@@ -11,7 +11,10 @@ from starlette.responses import JSONResponse
 from sqlalchemy import create_engine,Column,Integer,String,ForeignKey,func
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime, timedelta
 import uvicorn
+from tool import token as createToken
+from tool.statusTool import EXPIRE_TIME
 
 username="root" # 数据库用户名
 password="123456" # 数据库密码
@@ -26,9 +29,22 @@ ENGIN=create_engine(url,echo=True)
 LOCSESSION=sessionmaker(bind=ENGIN)
 # 从sqlalchemy中创建基类
 Base=declarative_base()
-from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp
+from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp,createUuid
 from tool.getAjax import getHeadersHolidayUrl
-from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput
+from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput
+
+
+class AccountInputs(Base):
+    __tablename__ = 'account'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    account = Column(String(100), nullable=False, default='')
+    password = Column(String(100), nullable=False, default='')
+    type = Column(Integer, nullable=False, default=0)
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    last_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    name=Column(String(30),nullable=False,default='管理员')
+    def __repr__(self):
+        return f'<AccountInputs {self.account}>'
 class User(Base):
     __tablename__ = 'user'
     id = Column(UUIDType(), primary_key=True, default=uuid.uuid4)
@@ -70,11 +86,55 @@ app.add_middleware(
     allow_methods=["*"],  # 允许使用的请求方法
     allow_headers=["*"]  # 允许携带的 Headers
 )
+expires_delta = timedelta(minutes=EXPIRE_TIME)
 
 
+@app.post('/pc/login',description="登录",summary="登录")
+def pcLogin(acc:AccountInput):
+    account=acc.account
+    password=acc.password
+    if not account or not password:
+        return httpStatus(message="帐号或密码不能为空", data={})
+    session=LOCSESSION()
+    existing_account = session.query(AccountInputs).filter(AccountInputs.account == account).first()
+    if existing_account is None:
+        if account!='admin':
+            return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="不能进行注册，必须为admin才行", data={})
+        regTime = int(time.time())
+        accountCreated = password + str(regTime)
+        new_account = AccountInputs(account=account, password=accountCreated, create_time=regTime,
+                                    last_time=regTime)
+        try:
+            session.add(new_account)
+            session.commit()
+            session.flush()
+            return httpStatus(code=status.HTTP_200_OK, message="注册成功", data={})
+        except SQLAlchemyError as e:
+            session.rollback()
+            return httpStatus(message="注册失败", data={})
+        finally:
+            session.close()
+    print("已注册了吧！！！")
+    if existing_account.type>1:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="您的帐号权限不足", data={})
+    if existing_account.type==1:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="当前帐号暂时不能进行登录操作", data={})
+    if existing_account.type==0:
+        if existing_account.account!='admin':
+            return httpStatus(code=status.HTTP_200_OK, message="您的帐号不属于管理员权限,请联系管理员添加权限操作", data={})
+        token = createToken.create_token({"sub": str(existing_account.id)}, expires_delta)
+        data={
+            "token":token,
+            "type":existing_account.type,
+            "account":existing_account.account,
+            "createTime":existing_account.create_time,
+            "lastTime":existing_account.last_time,
+            "name":existing_account.name,
+        }
+        return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=data)
 
 #生成一个通过手机号码查询用户的接口
-@app.post('/phone',description="通过手机号码获取信息",summary="通过手机号码获取信息")
+@app.post('/h5/phone',description="通过手机号码获取信息",summary="通过手机号码获取信息")
 def phone(user_phone:PhoneInput):
     phone=user_phone.phone
 
@@ -94,7 +154,7 @@ def phone(user_phone:PhoneInput):
         return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=records_data)
     else:
         return httpStatus(code=status.HTTP_200_OK, message="您还没有进行抽奖操作呢,快去抽奖吧", data={})
-@app.post('/lottery')
+@app.post('/h5/lottery')
 def lottery(user_input: LotteryInput):
     name = user_input.name
     phone = user_input.phone
@@ -128,7 +188,7 @@ def lottery(user_input: LotteryInput):
         return httpStatus(message="抽奖失败", data={})
     finally:
         session.close()
-@app.post('/login',description="保存未存在的或者获取已存在的用户信息",summary="保存未存在的或者获取已存在的用户信息")
+@app.post('/h5/login',description="保存未存在的或者获取已存在的用户信息",summary="保存未存在的或者获取已存在的用户信息")
 def save(user_input: UserInput):
     name=user_input.name
     phone=user_input.phone
@@ -175,7 +235,7 @@ async def index():
             }
         }
     }
-@app.get("/festival",description="获取节假日信息",summary="获取节假日信息")
+@app.get("/h5/festival",description="获取节假日信息",summary="获取节假日信息")
 async def root(request: Request)->dict:
     user_agent = request.headers.get('User-Agent')
     headers={"User-Agent": user_agent}
@@ -190,7 +250,7 @@ async def root(request: Request)->dict:
         }
     }
 
-@app.post('/paymentAccount')
+@app.post('/h5/paymentAccount')
 def paymentAccount(user_input:UserQcInput)->dict:
     phone=user_input.phone
     name=user_input.name

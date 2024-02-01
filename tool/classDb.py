@@ -3,7 +3,7 @@ from fastapi import  status
 import uuid
 import re
 import time
-
+import hashlib
 from datetime import datetime, timedelta
 
 def get_next_year_timestamp():
@@ -51,3 +51,15 @@ def validate_phone_input(phone: str):
         return httpStatus(message="手机号必须为11位", data={})
 
     return None  # 如果验证通过，返回 None
+
+def createUuid(name,time,pwd):
+    data="{}{}{}".format(name,time,pwd)
+    d=uuid.uuid5(uuid.NAMESPACE_DNS, data)
+    return d
+
+
+
+def getMd5Pwd(pwd:str):
+    m=hashlib.md5()
+    m.update(pwd.encode('utf-8'))
+    return m.hexdigest()
