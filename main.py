@@ -9,7 +9,7 @@ import time
 from fastapi.middleware.cors import CORSMiddleware # CORS
 from starlette.responses import JSONResponse
 from sqlalchemy import create_engine,Column,Integer,String,ForeignKey,func
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship,Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
 import uvicorn
@@ -29,10 +29,32 @@ ENGIN=create_engine(url,echo=True)
 LOCSESSION=sessionmaker(bind=ENGIN)
 # 从sqlalchemy中创建基类
 Base=declarative_base()
-from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp,createUuid
-from tool.getAjax import getHeadersHolidayUrl
-from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput
+from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp,createUuid,getListAll,getListAllTotal
 
+from tool.getAjax import getHeadersHolidayUrl
+from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput,dictQueryExtractor,DictType,DictTypeName
+
+
+class DictTypes(Base):
+    __tablename__ = 'dict'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(30), nullable=False, default='')
+    key = Column(String(30), nullable=False, default='')
+    value = Column(String(30), nullable=False, default='')
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    children = relationship("DictTypesChild", backref="dict")
+    def __repr__(self):
+        return f'<DictTypes {self.children}>'
+class DictTypesChild(Base):
+    __tablename__ = 'dict_child'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(30), nullable=False, default='')
+    key = Column(String(30), nullable=False, default='')
+    value = Column(String(30), nullable=False, default='')
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    parent_id = Column(Integer, ForeignKey('dict.id'))
+    def __repr__(self):
+        return f'<DictTypesChild {self.parent_id}>'
 
 class AccountInputs(Base):
     __tablename__ = 'account'
@@ -87,39 +109,154 @@ app.add_middleware(
     allow_headers=["*"]  # 允许携带的 Headers
 )
 expires_delta = timedelta(minutes=EXPIRE_TIME)
+def getDbSession():
+    db = LOCSESSION()
+    try:
+        yield db
+    finally:
+        db.close()
 
+@app.middleware("http")
+async def allow_pc_only(request: Request, call_next):
+    if not request.url.path.startswith("/h5/"):
+        user_agent = request.headers.get('User-Agent', '').lower()
+        if 'mobile' in user_agent or 'android' in user_agent or 'iphone' in user_agent:
+            # 如果检测到是移动设备且不是访问/h5/路径，返回403禁止访问
+            return httpStatus(code=status.HTTP_403_FORBIDDEN,message="当前环境不允许进行访问", data={})
+        # 对于/h5/路径或非移动设备请求，继续处理
+    response = await call_next(request)
+    return response
+@app.get('/pc/dict/search', description="获取模糊搜索字典信息", summary="获取模糊搜索字典信息")
+def getDictSearch(d: DictType = Depends(DictTypeName), db: Session = Depends(getDbSession)):
+    if d.page<1:
+        return httpStatus(message="页码不能小于1", data={})
+    if d.limit<1:
+        return httpStatus(message="每页显示数量不能小于1", data={})
+    result = getListAll(db, DictTypes, d.name, d.page, d.limit)
+    child = getListAll(db, DictTypesChild, d.name, d.page, d.limit)
+    for item in result:
+        item.children=child
+    data={
+        "page": d.page,
+        "limit": d.limit,
+        "data":result,
+        "total": getListAllTotal(db, DictTypes, d.name),
+
+    }
+    return httpStatus(code=status.HTTP_200_OK, message="查询成功",data=data)
+@app.get('/pc/dict', description="获取某个字典信息", summary="获取某个字典信息")
+def getDict(d: DictType = Depends(dictQueryExtractor), db: Session = Depends(getDbSession)):
+    if not d.name:
+        return httpStatus(message="字典名称不能为空", data={})
+    query = db.query(DictTypes)
+    if d.name:
+        query = query.filter(DictTypes.name == d.name)
+    if d.key:
+        query = query.filter(DictTypes.key == d.key)
+    if d.value:
+        query = query.filter(DictTypes.value == d.value)
+
+    first = query.first()
+    if not first:
+        return httpStatus(message=f"未找到相关字典{d.name}", data={})
+    #如果父找到了，就查询子
+    data={
+        "id":first.id,
+        "parent_id":first.id,
+        "name":first.name,
+        "children":db.query(DictTypesChild).filter(DictTypesChild.parent_id == first.id).all(),
+        "key":first.key,
+        "value":first.value,
+        "create_time":first.create_time,
+        "timestamp":int(time.time())
+    }
+    # 如果一切正常，继续你的业务逻辑
+    # 假设成功的情况
+    return httpStatus(code=status.HTTP_200_OK, message="查询成功",data=data)
+
+
+@app.post('/pc/dictChild', description="保存字典下级信息", summary="保存字典下级信息")
+def saveDictChild(d: DictType, db: Session = Depends(getDbSession))->dict:
+    if not d.name or not d.key or not d.value:
+        return httpStatus(message="字典名称或者字典key或者字典value不能为空", data={})
+
+    if d.parent_id:
+        parent = db.query(DictTypes).filter(DictTypes.id == d.parent_id).first()
+        if not parent:
+            raise httpStatus(message="父字典未找到")
+
+        # 检查是否已存在相同的子字典
+
+        existing_child = db.query(DictTypesChild)
+        if d.name:
+            query = existing_child.filter(DictTypesChild.name == d.name)
+        if d.key:
+            query = existing_child.filter(DictTypesChild.key == d.key)
+        if d.value:
+            query = existing_child.filter(DictTypesChild.value == d.value)
+        first = query.first()
+        if first:
+            # 如果已存在相同的子字典，则不允许添加
+            return httpStatus( message="相同的子字典已存在，不允许重复添加")
+
+        # 如果不存在相同的子字典，则添加新的子字典
+        new_child = DictTypesChild(name=d.name, key=d.key, value=d.value, parent_id=d.parent_id)
+        try:
+            db.add(new_child)
+            db.commit()
+            db.refresh(new_child)
+            return httpStatus(message="字典添加成功", code=status.HTTP_200_OK, data={
+                "id": new_child.id, "id": new_child.id,
+                "name": new_child.name,
+                "key": new_child.key,
+                "value": new_child.value
+            })
+        except SQLAlchemyError as e:
+            db.rollback()
+            return httpStatus(message="字典添加失败", data={})
+        finally:
+            db.close()
+
+    else:
+        return httpStatus(message="父字典ID不能为空")
+
+@app.post('/pc/dictChild',description="保存字典下级信息",summary="保存字典下级信息")
+def saveDictChild(d: DictType, db: Session = Depends(getDbSession)):
+    name=d.name
+    key=d.key
+    value=d.value
+    if not name or not key or not value:
+        return httpStatus(message="字典名称或者字典key或者字典value不能为空", data={})
 
 @app.post('/pc/login',description="登录",summary="登录")
-def pcLogin(acc:AccountInput):
+def pcLogin(acc:AccountInput,db:Session = Depends(getDbSession)):
     account=acc.account
     password=acc.password
     if not account or not password:
         return httpStatus(message="帐号或密码不能为空", data={})
-    session=LOCSESSION()
-    existing_account = session.query(AccountInputs).filter(AccountInputs.account == account).first()
+    existing_account = db.query(AccountInputs).filter(AccountInputs.account == account).first()
+
     if existing_account is None:
         if account!='admin':
-            return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="不能进行注册，必须为admin才行", data={})
+            return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="只能管理员帐号才能帮您进行注册哦,请联系管理员进行注册哦", data={})
+
         regTime = int(time.time())
         accountCreated = password + str(regTime)
         new_account = AccountInputs(account=account, password=accountCreated, create_time=regTime,
                                     last_time=regTime)
         try:
-            session.add(new_account)
-            session.commit()
-            session.flush()
+            db.add(new_account)
+            db.commit()
+            db.flush()
             return httpStatus(code=status.HTTP_200_OK, message="注册成功", data={})
         except SQLAlchemyError as e:
-            session.rollback()
+            db.rollback()
             return httpStatus(message="注册失败", data={})
         finally:
-            session.close()
-    print("已注册了吧！！！")
-    if existing_account.type>1:
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="您的帐号权限不足", data={})
-    if existing_account.type==1:
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="当前帐号暂时不能进行登录操作", data={})
-    if existing_account.type==0:
+            db.close()
+    if existing_account.type!=0:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="当前帐号权限为已被限制登录,请使用管理员账号登录", data={})
+    else:
         if existing_account.account!='admin':
             return httpStatus(code=status.HTTP_200_OK, message="您的帐号不属于管理员权限,请联系管理员添加权限操作", data={})
         token = createToken.create_token({"sub": str(existing_account.id)}, expires_delta)
@@ -225,7 +362,7 @@ async def index():
     return {
         "data":{
             "message":"欢迎来到德莱联盟",
-            "result":{
+            "data":{
                 "version":"1.0.0",
                 "authorName":"hooks",
                 "authorEmail":"869710179@qq.com",

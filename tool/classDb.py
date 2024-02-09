@@ -1,3 +1,5 @@
+from typing import Tuple, List
+
 from sqlalchemy.types import TypeDecorator, CHAR
 from fastapi import  status
 import uuid
@@ -30,7 +32,7 @@ class UUIDType(TypeDecorator):
         else:
             return uuid.UUID(value)
 
-def httpStatus(code:str=status.HTTP_400_BAD_REQUEST,message:str="获取成功",data:dict={})->dict:
+def httpStatus(code:int=status.HTTP_400_BAD_REQUEST,message:str="获取成功",data:dict={})->dict:
     return {
         "data":{
             "code":code,
@@ -63,3 +65,11 @@ def getMd5Pwd(pwd:str):
     m=hashlib.md5()
     m.update(pwd.encode('utf-8'))
     return m.hexdigest()
+def getListAll(db=None,cls=None,name:str='',pageNo:int=1,pageSize:int=20):
+    size = (pageNo - 1) * pageSize
+    result = db.query(cls).filter(cls.name.like("%{}%".format(name))).offset(size).limit(pageSize).all()
+    return result
+#获取总条数
+def getListAllTotal(db=None,cls=None,name:str='')->int:
+    count = db.query(cls).filter(cls.name.like("%{}%".format(name))).count()
+    return count

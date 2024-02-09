@@ -15,3 +15,16 @@ class UserQcInput(PhoneInput):
     account: str
 class LotteryInput(UserInput):
     last_time: int
+class DictTypeName(BaseModel):
+    name: Optional[str] = ''
+    page: Optional[int] = 1
+    limit: Optional[int] = 20
+#字典类型
+class DictType(DictTypeName):
+    key: Optional[str] = None
+    value: Optional[str] = None
+    parent_id: Optional[int] = None
+
+
+def dictQueryExtractor(name: Optional[str] = None, key: Optional[str] = None, value: Optional[str] = None) -> DictType:
+    return DictType(name=name, key=key, value=value)
