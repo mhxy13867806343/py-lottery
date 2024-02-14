@@ -1,4 +1,5 @@
 from typing import Tuple, List
+from sqlalchemy import or_
 
 from sqlalchemy.types import TypeDecorator, CHAR
 from fastapi import  status
@@ -65,11 +66,26 @@ def getMd5Pwd(pwd:str):
     m=hashlib.md5()
     m.update(pwd.encode('utf-8'))
     return m.hexdigest()
-def getListAll(db=None,cls=None,name:str='',pageNo:int=1,pageSize:int=20):
+
+
+def getListAll(db=None, cls=None, name: str = '', status: int = 0, pageNo: int = 1, pageSize: int = 20):
     size = (pageNo - 1) * pageSize
-    result = db.query(cls).filter(cls.name.like("%{}%".format(name))).offset(size).limit(pageSize).all()
+
+    # 如果name为空字符串，即没有提供搜索关键词，则忽略name的筛选条件
+    if name:
+        result = db.query(cls).filter(or_(cls.name.like(f"%{name}%"), cls.status == status)).offset(size).limit(
+            pageSize).all()
+    else:  # 如果没有提供name，只根据status筛选
+        result = db.query(cls).filter(cls.status == status).offset(size).limit(pageSize).all()
+
     return result
-#获取总条数
-def getListAllTotal(db=None,cls=None,name:str='')->int:
-    count = db.query(cls).filter(cls.name.like("%{}%".format(name))).count()
+
+
+def getListAllTotal(db=None, cls=None, name: str = '', status: int = 0) -> int:
+    # 类似地处理总数查询
+    if name:
+        count = db.query(cls).filter(or_(cls.name.like(f"%{name}%"), cls.status == status)).count()
+    else:
+        count = db.query(cls).filter(cls.status == status).count()
+
     return count

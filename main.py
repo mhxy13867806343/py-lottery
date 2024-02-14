@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Depends,Request,status
+from fastapi import FastAPI,Depends,Request,status,APIRouter
 from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles #静态文件操作
 from sqlalchemy.dialects.mysql import CHAR,BINARY
@@ -30,9 +30,9 @@ LOCSESSION=sessionmaker(bind=ENGIN)
 # 从sqlalchemy中创建基类
 Base=declarative_base()
 from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp,createUuid,getListAll,getListAllTotal
-
+from tool.defDb import dbSessionCommitClose
 from tool.getAjax import getHeadersHolidayUrl
-from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput,dictQueryExtractor,DictType,DictTypeName
+from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput,dictQueryExtractor,DictType,DictTypeName,DictTypeParams
 
 
 class DictTypes(Base):
@@ -42,6 +42,7 @@ class DictTypes(Base):
     key = Column(String(30), nullable=False, default='')
     value = Column(String(30), nullable=False, default='')
     create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    status = Column(Integer, nullable=False, default=0)
     children = relationship("DictTypesChild", backref="dict")
     def __repr__(self):
         return f'<DictTypes {self.children}>'
@@ -53,6 +54,7 @@ class DictTypesChild(Base):
     value = Column(String(30), nullable=False, default='')
     create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     parent_id = Column(Integer, ForeignKey('dict.id'))
+    status = Column(Integer, nullable=False, default=0)
     def __repr__(self):
         return f'<DictTypesChild {self.parent_id}>'
 
@@ -95,7 +97,12 @@ class PaymentAccount(Base):
     account = Column(String(30), nullable=False, default='')
     create_time = Column(Integer, nullable=False)
     timestamp = Column(Integer, nullable=False)
+router = APIRouter(
+    prefix="/v1",  # 为这个路由器下的所有路由添加路径前缀 /v1
+    tags=["v1"],  # 可选，为这组路由添加标签
+)
 app = FastAPI()
+# 将 router 添加到 app 中
 origins = [
 "*"
 
@@ -126,56 +133,87 @@ async def allow_pc_only(request: Request, call_next):
         # 对于/h5/路径或非移动设备请求，继续处理
     response = await call_next(request)
     return response
-@app.get('/pc/dict/search', description="获取模糊搜索字典信息", summary="获取模糊搜索字典信息")
+@router.get('/pc/dict/search', description="获取模糊搜索字典信息", summary="获取模糊搜索字典信息")
 def getDictSearch(d: DictType = Depends(DictTypeName), db: Session = Depends(getDbSession)):
     if d.page<1:
         return httpStatus(message="页码不能小于1", data={})
     if d.limit<1:
         return httpStatus(message="每页显示数量不能小于1", data={})
-    result = getListAll(db, DictTypes, d.name, d.page, d.limit)
-    child = getListAll(db, DictTypesChild, d.name, d.page, d.limit)
+    result = getListAll(db, DictTypes, d.name,d.status, d.page, d.limit)
+    child = getListAll(db, DictTypesChild, d.name,d.status, d.page, d.limit)
     for item in result:
         item.children=child
     data={
         "page": d.page,
         "limit": d.limit,
         "data":result,
-        "total": getListAllTotal(db, DictTypes, d.name),
+        "total": getListAllTotal(db, DictTypes, d.name,d.status),
 
     }
     return httpStatus(code=status.HTTP_200_OK, message="查询成功",data=data)
-@app.get('/pc/dict', description="获取某个字典信息", summary="获取某个字典信息")
+@router.get('/pc/dict', description="获取某个字典信息", summary="获取某个字典信息")
 def getDict(d: DictType = Depends(dictQueryExtractor), db: Session = Depends(getDbSession)):
     if not d.name:
         return httpStatus(message="字典名称不能为空", data={})
-    query = db.query(DictTypes)
+    query = db.query(DictTypes).filter(DictTypes.status == 0)  # 这里加入了对status的过滤
     if d.name:
         query = query.filter(DictTypes.name == d.name)
     if d.key:
         query = query.filter(DictTypes.key == d.key)
     if d.value:
         query = query.filter(DictTypes.value == d.value)
-
     first = query.first()
     if not first:
         return httpStatus(message=f"未找到相关字典{d.name}", data={})
-    #如果父找到了，就查询子
-    data={
-        "id":first.id,
-        "parent_id":first.id,
-        "name":first.name,
-        "children":db.query(DictTypesChild).filter(DictTypesChild.parent_id == first.id).all(),
-        "key":first.key,
-        "value":first.value,
-        "create_time":first.create_time,
-        "timestamp":int(time.time())
+    data = {
+        "id": first.id,
+        "parent_id": first.id,
+        "name": first.name,
+        "children": db.query(DictTypesChild).filter(DictTypesChild.parent_id == first.id, DictTypesChild.status == 0).all(),  # 这里加入了对status的过滤
+        "key": first.key,
+        "value": first.value,
+        "create_time": first.create_time,
+        "timestamp": int(time.time())
     }
-    # 如果一切正常，继续你的业务逻辑
-    # 假设成功的情况
-    return httpStatus(code=status.HTTP_200_OK, message="查询成功",data=data)
+    return httpStatus(code=status.HTTP_200_OK, message="查询成功", data=data)
 
 
-@app.post('/pc/dictChild', description="保存字典下级信息", summary="保存字典下级信息")
+@router.post('/pc/parentDict', description="修改父字典信息", summary="修改父字典信息")
+@dbSessionCommitClose(db=Depends(getDbSession))
+def saveParidDict(d: DictType = Depends(DictTypeParams), db: Session = Depends(getDbSession)):
+    # 检查必要字段
+    if not d.parent_id:
+        return httpStatus(message="当前字典id不能为空,无法修改", data={})
+    if not (d.name and d.key and d.value and d.status is not None):
+        return httpStatus(message="字典名称、key、value和状态值不能为空", data={})
+    if d.status < 0 or d.status > 1:
+        return httpStatus(message="状态值不合法", data={})
+
+    dbResult = db.query(DictTypes).filter(DictTypes.id == d.parent_id).first()
+    if not dbResult:
+        return httpStatus(message="未找到相关字典,不能进行修改操作", data={})
+
+    # 检查是否有字段需要更新
+    update_needed = (
+        dbResult.name != d.name or
+        dbResult.key != d.key or
+        dbResult.value != d.value or
+        dbResult.status != d.status
+    )
+
+    if not update_needed:
+        return httpStatus(message="没有字段变更，无需修改", data={})
+
+
+    dbResult.name = d.name
+    dbResult.key = d.key
+    dbResult.value = d.value
+    dbResult.status = d.status
+    db.commit()
+    return httpStatus(message="修改成功", data={})
+
+@router.post('/pc/dictChild', description="保存字典下级信息", summary="保存字典下级信息")
+@dbSessionCommitClose(db=Depends(getDbSession))
 def saveDictChild(d: DictType, db: Session = Depends(getDbSession))->dict:
     if not d.name or not d.key or not d.value:
         return httpStatus(message="字典名称或者字典key或者字典value不能为空", data={})
@@ -201,34 +239,22 @@ def saveDictChild(d: DictType, db: Session = Depends(getDbSession))->dict:
 
         # 如果不存在相同的子字典，则添加新的子字典
         new_child = DictTypesChild(name=d.name, key=d.key, value=d.value, parent_id=d.parent_id)
-        try:
-            db.add(new_child)
-            db.commit()
-            db.refresh(new_child)
-            return httpStatus(message="字典添加成功", code=status.HTTP_200_OK, data={
-                "id": new_child.id, "id": new_child.id,
-                "name": new_child.name,
-                "key": new_child.key,
-                "value": new_child.value
-            })
-        except SQLAlchemyError as e:
-            db.rollback()
-            return httpStatus(message="字典添加失败", data={})
-        finally:
-            db.close()
+        db.add(new_child)
+        db.commit()
+        db.refresh(new_child)
+        return httpStatus(message="字典添加成功", code=status.HTTP_200_OK, data={
+            "id": new_child.id, "id": new_child.id,
+            "name": new_child.name,
+            "key": new_child.key,
+            "value": new_child.value
+        })
 
     else:
         return httpStatus(message="父字典ID不能为空")
 
-@app.post('/pc/dictChild',description="保存字典下级信息",summary="保存字典下级信息")
-def saveDictChild(d: DictType, db: Session = Depends(getDbSession)):
-    name=d.name
-    key=d.key
-    value=d.value
-    if not name or not key or not value:
-        return httpStatus(message="字典名称或者字典key或者字典value不能为空", data={})
 
-@app.post('/pc/login',description="登录",summary="登录")
+@router.post('/pc/login',description="登录",summary="登录")
+@dbSessionCommitClose(db=Depends(getDbSession))
 def pcLogin(acc:AccountInput,db:Session = Depends(getDbSession)):
     account=acc.account
     password=acc.password
@@ -244,16 +270,10 @@ def pcLogin(acc:AccountInput,db:Session = Depends(getDbSession)):
         accountCreated = password + str(regTime)
         new_account = AccountInputs(account=account, password=accountCreated, create_time=regTime,
                                     last_time=regTime)
-        try:
-            db.add(new_account)
-            db.commit()
-            db.flush()
-            return httpStatus(code=status.HTTP_200_OK, message="注册成功", data={})
-        except SQLAlchemyError as e:
-            db.rollback()
-            return httpStatus(message="注册失败", data={})
-        finally:
-            db.close()
+        db.add(new_account)
+        db.commit()
+        db.flush()
+        return httpStatus(code=status.HTTP_200_OK, message="注册成功", data={})
     if existing_account.type!=0:
         return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="当前帐号权限为已被限制登录,请使用管理员账号登录", data={})
     else:
@@ -271,7 +291,7 @@ def pcLogin(acc:AccountInput,db:Session = Depends(getDbSession)):
         return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=data)
 
 #生成一个通过手机号码查询用户的接口
-@app.post('/h5/phone',description="通过手机号码获取信息",summary="通过手机号码获取信息")
+@router.post('/h5/phone',description="通过手机号码获取信息",summary="通过手机号码获取信息")
 def phone(user_phone:PhoneInput):
     phone=user_phone.phone
 
@@ -291,7 +311,7 @@ def phone(user_phone:PhoneInput):
         return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=records_data)
     else:
         return httpStatus(code=status.HTTP_200_OK, message="您还没有进行抽奖操作呢,快去抽奖吧", data={})
-@app.post('/h5/lottery')
+@router.post('/h5/lottery')
 def lottery(user_input: LotteryInput):
     name = user_input.name
     phone = user_input.phone
@@ -325,7 +345,7 @@ def lottery(user_input: LotteryInput):
         return httpStatus(message="抽奖失败", data={})
     finally:
         session.close()
-@app.post('/h5/login',description="保存未存在的或者获取已存在的用户信息",summary="保存未存在的或者获取已存在的用户信息")
+@router.post('/h5/login',description="保存未存在的或者获取已存在的用户信息",summary="保存未存在的或者获取已存在的用户信息")
 def save(user_input: UserInput):
     name=user_input.name
     phone=user_input.phone
@@ -357,7 +377,7 @@ def save(user_input: UserInput):
             session.close()  # 确保会话在结束时关闭
 
         return httpStatus(code=status.HTTP_200_OK,message="保存成功",data={})
-@app.get('/')
+@router.get('/')
 async def index():
     return {
         "data":{
@@ -372,7 +392,7 @@ async def index():
             }
         }
     }
-@app.get("/h5/festival",description="获取节假日信息",summary="获取节假日信息")
+@router.get("/h5/festival",description="获取节假日信息",summary="获取节假日信息")
 async def root(request: Request)->dict:
     user_agent = request.headers.get('User-Agent')
     headers={"User-Agent": user_agent}
@@ -387,7 +407,7 @@ async def root(request: Request)->dict:
         }
     }
 
-@app.post('/h5/paymentAccount')
+@router.post('/h5/paymentAccount')
 def paymentAccount(user_input:UserQcInput)->dict:
     phone=user_input.phone
     name=user_input.name
@@ -397,12 +417,14 @@ def paymentAccount(user_input:UserQcInput)->dict:
         return validation_error
     if not  account:
         return httpStatus(message="支付账号不能为空", data={})
-@app.get("/hello/{name}")
+@router.get("/hello/{name}")
 async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 # 静态文件
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 Base.metadata.create_all(bind=ENGIN)
+
+app.include_router(router)
 if __name__ == "__main__":
     uvicorn.run(app,host="localhost", port=8000)

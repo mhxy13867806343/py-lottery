@@ -15,10 +15,18 @@ class UserQcInput(PhoneInput):
     account: str
 class LotteryInput(UserInput):
     last_time: int
-class DictTypeName(BaseModel):
+class DictTypeNameParams(BaseModel):
     name: Optional[str] = ''
+    status: Optional[int] = 0  # 0正常 1禁用
+class DictTypeParams(DictTypeNameParams):
+    parent_id: Optional[int] = None
+    key: Optional[str] = None
+    value: Optional[str] = None
+
+class DictTypeName(DictTypeNameParams):
     page: Optional[int] = 1
     limit: Optional[int] = 20
+
 #字典类型
 class DictType(DictTypeName):
     key: Optional[str] = None
