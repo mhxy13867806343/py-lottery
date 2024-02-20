@@ -19,3 +19,5 @@ def dbSessionCommitClose(db,error="操作失败"):
                 db.close()
         return wrapper
     return decorator
+def isAdminOrTypeOne(type: int=0) -> bool:
+    return type==0

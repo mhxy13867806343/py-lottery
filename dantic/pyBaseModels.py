@@ -8,8 +8,8 @@ class AccountInput(BaseModel):
 class PhoneInput(BaseModel):
     phone: str
 class UserInput(BaseModel):
-    name: str
-    phone: str
+    name:  Optional[str]=None
+    phone:  Optional[str]=None
 class UserQcInput(PhoneInput):
     name: Optional[str] = None
     account: str

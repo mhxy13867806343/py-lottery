@@ -30,7 +30,7 @@ LOCSESSION=sessionmaker(bind=ENGIN)
 # 从sqlalchemy中创建基类
 Base=declarative_base()
 from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp,createUuid,getListAll,getListAllTotal
-from tool.defDb import dbSessionCommitClose
+from tool.defDb import dbSessionCommitClose,isAdminOrTypeOne
 from tool.getAjax import getHeadersHolidayUrl
 from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput,dictQueryExtractor,DictType,DictTypeName,DictTypeParams
 
@@ -122,7 +122,8 @@ def getDbSession():
         yield db
     finally:
         db.close()
-
+def isAdmin(user: AccountInputs = Depends(createToken.pase_token)):
+    return 0 if user.type == 0 else 1
 @app.middleware("http")
 async def allow_pc_only(request: Request, call_next):
     if not request.url.path.startswith("/h5/"):
@@ -179,8 +180,8 @@ def getDict(d: DictType = Depends(dictQueryExtractor), db: Session = Depends(get
 
 
 @router.post('/pc/parentDict', description="修改父字典信息", summary="修改父字典信息")
-@dbSessionCommitClose(db=Depends(getDbSession))
-def saveParidDict(d: DictType = Depends(DictTypeParams), db: Session = Depends(getDbSession)):
+def saveParidDict(d: DictType = Depends(DictTypeParams), db: Session = Depends(getDbSession), _admin: AccountInputs = Depends(createToken.pase_token)):
+
     # 检查必要字段
     if not d.parent_id:
         return httpStatus(message="当前字典id不能为空,无法修改", data={})
@@ -189,6 +190,8 @@ def saveParidDict(d: DictType = Depends(DictTypeParams), db: Session = Depends(g
     if d.status < 0 or d.status > 1:
         return httpStatus(message="状态值不合法", data={})
 
+    if not _admin:
+        return httpStatus(message="您没有权限进行此操作", data={})
     dbResult = db.query(DictTypes).filter(DictTypes.id == d.parent_id).first()
     if not dbResult:
         return httpStatus(message="未找到相关字典,不能进行修改操作", data={})
@@ -211,10 +214,62 @@ def saveParidDict(d: DictType = Depends(DictTypeParams), db: Session = Depends(g
     dbResult.status = d.status
     db.commit()
     return httpStatus(message="修改成功", data={})
+@router.delete('/pc/del/childDict/{id}', description="删除子字典信息", summary="删除父字典信息")
+def deleteChildDict(
+    id: int,db: Session = Depends(getDbSession), _admin: AccountInputs = Depends(isAdmin)):
+    if not id:
+        return httpStatus(message="当前字典id不能为空,无法删除", data={})
+    if not _admin:
+        return httpStatus(message="您没有权限进行此操作", data={})
+    dbResult = db.query(DictTypesChild).filter(DictTypesChild.id == id).first()
+    try:
+        if not dbResult:
+            return httpStatus(message="未找到相关字典,不能进行删除操作", data={})
+        if not dbResult.parent_id:
+            return httpStatus(message="父字典不存在,无法删除", data={})
+        if not dbResult.id:
+            return httpStatus(message="当前字典id不能为空,无法删除", data={})
+        if dbResult.status !=0:
+            return httpStatus(message="当前字典已被禁用,无法删除", data={})
 
-@router.post('/pc/dictChild', description="保存字典下级信息", summary="保存字典下级信息")
-@dbSessionCommitClose(db=Depends(getDbSession))
-def saveDictChild(d: DictType, db: Session = Depends(getDbSession))->dict:
+        dbResult.status = 1
+        db.commit()
+        return httpStatus(message="删除成功", data={})
+    except SQLAlchemyError as e:
+        db.rollback()
+        return httpStatus(message="删除失败", data={})
+    finally:
+        db.close()
+
+@router.delete('/pc/del/parentDict/{id}', description="删除父字典信息", summary="删除父字典信息")
+def deleteParidDict(
+    id: int,
+    db: Session = Depends(getDbSession),
+    _admin: AccountInputs = Depends(isAdmin)):  # 确保 isAdmin 依赖项已正确实现
+    if not id:
+        return httpStatus(message="当前字典id不能为空,无法删除", data={})
+    if not _admin:
+        return httpStatus(message="您没有权限进行此操作", data={})
+    dbResult = db.query(DictTypes).filter(DictTypes.id ==id).first()
+    try:
+        if not dbResult:
+            return httpStatus(message="未找到相关字典,不能进行删除操作", data={})
+        if not dbResult.id:
+            return httpStatus(message="当前字典id不能为空,无法删除", data={})
+        if dbResult.status !=0:
+            return httpStatus(message="当前字典已被禁用,无法删除", data={})
+        if len(dbResult.children)>0:
+            return httpStatus(message="当前字典下有子字典,无法删除,请先删除子字典", data={})
+        dbResult.status = 1
+        db.commit()
+        return httpStatus(message="删除成功", data={})
+    except SQLAlchemyError as e:
+        db.rollback()
+        return httpStatus(message="删除失败", data={})
+    finally:
+        db.close()
+@router.post('/pc/save/dictChild', description="保存字典下级信息", summary="保存字典下级信息")
+def saveDictChild(d: DictType, db: Session = Depends(getDbSession), _admin: AccountInputs = Depends(createToken.pase_token))->dict:
     if not d.name or not d.key or not d.value:
         return httpStatus(message="字典名称或者字典key或者字典value不能为空", data={})
 
@@ -224,7 +279,8 @@ def saveDictChild(d: DictType, db: Session = Depends(getDbSession))->dict:
             raise httpStatus(message="父字典未找到")
 
         # 检查是否已存在相同的子字典
-
+        if not _admin:
+            return httpStatus(message="您没有权限进行此操作", data={})
         existing_child = db.query(DictTypesChild)
         if d.name:
             query = existing_child.filter(DictTypesChild.name == d.name)
@@ -254,7 +310,6 @@ def saveDictChild(d: DictType, db: Session = Depends(getDbSession))->dict:
 
 
 @router.post('/pc/login',description="登录",summary="登录")
-@dbSessionCommitClose(db=Depends(getDbSession))
 def pcLogin(acc:AccountInput,db:Session = Depends(getDbSession)):
     account=acc.account
     password=acc.password
@@ -377,8 +432,8 @@ def save(user_input: UserInput):
             session.close()  # 确保会话在结束时关闭
 
         return httpStatus(code=status.HTTP_200_OK,message="保存成功",data={})
-@router.get('/')
-async def index():
+@router.get('/pc/user',description="获取用户信息",summary="获取用户信息")
+async def getIndexauthorUser():
     return {
         "data":{
             "message":"欢迎来到德莱联盟",
@@ -392,6 +447,7 @@ async def index():
             }
         }
     }
+
 @router.get("/h5/festival",description="获取节假日信息",summary="获取节假日信息")
 async def root(request: Request)->dict:
     user_agent = request.headers.get('User-Agent')
@@ -406,7 +462,9 @@ async def root(request: Request)->dict:
             }
         }
     }
-
+@router.post("/h5/lotteryRecord",description="获取抽奖记录",summary="获取抽奖记录")
+def lotteryRecord(user:UserInput,db:Session = Depends(getDbSession),_admin:AccountInputs = Depends(isAdmin))->dict:
+    return {}
 @router.post('/h5/paymentAccount')
 def paymentAccount(user_input:UserQcInput)->dict:
     phone=user_input.phone
