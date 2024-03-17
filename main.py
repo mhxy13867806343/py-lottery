@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 import uvicorn
 from tool import token as createToken
 from tool.statusTool import EXPIRE_TIME
-
+from tool.dbRedis import RedisDB
 username="root" # 数据库用户名
 password="123456" # 数据库密码
 host="localhost" # 数据库地址
@@ -29,10 +29,11 @@ ENGIN=create_engine(url,echo=True)
 LOCSESSION=sessionmaker(bind=ENGIN)
 # 从sqlalchemy中创建基类
 Base=declarative_base()
-from tool.classDb import UUIDType,httpStatus,validate_phone_input,get_next_year_timestamp,createUuid,getListAll,getListAllTotal
+from tool.classDb import UUIDType,httpStatus,validate_phone_input,validate_pwd
 from tool.defDb import dbSessionCommitClose,isAdminOrTypeOne
 from tool.getAjax import getHeadersHolidayUrl
-from dantic.pyBaseModels import UserInput,PhoneInput,LotteryInput,UserQcInput,AccountInput,dictQueryExtractor,DictType,DictTypeName,DictTypeParams
+from dantic.pyBaseModels import UserInput, PhoneInput, LotteryInput, UserQcInput, AccountInput, dictQueryExtractor, \
+    DictType, DictTypeName, DictTypeParams, AccountInputFirst
 
 
 class DictTypes(Base):
@@ -67,8 +68,23 @@ class AccountInputs(Base):
     create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     last_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     name=Column(String(30),nullable=False,default='管理员')
+    posts = relationship("UserPosts", back_populates="user")
     def __repr__(self):
         return f'<AccountInputs {self.account}>'
+
+
+class UserPosts(Base):
+    __tablename__ = 'user_posts'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    content = Column(String(255), nullable=False, default='')  # 最多255个字符
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    status = Column(Integer, nullable=False, default=0)
+    # 创建与AccountInputs的反向引用，建立一对多关系
+    user = relationship("AccountInputs", back_populates="posts")
+
+    def __repr__(self):
+        return f'<UserPosts {self.content[:10]}...>'  # 显示内容的前10个字符
 class User(Base):
     __tablename__ = 'user'
     id = Column(UUIDType(), primary_key=True, default=uuid.uuid4)
@@ -101,6 +117,7 @@ router = APIRouter(
     prefix="/v1",  # 为这个路由器下的所有路由添加路径前缀 /v1
     tags=["v1"],  # 可选，为这组路由添加标签
 )
+redis_db = RedisDB()
 app = FastAPI()
 # 将 router 添加到 app 中
 origins = [
@@ -137,129 +154,118 @@ async def allow_pc_only(request: Request, call_next):
 
 
 
-@router.post('/pc/login',description="登录",summary="登录")
-def pcLogin(acc:AccountInput,db:Session = Depends(getDbSession)):
-    account=acc.account
-    password=acc.password
+@router.post('/h5/registered',description="h5注册",summary="h5注册")
+def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
+    account:str=acc.account
+    password:str=acc.password
     if not account or not password:
         return httpStatus(message="帐号或密码不能为空", data={})
+    if not validate_pwd(password):
+        msg:str="密码强度太弱啦,第我位字符必须以字母或特殊字符开头，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符"
+        return httpStatus(message=msg, data={})
     existing_account = db.query(AccountInputs).filter(AccountInputs.account == account).first()
-
     if existing_account is None:
-        if account!='admin':
-            return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="只能管理员帐号才能帮您进行注册哦,请联系管理员进行注册哦", data={})
-
-        regTime = int(time.time())
-        accountCreated = password + str(regTime)
-        new_account = AccountInputs(account=account, password=accountCreated, create_time=regTime,
-                                    last_time=regTime)
-        db.add(new_account)
+        rTime = int(time.time())
+        name=str('--')+str(rTime)+str(account)+str('--')
+        password = createToken.getHashPwd(password)
+        resultSql = AccountInputs(account=account, password=password, create_time=rTime,
+                                    last_time=rTime,name=name,type=1)
+        db.add(resultSql)
         db.commit()
         db.flush()
         return httpStatus(code=status.HTTP_200_OK, message="注册成功", data={})
-    if existing_account.type!=0:
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="当前帐号权限为已被限制登录,请使用管理员账号登录", data={})
-    else:
-        if existing_account.account!='admin':
-            return httpStatus(code=status.HTTP_200_OK, message="您的帐号不属于管理员权限,请联系管理员添加权限操作", data={})
-        token = createToken.create_token({"sub": str(existing_account.id)}, expires_delta)
-        data={
-            "token":token,
-            "type":existing_account.type,
-            "account":existing_account.account,
-            "createTime":existing_account.create_time,
-            "lastTime":existing_account.last_time,
-            "name":existing_account.name,
-        }
-        return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=data)
+    return httpStatus(message="当前帐号已注册存在,请直接登录", data={})
 
-#生成一个通过手机号码查询用户的接口
-@router.post('/h5/phone',description="通过手机号码获取信息",summary="通过手机号码获取信息")
-def phone(user_phone:PhoneInput):
-    phone=user_phone.phone
 
-    validation_error = validate_phone_input(phone)
-    if validation_error:
-        return validation_error
-    session=LOCSESSION()
-    existing_user = session.query(User).filter(User.phone == phone).first()
-    if existing_user:
-        # 直接通过用户获取抽奖记录
-        records_data = [{
-            "id": record.id,
-            "timestamp": record.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-            # 添加其他你需要返回的字段
-        } for record in existing_user.lottery_records]
-
-        return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=records_data)
-    else:
-        return httpStatus(code=status.HTTP_200_OK, message="您还没有进行抽奖操作呢,快去抽奖吧", data={})
-@router.post('/h5/lottery')
-def lottery(user_input: LotteryInput):
-    name = user_input.name
-    phone = user_input.phone
-    last_time = user_input.last_time
-    validation_error = validate_phone_input(phone)
-    if not name or not phone:
-        return httpStatus(message="姓名不能为空", data={})
-    if validation_error:
-        return validation_error
-
-    session = LOCSESSION()
-    user = session.query(User).filter(User.name == name, User.phone == phone).first()
-    if not user:
-        return httpStatus(message="未找到相关用户呢", data={})
-    if user and user.count <= 0:
-        next_year_timestamp = get_next_year_timestamp()
-        return httpStatus(
-            code=status.HTTP_200_OK,
-            message="您的抽奖次数已经用完了呢",
-            data={
-                "count": user.count,
-                "lastTime": next_year_timestamp,  # 下一年的时间戳
-                "createTime": user.create_time  # 已经是时间戳
-            }
-        )
+@router.post('/h5/login', description="登录用户信息", summary="登录用户信息")
+def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
+    account = user_input.account
+    password = user_input.password
+    newAccount=f"user-{account}"#redis key
+    if not account or not password:
+        return httpStatus(message="账号或密码不能为空", data={})
+    # 先从Redis尝试获取用户信息
+    user_data = redis_db.get(newAccount)
+    if user_data:
+        try:
+            # 验证token的有效性
+            user_id = createToken.pase_token(user_data['token'])
+            # 如果提供的账号与Redis中的账号一致，且token有效，认为登录成功
+            if user_id and account == user_data["account"]:
+                return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=user_data)
+            return httpStatus(message="登录信息已失效，请重新登录", data={})
+        except Exception as e:
+            print(e)
+            return httpStatus(message="登录信息已失效，请重新登录", data={})
+    existing_user = session.query(AccountInputs).filter(AccountInputs.account == account).first()
+    if existing_user is None or not createToken.check_password(password, existing_user.password):
+        return httpStatus(message="账号或密码错误，请重新输入", data={})
     try:
-        user.count-=1
+        # 用户验证成功，创建token等操作
+        token = createToken.create_token({"sub": str(existing_user.id)}, expires_delta)
+        user_data = {
+            "token": token,
+            "type": existing_user.type,
+            "account": existing_user.account,
+            "createTime": existing_user.create_time,
+            "lastTime": existing_user.last_time,
+            "name": existing_user.name,
+        }
+        # 将用户信息保存到Redis
+        redis_db.set(newAccount, user_data)  # 注意调整为合适的键值和数据
+        return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=user_data)
+    except Exception as e:
+        session.rollback()
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="登录失败", data={})
+@router.post('/h5/user')
+def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    redis_key = f"user-{user.account}"  # 构造一个基于用户ID的Redis键
+
+    # 尝试从Redis获取用户信息
+    redis_user_data = redis_db.get(redis_key)
+    if redis_user_data:
+        # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
+        data_source = {
+            "account": redis_user_data["account"],
+            "name": redis_user_data["name"],
+            "type": redis_user_data["type"],
+            "createTime": redis_user_data["createTime"],
+            "lastTime": redis_user_data["lastTime"],
+            "id": redis_user_data["sub"],
+            "isPermissions": 1
+        }
+    else:
+        user = session.query(AccountInputs).filter(AccountInputs.id == user.id).first()
+        if user is None:
+            return httpStatus(message="用户不存在", data={})
+        data_source = {
+            "account": user.account,
+            "name": user.name,
+            "type": user.type,
+            "createTime": user.create_time,
+            "lastTime": user.last_time,
+            "id": user.id,
+            "isPermissions": 1
+        }
+
+    return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=data_source)
+@router.post('/h5/user/update',description="更新用户信息",summary="更新用户信息")
+def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    name = params.name
+    if not name:
+        return httpStatus(message="昵称不能为空", data={})
+    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
+    if db is None:
+        return httpStatus(message="用户不存在,无法更新", data={})
+    if db.name==name:
+        return httpStatus(message="昵称未发生变化", data={})
+    try:
+        user.name = name
         session.commit()
+        return httpStatus(code=status.HTTP_200_OK, message="更新成功", data={})
     except SQLAlchemyError as e:
         session.rollback()
-        return httpStatus(message="抽奖失败", data={})
-    finally:
-        session.close()
-@router.post('/h5/login',description="保存未存在的或者获取已存在的用户信息",summary="保存未存在的或者获取已存在的用户信息")
-def save(user_input: UserInput):
-    name=user_input.name
-    phone=user_input.phone
-
-    validation_error = validate_phone_input(phone)
-    if not name or not phone:
-        return httpStatus( message="姓名不能为空", data={})
-    if validation_error:
-        return validation_error
-    session = LOCSESSION()
-    user_count = session.query(func.count(User.id)).scalar()
-    if user_count >= 10:
-        return httpStatus(message="用户数量已经超过10个", data={})
-
-    existing_user = session.query(User).filter(User.name == name, User.phone == phone).first()
-    if existing_user:
-        # 如果用户存在，认为是登录
-        return httpStatus(code=status.HTTP_200_OK, message="登录成功", data={})
-    else:
-        # 如果用户不存在，创建一个新用户
-        new_user = User(name=name, phone=phone,create_time=int(time.time()))
-        session.add(new_user)
-        try:
-            session.commit()
-        except SQLAlchemyError as e:
-            session.rollback()  # 发生异常时回滚事务
-            return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="保存失败", data={})
-        finally:
-            session.close()  # 确保会话在结束时关闭
-
-        return httpStatus(code=status.HTTP_200_OK,message="保存成功",data={})
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="更新失败", data={})
 @router.get('/pc/user',description="获取用户信息",summary="获取用户信息")
 async def getIndexauthorUser():
     return {

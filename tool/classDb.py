@@ -9,6 +9,11 @@ import time
 import hashlib
 from datetime import datetime, timedelta
 
+# 通用工具类 正则表达式
+toolReg={
+    "phone_regex":r"^(?:(?:\+|00)86)?1[3-9]\d{9}$",
+    "pwd_regex": r"^(?=[a-zA-Z!@#$%^&*? ])(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$"
+}
 def get_next_year_timestamp():
     current_time = datetime.now()
     next_year_date = current_time.replace(year=current_time.year + 1)
@@ -42,10 +47,17 @@ def httpStatus(code:int=status.HTTP_400_BAD_REQUEST,message:str="获取成功",d
         }
     }
 def validate_phone_number(phone_number:int)->bool:
-    pattern = r"^(?:(?:\+|00)86)?1[3-9]\d{9}$"
-    return re.match(pattern, phone_number) if 1 else 0
+    return validateReg("phone_regex",phone_number)
+#密码强度校验，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
+def validate_pwd(pwd_str:str)->bool:
+    return validateReg("pwd_regex",pwd_str)
 
-def validate_phone_input(phone: str):
+def validateReg(reg:str,txt:str)->bool:
+    pattern = toolReg[reg]
+    return re.match(pattern, txt) if 1 else 0
+
+
+def validate_phone_input(phone: str)->dict or None:
     if not phone:
         return httpStatus(message="手机号码不能为空", data={})
     if not validate_phone_number(phone):
@@ -62,10 +74,13 @@ def createUuid(name,time,pwd):
 
 
 
-def getMd5Pwd(pwd:str):
-    m=hashlib.md5()
+def createMd5Pwd(pwd:str):
+    m = hashlib.md5()
     m.update(pwd.encode('utf-8'))
     return m.hexdigest()
+import bcrypt
+
+
 
 
 def getListAll(db=None, cls=None, name: str = '', status: int = 0, pageNo: int = 1, pageSize: int = 20):
