@@ -33,7 +33,7 @@ from tool.classDb import UUIDType,httpStatus,validate_phone_input,validate_pwd
 from tool.defDb import dbSessionCommitClose,isAdminOrTypeOne
 from tool.getAjax import getHeadersHolidayUrl
 from dantic.pyBaseModels import UserInput, PhoneInput, LotteryInput, UserQcInput, AccountInput, dictQueryExtractor, \
-    DictType, DictTypeName, DictTypeParams, AccountInputFirst
+    DictType, DictTypeName, DictTypeParams, AccountInputFirst, DynamicInput
 
 
 class DictTypes(Base):
@@ -77,12 +77,14 @@ class UserPosts(Base):
     __tablename__ = 'user_posts'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    isDisabledTitle=Column(Integer,nullable=False,default=0) #标题不能进行修改创建完了就不能修改 0:不可以修改 1:不可以修改
+    title = Column(String(100), nullable=False, default='') # 最多100个字符
     content = Column(String(255), nullable=False, default='')  # 最多255个字符
     create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    update_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     status = Column(Integer, nullable=False, default=0)
     # 创建与AccountInputs的反向引用，建立一对多关系
     user = relationship("AccountInputs", back_populates="posts")
-
     def __repr__(self):
         return f'<UserPosts {self.content[:10]}...>'  # 显示内容的前10个字符
 class User(Base):
@@ -139,8 +141,6 @@ def getDbSession():
         yield db
     finally:
         db.close()
-def isAdmin(user: AccountInputs = Depends(createToken.pase_token)):
-    return 0 if user.type == 0 else 1
 @app.middleware("http")
 async def allow_pc_only(request: Request, call_next):
     if not request.url.path.startswith("/h5/"):
@@ -266,7 +266,76 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
     except SQLAlchemyError as e:
         session.rollback()
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="更新失败", data={})
-@router.get('/pc/user',description="获取用户信息",summary="获取用户信息")
+@router.post('/h5/user/logout',description="用户退出",summary="用户退出")
+def logout(user: AccountInputs = Depends(createToken.pase_token)):
+    redis_key = f"user-{user.account}"
+    redis_db.delete(redis_key)
+    return httpStatus(code=status.HTTP_200_OK, message="退出成功", data={})
+
+
+@router.post('/h5/user/post/dynamic', description="用户动态发布", summary="用户动态发布")
+def postUserDynamic(params: DynamicInput, user: AccountInputs = Depends(createToken.pase_token),
+                session: Session = Depends(getDbSession)):
+    content:str = params.content
+    title=params.name
+    status:int=params.type #0:公开 1:私有
+    if not title:
+        return httpStatus(message="标题不能为空", data={})
+    if not content:
+        return httpStatus(message="动态内容不能为空", data={})
+    if len(title) > 100:
+        return httpStatus(message="标题不能超过100个字符", data={})
+    if len(content) > 255:
+        return httpStatus(message="动态内容不能超过255个字符", data={})
+
+    # 查询用户的最近一篇帖子
+    latest_post = session.query(UserPosts).filter(UserPosts.user_id == user.id).order_by(
+        UserPosts.create_time.desc()).first()
+    if latest_post:
+        # 检查时间差
+        current_time = int(time.time())
+        if (current_time - latest_post.create_time) < 30:
+            return httpStatus(message="30秒内不允许连续发布", data={})
+
+        # 如果本次发布内容与之前内容相同，则拒绝发布
+        if latest_post.content == content:
+            return httpStatus(message="发布内容与之前相同，不允许发布", data={})
+
+    # 创建新的动态
+    try:
+        new_post = UserPosts(title=title,user_id=user.id, content=content, create_time=int(time.time()), update_time=int(time.time())
+                             ,status=status,isDisabledTitle=0)
+        session.add(new_post)
+        session.commit()
+        return httpStatus(message="发布成功", data={})
+    except SQLAlchemyError as e:
+        session.rollback()
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="发布失败", data={})
+@router.put('/h5/user/put/dynamic',description="修改用户动态",summary="修改用户动态")
+def putUserPosts(params: DynamicInput,user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+     dyId:str=params.id #动态id
+     dyContent:str=params.content #动态内容
+     dyStatus:int=params.type #0:公开 1:私有
+     if not dyId:
+            return httpStatus(message="当前id不存在,无法更新动态内容", data={})
+
+     db=session.query(UserPosts).filter(UserPosts.id==dyId).first()
+     if db is None:
+         return httpStatus(message="当前动态不存在,无法更新", data={})
+     if db.content==dyContent:
+            return httpStatus(message="内容未发生变化,无需更新动态", data={})
+     try:
+         db.content=dyContent
+         db.status=dyStatus
+         db.update_time=int(time.time())
+         session.commit()
+         return httpStatus(message="更新成功", data={})
+     except SQLAlchemyError as e:
+         session.rollback()
+         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="更新失败", data={})
+
+
+@router.get('/pc/get/user',description="获取用户信息",summary="获取用户信息")
 async def getIndexauthorUser():
     return {
         "data":{
@@ -306,4 +375,6 @@ Base.metadata.create_all(bind=ENGIN)
 
 app.include_router(router)
 if __name__ == "__main__":
-    uvicorn.run(app,host="localhost", port=8000)
+    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+    # uvicorn main.app --reload
+    # uvicorn.run(app,host="localhost", port=8000)
