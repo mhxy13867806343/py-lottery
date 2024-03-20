@@ -7,11 +7,24 @@ from models.user.model import AccountInputs, UserPosts
 from tool import token as createToken
 from tool.classDb import httpStatus
 from tool.db import getDbSession
-
+from .operation import getPagenation,getTotal
 dyApp = APIRouter(
     prefix="/h5/dyanmic",
     tags=["用户动态管理"]
 )
+@dyApp.get('/list', description="获取用户动态列表", summary="获取用户动态列表")
+def getUserDynamicList(session: Session = Depends(getDbSession), userId: int = None,title:str="", pageNum: int = 1, pageSize: int = 20,):
+    if not userId:
+        return httpStatus(message="用户id不能为空", data={})
+    data = getPagenation(db=session,model=UserPosts,title=title, current=pageNum, size=pageSize)
+    total = getTotal(db=session,title=title,model=UserPosts)
+    result= {
+        "list": data,
+        "total": total,
+        "page": pageNum,
+        "pageSize": pageSize
+    }
+    return httpStatus(message="获取成功", data=result,code=status.HTTP_200_OK)
 @dyApp.post('/add', description="用户动态发布", summary="用户动态发布")
 def postUserDynamic(params: DynamicInput, user: AccountInputs = Depends(createToken.pase_token),
                 session: Session = Depends(getDbSession)):

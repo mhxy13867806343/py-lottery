@@ -78,9 +78,6 @@ def createMd5Pwd(pwd:str):
     m = hashlib.md5()
     m.update(pwd.encode('utf-8'))
     return m.hexdigest()
-import bcrypt
-
-
 
 
 def getListAll(db=None, cls=None, name: str = '', status: int = 0, pageNo: int = 1, pageSize: int = 20):

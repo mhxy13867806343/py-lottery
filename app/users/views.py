@@ -16,37 +16,8 @@ redis_db = RedisDB()
 expires_delta = timedelta(minutes=EXPIRE_TIME)
 userApp = APIRouter(
     prefix="/h5/user",
-    tags=["用户管理"]
+    tags=["用户信息管理"]
 )
-@userApp.post('/h5/user/update',description="更新用户信息",summary="更新用户信息")
-def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-    name = params.name
-    if not name:
-        return httpStatus(message="昵称不能为空", data={})
-    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
-    if db is None:
-        return httpStatus(message="用户不存在,无法更新", data={})
-    if db.status == 1:
-        return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
-    if db.name==name:
-        return httpStatus(message="昵称未发生变化", data={})
-    try:
-        user.name = name
-        session.commit()
-        return httpStatus(code=status.HTTP_200_OK, message="更新成功", data={})
-    except SQLAlchemyError as e:
-        session.rollback()
-        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="更新失败", data={})
-@userApp.post('/h5/user/logout',description="用户退出",summary="用户退出")
-def logout(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-    redis_key = f"user-{user.account}"
-    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
-    if db is None:
-        return httpStatus(message="用户不存在,无法退出", data={})
-    if db.status == 1:
-        return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
-    redis_db.delete(redis_key)
-    return httpStatus(code=status.HTTP_200_OK, message="退出成功", data={})
 @userApp.post('/registered',description="h5注册",summary="h5注册")
 def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
     account:str=acc.account
@@ -169,3 +140,32 @@ async def getIndexauthorUser():
             }
         }
     }
+@userApp.post('/update',description="更新用户信息",summary="更新用户信息")
+def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    name = params.name
+    if not name:
+        return httpStatus(message="昵称不能为空", data={})
+    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
+    if db is None:
+        return httpStatus(message="用户不存在,无法更新", data={})
+    if db.status == 1:
+        return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
+    if db.name==name:
+        return httpStatus(message="昵称未发生变化", data={})
+    try:
+        user.name = name
+        session.commit()
+        return httpStatus(code=status.HTTP_200_OK, message="更新成功", data={})
+    except SQLAlchemyError as e:
+        session.rollback()
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="更新失败", data={})
+@userApp.post('/logout',description="用户退出",summary="用户退出")
+def logout(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    redis_key = f"user-{user.account}"
+    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
+    if db is None:
+        return httpStatus(message="用户不存在,无法退出", data={})
+    if db.status == 1:
+        return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
+    redis_db.delete(redis_key)
+    return httpStatus(code=status.HTTP_200_OK, message="退出成功", data={})
