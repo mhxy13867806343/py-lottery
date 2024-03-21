@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from extend.db import Base,LOCSESSION,ENGIN
 
 import time
-class AccountInputs(Base):
+class AccountInputs(Base): # 用户信息
     __tablename__ = 'account'
     id = Column(Integer, primary_key=True, autoincrement=True)
     account = Column(String(100), nullable=False, default='')
@@ -16,7 +16,7 @@ class AccountInputs(Base):
     status = Column(Integer, nullable=False, default=0) # 0:正常 1:禁用
     def __repr__(self):
         return f'<AccountInputs {self.account}>'
-class UserPosts(Base):
+class UserPosts(Base): # 用户动态
     __tablename__ = 'user_posts'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
@@ -32,3 +32,14 @@ class UserPosts(Base):
     user = relationship("AccountInputs", back_populates="posts")
     def __repr__(self):
         return f'<UserPosts {self.content[:10]}...>'  # 显示内容的前10个字符
+class Signature(Base): # 用户签名
+    __tablename__ ='signature'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    signature = Column(String(25), nullable=False, default='')  # 最多25个字符
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    update_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    isDeleted = Column(Integer, nullable=False, default=0) # 是否删除 0:未删除 1:已删除
+    user = relationship("AccountInputs", backref="signature")
+    def __repr__(self):
+        return f'<Signature {self.signature[:10]}...>'

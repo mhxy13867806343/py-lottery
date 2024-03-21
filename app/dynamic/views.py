@@ -1,4 +1,6 @@
-from fastapi import APIRouter,Depends,status
+from typing import Optional
+
+from fastapi import APIRouter,Depends,status,Query
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 import time
@@ -12,19 +14,39 @@ dyApp = APIRouter(
     prefix="/h5/dyanmic",
     tags=["用户动态管理"]
 )
+
+
 @dyApp.get('/list', description="获取用户动态列表", summary="获取用户动态列表")
-def getUserDynamicList(session: Session = Depends(getDbSession), userId: int = None,title:str="", pageNum: int = 1, pageSize: int = 20,):
-    if not userId:
-        return httpStatus(message="用户id不能为空", data={})
-    data = getPagenation(db=session,model=UserPosts,title=title, current=pageNum, size=pageSize)
-    total = getTotal(db=session,title=title,model=UserPosts)
-    result= {
+def getUserDynamicList(
+        session: Session = Depends(getDbSession),
+        title: Optional[str] = Query(None, description="标题,可以输入想要搜索的动态标题", alias="title"),
+        pageNum: int = Query(1, description="当前页,默认从第1开始", alias="pageNum"),
+        pageSize: int = Query(20, description="每页显示条数", alias="pageSize"),
+        isStatus: Optional[int] = Query(None, description="0:公开 1:私有", alias="isStatus"),
+        isDeleted: Optional[int] = Query(None, description="是否删除 0:未删除 1:已删除", alias="isDeleted"),
+        current_user_id: Optional[int] = Depends(createToken.pase_token)  # 这里改为current_user_id
+):
+    conditions = {"title": title, "current": pageNum, "size": pageSize, "is_deleted": isDeleted}
+    if current_user_id:
+        # 登录用户可以看到自己的动态，根据状态和删除条件过滤
+        conditions["user_id"] = current_user_id
+        if isStatus is not None:
+            conditions["status"] = isStatus
+    else:
+        # 未登录用户只能看到公开的未删除的动态
+        conditions["is_deleted"] = 0
+        conditions["status"] = 0
+
+    data = getPagenation(db=session, model=UserPosts, **conditions)
+    total = getTotal(db=session, model=UserPosts, **conditions)
+
+    result = {
         "list": data,
         "total": total,
         "page": pageNum,
         "pageSize": pageSize
     }
-    return httpStatus(message="获取成功", data=result,code=status.HTTP_200_OK)
+    return httpStatus(message="获取成功", data=result, code=status.HTTP_200_OK)
 @dyApp.post('/add', description="用户动态发布", summary="用户动态发布")
 def postUserDynamic(params: DynamicInput, user: AccountInputs = Depends(createToken.pase_token),
                 session: Session = Depends(getDbSession)):

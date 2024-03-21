@@ -1,5 +1,7 @@
 #密码加密
-from fastapi import Depends,HTTPException,status
+from typing import Optional
+
+from fastapi import Depends, HTTPException, status, Security
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 from jose import jwt,JWTError
@@ -37,20 +39,12 @@ def create_token(data:dict,expires_delta):
     token= jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
     return token
 #解构token
-def pase_token(token:str=Depends(oauth_scheme)):
-    token_exception=HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                  detail={
-                        "code": status.HTTP_401_UNAUTHORIZED,
-                        "msg": "用户信息已过期或者token错误",
-                  },
-                    headers={"WWW-Authenticate": "Bearer"}
-                  )
+def pase_token(token: str = Security(oauth_scheme)) -> Optional[int]:
     try:
-        jwk_data = jwt.decode(token, SECRET_KEY, algorithms=ALGORITHM)
-        id = jwk_data.get("sub")
-        if id is None or id == "":
-            raise token_exception
-    except JWTError as e:
-        raise token_exception
-
-    return id
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get("sub")
+        if user_id is None or user_id == "":
+            return None
+        return int(user_id)
+    except JWTError:
+        return None

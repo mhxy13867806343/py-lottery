@@ -5,6 +5,7 @@ from tool.appAddMiddleware import appAddMiddleware
 import uvicorn
 from app.users.views import userApp as userRouterApi
 from app.dynamic.views import dyApp as dyRouterApi
+from app.signature.views import signatureApp as signatureRouterApi
 router = APIRouter(
     prefix="/v1",  # 为这个路由器下的所有路由添加路径前缀 /v1
     tags=["v1"],  # 可选，为这组路由添加标签
@@ -13,6 +14,7 @@ app = FastAPI()
 # 将 router 添加到 app 中
 app.include_router(userRouterApi)
 app.include_router(dyRouterApi)
+app.include_router(signatureRouterApi)
 # CORS
 appAddMiddleware(app)
 # 静态文件

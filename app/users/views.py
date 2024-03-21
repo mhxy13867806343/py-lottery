@@ -51,13 +51,17 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
     # 先从Redis尝试获取用户信息
     user_data = redis_db.get(newAccount)
     if user_data:
-        if user_data.status==1:
+        if user_data.get('status')=="1" or int(user_data.get('status'))==1:
             return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
         try:
             # 验证token的有效性
             user_id = createToken.pase_token(user_data['token'])
             # 如果提供的账号与Redis中的账号一致，且token有效，认为登录成功
             if user_id and account == user_data["account"]:
+                user_data['status']=int(user_data['status'])
+                user_data['type']=int(user_data['type'])
+                user_data['createTime']=int(user_data['createTime'])
+                user_data['lastTime']=int(user_data['lastTime'])
                 return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=user_data)
             return httpStatus(message="登录信息已失效，请重新登录", data={})
         except Exception as e:
@@ -66,19 +70,19 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
     existing_user = session.query(AccountInputs).filter(AccountInputs.account == account).first()
     if existing_user is None or not createToken.check_password(password, existing_user.password):
         return httpStatus(message="账号或密码错误，请重新输入", data={})
-    if existing_user.status==1:
+    if existing_user.status=='1' or int(existing_user.status)==1:
         return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
     try:
         # 用户验证成功，创建token等操作
         token = createToken.create_token({"sub": str(existing_user.id)}, expires_delta)
         user_data = {
             "token": token,
-            "type": existing_user.type,
+            "type": int(existing_user.type),
             "account": existing_user.account,
-            "createTime": existing_user.create_time,
-            "lastTime": existing_user.last_time,
+            "createTime": int(existing_user.create_time),
+            "lastTime": int(existing_user.last_time),
             "name": existing_user.name,
-            "status": existing_user.status
+            "status": int(existing_user.status)
         }
         # 将用户信息保存到Redis
         redis_db.set(newAccount, user_data)  # 注意调整为合适的键值和数据
@@ -93,7 +97,7 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
     # 尝试从Redis获取用户信息
     redis_user_data = redis_db.get(redis_key)
     if redis_user_data:
-        if redis_user_data.status==1:
+        if redis_user_data.get('status')==1:
             return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
         # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
         data_source = {
