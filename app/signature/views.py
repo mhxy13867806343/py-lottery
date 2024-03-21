@@ -9,7 +9,7 @@ from tool.db import getDbSession
 from .model import SignatureFirst
 signatureApp = APIRouter(
     prefix="/h5/signature",
-    tags=["用户个性签到管理"]
+    tags=["用户个性签名管理"]
 )
 @signatureApp.get('/{userId}', description="获取用户个性签名", summary="获取用户个性签名")
 def get_signature_first(userId: int=None,db: Session = Depends(getDbSession),
