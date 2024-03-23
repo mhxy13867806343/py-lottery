@@ -11,9 +11,11 @@ from datetime import datetime, timedelta
 
 # 通用工具类 正则表达式
 toolReg={
+    "email_regex":r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
     "phone_regex":r"^(?:(?:\+|00)86)?1[3-9]\d{9}$",
     "pwd_regex": r"^(?=[a-zA-Z!@#$%^&*? ])(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$"
 }
+
 def get_next_year_timestamp():
     current_time = datetime.now()
     next_year_date = current_time.replace(year=current_time.year + 1)
@@ -55,8 +57,31 @@ def validate_pwd(pwd_str:str)->bool:
 def validateReg(reg:str,txt:str)->bool:
     pattern = toolReg[reg]
     return re.match(pattern, txt) if 1 else 0
+def validate_email_str(s:str)->bool:
+    return validateReg("email_regex",s)
 
 
+def validate_encrypt_email(email:str=""):
+    result =validate_email_str(email)
+    if not result:
+        return httpStatus(message="邮箱格式不正确", data={})
+    # 分割邮箱地址为用户名和域名
+    user, domain = email.split('@')
+
+    # 根据不同的用户名长度进行处理
+    if len(user) > 2:
+        # 如果用户名长度大于2，保留第一个和最后一个字符，中间用星号替换
+        encrypted_user = user[0] + '*' * (len(user) - 2) + user[-1]
+    elif len(user) == 2:
+        # 如果用户名长度等于2，保留第一个字符，第二个字符用星号替换
+        encrypted_user = user[0] + '*'
+    else:
+        # 如果用户名长度为1，直接使用用户名，不加密
+        encrypted_user = user
+
+    # 合并加密后的用户名和域名
+    encrypted_email = encrypted_user + '@' + domain
+    return encrypted_email
 def validate_phone_input(phone: str)->dict or None:
     if not phone:
         return httpStatus(message="手机号码不能为空", data={})
