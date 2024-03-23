@@ -40,7 +40,7 @@ class UUIDType(TypeDecorator):
         else:
             return uuid.UUID(value)
 
-def httpStatus(code:int=status.HTTP_400_BAD_REQUEST,message:str="获取成功",data:dict={})->dict:
+def httpStatus(code:int=status.HTTP_400_BAD_REQUEST,message:str="获取失败",data:dict={})->dict:
     return {
         "data":{
             "code":code,

@@ -5,3 +5,8 @@ class AuxiliaryInput(BaseModel):
 class AuxiliaryInputFirst(AuxiliaryInput):
     title: Optional[str] = None
     content: str
+class AuxiliaryInputPostNunSize(AuxiliaryInput):
+    pageNum: Optional[int] = 1
+    pageSize: Optional[int] = 10
+class AuxiliaryCopyInput(AuxiliaryInputFirst):
+    id: int

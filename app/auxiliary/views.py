@@ -1,41 +1,40 @@
-from fastapi import APIRouter,Depends,status
+from typing import Optional
+
+from fastapi import APIRouter, Depends, status, Query
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 import time
 from datetime import datetime, timedelta
-from .model import AuxiliaryInputFirst,AuxiliaryInput
+from .model import AuxiliaryInputFirst, AuxiliaryInputPostNunSize, AuxiliaryCopyInput
 from models.auxiliary.operation import getEmailList,getEmailTotal
 from tool.db import getDbSession
 from models.auxiliary.model import Email
 from tool.classDb import httpStatus, validate_email_str,validate_encrypt_email
-from tool.dbRedis import RedisDB
 from tool.statusTool import EXPIRE_TIME
 from .tools import sendEmail,isSend
-redis_db = RedisDB()
+from tool.takw import getArgsKwArgsResult
 expires_delta = timedelta(minutes=EXPIRE_TIME)
 emailApp = APIRouter(
     prefix="/h5/auxiliary",
     tags=["辅助管理"]
 )
-@emailApp.get('/{email}',description="邮箱列表",summary="邮箱列表")
-async def email_list(email:str,session:Session = Depends(getDbSession)):
+@emailApp.get('/list/email',description="邮箱列表",summary="邮箱列表")
+async def postEmailList(email:str = Query(''), pageNum: int = 1, pageSize: int =10, session: Session = Depends(getDbSession)):
     if not email:
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="邮箱不能为空",data={})
+        return httpStatus(message="邮箱不能为空", data={})
     try:
-        #searchEmail 加密下8697****9@qq.com
-
-
+        res:[str or bool]=validate_encrypt_email(email)
         result={
-            "searchEmail":validate_encrypt_email(email),
-            "total":getEmailTotal(email,session),
-            "data":getEmailList(email,session)
+            "total":getEmailTotal(email=email,session=session),
+            "data":getEmailList(email=email,session=session,pageNum=pageNum,pageSize=pageSize)
         }
-        return httpStatus(code=status.HTTP_200_OK,message="获取成功",data=result)
+        result["searchEmail"]= res if result["total"] != 0 else res
+        return getArgsKwArgsResult(**result)
     except SQLAlchemyError as e:
         session.rollback()
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="获取失败",data={})
+        return httpStatus()
 @emailApp.post('/send/email',description="发送邮箱",summary="发送邮箱")
-def send_email(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession)):
+def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession)):
     title:str=aed.title
     email:str=aed.email
     content:str=aed.content
@@ -45,9 +44,6 @@ def send_email(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession)):
         return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="邮箱格式不正确",data={})
     if not content:
         return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="内容不能为空",data={})
-    db_email = session.query(Email).filter(Email.email == email).all()
-    if len(db_email) > 50:
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="当前最多只能发送50封邮件",data={})
     try:
         if isSend:
             rTime = int(time.time())
@@ -57,8 +53,35 @@ def send_email(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession)):
             session.commit()
             return httpStatus(code=status.HTTP_200_OK,message="发送成功",data={})
         else:
-            return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="发送失败",data={})
+            return httpStatus()
     except SQLAlchemyError as e:
         session.rollback()
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="发送失败",data={})
+        return httpStatus()
 
+@emailApp.post('/send/email/copy',description="克隆邮箱",summary="克隆邮箱")
+def postSendEmailCopy(apns:AuxiliaryCopyInput,session:Session = Depends(getDbSession)):
+    title:str=apns.title
+    email:str=apns.email
+    content:str=apns.content
+    uid=apns.id
+    if not uid:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="id不能为空",data={})
+    if not email:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="邮箱不能为空",data={})
+    if not validate_email_str(email):
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="邮箱格式不正确",data={})
+    if not content:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="内容不能为空",data={})
+    try:
+        if isSend:
+            rTime = int(time.time())
+            sendEmail(title=title,content=content,from_email=email)
+            resultSql = Email(email=email, title=title, content=content, create_time=rTime)
+            session.add(resultSql)
+            session.commit()
+            return httpStatus(code=status.HTTP_200_OK,message="发送成功",data={})
+        else:
+            return httpStatus()
+    except SQLAlchemyError as e:
+        session.rollback()
+        return httpStatus()
