@@ -9,4 +9,4 @@ class AuxiliaryInputPostNunSize(AuxiliaryInput):
     pageNum: Optional[int] = 1
     pageSize: Optional[int] = 10
 class AuxiliaryCopyInput(AuxiliaryInputFirst):
-    id: int
+    email_id: str
