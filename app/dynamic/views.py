@@ -1,21 +1,102 @@
 from typing import Optional
-
 from fastapi import APIRouter,Depends,status,Query
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 import time
 from dantic.pyBaseModels import DynamicInput
-from models.user.model import AccountInputs, UserPosts
+from models.user.model import AccountInputs, UserPosts,ShareSignature
 from tool import token as createToken
 from tool.classDb import httpStatus
 from tool.db import getDbSession
 from .operation import getPagenation,getTotal
+from models.user.operation import getDynamicList,getDynamicTotal
+from .model import DynamicUserShare
 dyApp = APIRouter(
     prefix="/h5/dyanmic",
     tags=["用户动态管理"]
 )
 
+@dyApp.get('/home/list', description="获取根据条件分页的用户动态列表", summary="获取根据条件分页的用户动态列表")
+def getHomeDynamicList(
+        session: Session = Depends(getDbSession),
+        title: Optional[str] = Query(None, description="标题,可以输入想要搜索的动态标题", alias="title"),
+        pageNum: int = Query(1, description="当前页,默认从第1开始", alias="pageNum"),
+        pageSize: int = Query(20, description="每页显示条数", alias="pageSize"),
+        isStatus: Optional[int] = Query(0, description="0:公开 1:私有", alias="isStatus"),
+        deleted: Optional[int] = Query(0, description="是否删除 0:未删除 1:已删除", alias="deleted"),
 
+):
+    data=getDynamicList(session=session,title=title, pageNum=pageNum, pageSize=pageSize, status=isStatus, delete=deleted)
+    count=getDynamicTotal(session=session,title=title, status=isStatus, delete=deleted)
+    result={
+       "data":data,
+         "total":count,
+            "page":pageNum,
+            "pageSize":pageSize
+    }
+    return httpStatus(message="获取成功", data=result, code=status.HTTP_200_OK)
+
+
+@dyApp.get('/home/user/{uid}/list', description="获取用户动态详情", summary="获取用户动态详情")
+def getUserDynamicList(session: Session = Depends(getDbSession),
+                       current_user_id: int=Depends(createToken.getNotCurrentUserId),
+                       uid: int = Query(None, description="用户id", alias="uid"),
+                       title: Optional[str] = Query(None, description="标题,可以输入想要搜索的动态标题", alias="title"),
+                       pageNum: int = Query(1, description="当前页,默认从第1开始", alias="pageNum"),
+                       pageSize: int = Query(20, description="每页显示条数", alias="pageSize"),
+                       isStatus: Optional[int] = Query(0, description="0:公开 1:私有", alias="isStatus"),
+                       isDeleted: Optional[int] = Query(0, description="是否删除 0:未删除 1:已删除", alias="isDeleted"),
+                      ):
+    newStatus = isStatus
+    newDeleted = isDeleted
+    if not uid:
+        return httpStatus(message="用户id不能为空", data={})
+    if ((current_user_id != uid) or not current_user_id):
+        if newStatus==1 or newDeleted==1:
+            return httpStatus(message="未删除状态或者未私有状态只能在登录状态才能查看", data={})
+    try:
+        data = getDynamicList(session=session, uid=uid, title=title, pageNum=pageNum, pageSize=pageSize,
+                              status=newStatus, delete=newDeleted)
+        count = getDynamicTotal(session=session, uid=uid, title=title,  status=newStatus, delete=newDeleted)
+        result = {
+            "data": data,
+            "total": count,
+            "page": pageNum,
+            "pageSize": pageSize
+        }
+        return httpStatus(message="获取成功", data=result, code=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="获取动态失败")
+@dyApp.post('/share', description="用户动态分享", summary="用户动态分享") #???
+def postUserDynamicShare(params: DynamicUserShare, user: AccountInputs = Depends(createToken.pase_token),
+                session: Session = Depends(getDbSession)):
+    share_type: int = params.share_type
+    dynamic_id: int = params.dynamic_id
+    if not user.id:
+        return httpStatus(message="用户id不能为空", data={})
+    if not dynamic_id:
+        return httpStatus(message="动态id不能为空", data={})
+    if not share_type:
+        return httpStatus(message="分享类型不能为空", data={})
+    try:
+        db = session.query(ShareSignature).filter(ShareSignature.user_id == user.id,
+                                                  ShareSignature.count==0
+                                                  ).first()
+        db.dynamic_id = dynamic_id
+        db.user_id = user.id
+        db.create_time = int(time.time())
+        db.update_time = int(time.time())
+        db.type=share_type
+        db.count+=1
+        session.commit()
+        return httpStatus(message="分享动态成功", data={})
+        if not db:
+            return httpStatus(message="用户不存在,无法分享动态", data={})
+
+    except Exception as e:
+        session.rollback()
+        raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="分享动态失败")
 @dyApp.get('/list', description="获取用户动态列表", summary="获取用户动态列表")
 def getUserDynamicList(
         session: Session = Depends(getDbSession),

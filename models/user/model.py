@@ -41,5 +41,18 @@ class Signature(Base): # 用户签名
     update_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     isDeleted = Column(Integer, nullable=False, default=0) # 是否删除 0:未删除 1:已删除
     user = relationship("AccountInputs", backref="signature")
+    share_signature = relationship("ShareSignatureShareSignature", backref="signature")
     def __repr__(self):
         return f'<Signature {self.signature[:10]}...>'
+class ShareSignature(Base): # 分享单条信息
+
+    __tablename__ ='share_signature'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    signature_id = Column(Integer, ForeignKey('signature.id'), nullable=False)
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    update_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    type = Column(Integer, nullable=False, default=0) #分享类型
+    count = Column(Integer, nullable=False, default=0) #分享次数
+    user = relationship("AccountInputs", backref="share_signature")
+    signature = relationship("Signature", backref="share_signature")

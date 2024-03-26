@@ -1,7 +1,7 @@
 #密码加密
 from typing import Optional
 
-from fastapi import Depends, HTTPException, status, Security
+from fastapi import Depends, HTTPException, status, Security,Request
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 from jose import jwt,JWTError
@@ -39,12 +39,22 @@ def create_token(data:dict,expires_delta):
     token= jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
     return token
 #解构token
-def pase_token(token: str = Security(oauth_scheme)) -> Optional[int]:
+
+def pase_token(token: str = Depends(oauth_scheme)) -> Optional[int]:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
-        if user_id is None or user_id == "":
-            return None
-        return int(user_id)
-    except JWTError:
+        return int(user_id) if user_id else None
+    except (JWTError, ValueError):
         return None
+def getNotCurrentUserId(request: Request) -> Optional[int]:
+    token = request.headers.get("Authorization")
+    if token:
+        try:
+            token = token.split(" ")[1]  # 假设Token格式为"Bearer xxx"
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            user_id: int = payload.get("sub")
+            return user_id
+        except (IndexError, JWTError):
+            return None  # 在Token无效时返回None
+    return None  # 如果没有Token也返回None

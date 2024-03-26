@@ -64,7 +64,7 @@ def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession
         return httpStatus()
 @emailApp.get('/copy/list/{id}',description="克隆邮箱列表",summary="克隆邮箱列表")
 def getCopyEmailList(id:int,session:Session = Depends(getDbSession)):
-    if id=='' or id is None:
+    if not id:
         return httpStatus(message="id不能为空", data={})
     db_email = session.query(CopyEmail).filter(CopyEmail.email_id == id).all()
     db_count = session.query(CopyEmail).filter(CopyEmail.email_id == id).count()
