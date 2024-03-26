@@ -14,6 +14,7 @@ class AccountInputs(Base): # 用户信息
     name=Column(String(30),nullable=False,default='管理员')
     posts = relationship("UserPosts", back_populates="user")
     status = Column(Integer, nullable=False, default=0) # 0:正常 1:禁用
+    share = relationship("Signature", backref="share")
     def __repr__(self):
         return f'<AccountInputs {self.account}>'
 class UserPosts(Base): # 用户动态
@@ -30,6 +31,8 @@ class UserPosts(Base): # 用户动态
     isTop=Column(Integer,nullable=False,default=0) #是否置顶 0:不置顶 1:置顶
     # 创建与AccountInputs的反向引用，建立一对多关系
     user = relationship("AccountInputs", back_populates="posts")
+    share = relationship("ShareSignature", backref="user_posts")
+
     def __repr__(self):
         return f'<UserPosts {self.content[:10]}...>'  # 显示内容的前10个字符
 class Signature(Base): # 用户签名
@@ -41,7 +44,6 @@ class Signature(Base): # 用户签名
     update_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     isDeleted = Column(Integer, nullable=False, default=0) # 是否删除 0:未删除 1:已删除
     user = relationship("AccountInputs", backref="signature")
-    share_signature = relationship("ShareSignatureShareSignature", backref="signature")
     def __repr__(self):
         return f'<Signature {self.signature[:10]}...>'
 class ShareSignature(Base): # 分享单条信息
@@ -49,10 +51,6 @@ class ShareSignature(Base): # 分享单条信息
     __tablename__ ='share_signature'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
-    signature_id = Column(Integer, ForeignKey('signature.id'), nullable=False)
-    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
-    update_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
-    type = Column(Integer, nullable=False, default=0) #分享类型
-    count = Column(Integer, nullable=False, default=0) #分享次数
-    user = relationship("AccountInputs", backref="share_signature")
-    signature = relationship("Signature", backref="share_signature")
+    type = Column(Integer, nullable=False, default=0)  # 分享类型
+    share_id = Column(Integer, ForeignKey('user_posts.id'), nullable=False)  # 分享的动态id
+    count = Column(Integer, nullable=False, default=0)  # 分享次数

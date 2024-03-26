@@ -65,8 +65,8 @@ def getUserDynamicList(session: Session = Depends(getDbSession),
             "pageSize": pageSize
         }
         return httpStatus(message="获取成功", data=result, code=status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
+    except SQLAlchemyError as e:
+        print(e,77777)
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="获取动态失败")
 @dyApp.post('/share', description="用户动态分享", summary="用户动态分享") #???
 def postUserDynamicShare(params: DynamicUserShare, user: AccountInputs = Depends(createToken.pase_token),
@@ -94,7 +94,7 @@ def postUserDynamicShare(params: DynamicUserShare, user: AccountInputs = Depends
         if not db:
             return httpStatus(message="用户不存在,无法分享动态", data={})
 
-    except Exception as e:
+    except SQLAlchemyError as e:
         session.rollback()
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="分享动态失败")
 @dyApp.get('/list', description="获取用户动态列表", summary="获取用户动态列表")
