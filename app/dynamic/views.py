@@ -40,17 +40,15 @@ def getHomeDynamicList(
 @dyApp.get('/home/user/{uid}/list', description="获取用户动态详情", summary="获取用户动态详情")
 def getUserDynamicList(session: Session = Depends(getDbSession),
                        current_user_id: int=Depends(createToken.getNotCurrentUserId),
-                       uid: int = Query(None, description="用户id", alias="uid"),
+                       uid: int = Query(None, description="非登录用户id", alias="uid"),
                        title: Optional[str] = Query(None, description="标题,可以输入想要搜索的动态标题", alias="title"),
                        pageNum: int = Query(1, description="当前页,默认从第1开始", alias="pageNum"),
                        pageSize: int = Query(20, description="每页显示条数", alias="pageSize"),
                        isStatus: Optional[int] = Query(0, description="0:公开 1:私有", alias="isStatus"),
                        isDeleted: Optional[int] = Query(0, description="是否删除 0:未删除 1:已删除", alias="isDeleted"),
                       ):
-    newStatus = isStatus
-    newDeleted = isDeleted
-    if not uid:
-        return httpStatus(message="用户id不能为空", data={})
+    newStatus:int = isStatus
+    newDeleted:int = isDeleted
     if ((current_user_id != uid) or not current_user_id):
         if newStatus==1 or newDeleted==1:
             return httpStatus(message="未删除状态或者未私有状态只能在登录状态才能查看", data={})
@@ -66,7 +64,6 @@ def getUserDynamicList(session: Session = Depends(getDbSession),
         }
         return httpStatus(message="获取成功", data=result, code=status.HTTP_200_OK)
     except SQLAlchemyError as e:
-        print(e,77777)
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="获取动态失败")
 @dyApp.post('/share', description="用户动态分享", summary="用户动态分享") #???
 def postUserDynamicShare(params: DynamicUserShare, user: AccountInputs = Depends(createToken.pase_token),
