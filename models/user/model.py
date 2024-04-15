@@ -15,6 +15,7 @@ class AccountInputs(Base): # 用户信息
     posts = relationship("UserPosts", back_populates="user")
     status = Column(Integer, nullable=False, default=0) # 0:正常 1:禁用
     share = relationship("Signature", backref="share")
+    history = relationship("UserHistory", backref="history")
     def __repr__(self):
         return f'<AccountInputs {self.account}>'
 class UserPosts(Base): # 用户动态
@@ -35,6 +36,14 @@ class UserPosts(Base): # 用户动态
 
     def __repr__(self):
         return f'<UserPosts {self.content[:10]}...>'  # 显示内容的前10个字符
+class UserHistory(Base): # 用户浏览记录
+    __tablename__ = 'user_history'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    url=Column(String(255),nullable=False,default='')
+    isDeleted=Column(Integer,nullable=False,default=0) #是否删除 0:未删除 1:已删除
+    create_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
+    last_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
 class Signature(Base): # 用户签名
     __tablename__ ='signature'
     id = Column(Integer, primary_key=True, autoincrement=True)
