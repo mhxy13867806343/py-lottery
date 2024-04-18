@@ -1,0 +1,21 @@
+from .dbKey import weatherKey
+
+graphql='https://www.github-zh.com/api/graphql'
+ipLocationUrl="https://webapi-pc.meitu.com/common/ip_location"
+locationWeatherUrl=f"https://api.seniverse.com/v3/weather/now.json?key={weatherKey}"
+qwCityUrl="https://geoapi.qweather.com/v2/city/top"
+efefeeeUrlHot="https://api-hot.efefee.cn/"
+vvhanApiUrl="https://api.vvhan.com/api/"
+movieOnInfoListUrl="https://m.maoyan.com/ajax/movieOnInfoList"
+duanjuapiSearchPhp="https://zy.6789o.com/duanjuapi/search.php"
+QQyyscUrl="https://jkyapi.top/API/QQyysc.php"
+aweatherapiytrsss7="https://api.7trees.cn/weather/"
+api777camjson="https://777.cam/api/M/?type=json"
+zzxjjvideosUrl="http://api.yujn.cn/api/zzxjj.php?type=video"
+apigirlUrl="https://tucdn.wpon.cn/api-girl/index.php?wpon=json"
+mteladresscommon="https://api.oioweb.cn/api/common/teladress"
+dmlisturl="http://api.rlbot.cn/api/dm-lishi"
+aGasolinePriceQuery="https://api.oioweb.cn/api/common/GasolinePriceQuery"
+sfzurl="https://zj.v.api.aa1.cn/api/sfz/"
+pictureUrl="https://v.api.aa1.cn/api/api-tplist/go.php/api/picture/index"
+wordscanUrl="https://api.iminbk.com/v1/wordscan/"

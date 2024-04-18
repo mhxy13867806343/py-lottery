@@ -1,6 +1,6 @@
 minute3="3/minute"
 minute1="1/minute"
-minute110="3/1 minutes"
+minute110="5/1 minutes"
 minute5="5/minute"
 minute10="10/minute"
 minute15="15/minute"

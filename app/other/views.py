@@ -5,15 +5,22 @@ import requests
 import httpx
 from fastapi import APIRouter,status,Request
 from tool.classDb import httpStatus
+from tool.dbKey import hotCityKey
+from tool.dbUrlResult import graphql, ipLocationUrl, locationWeatherUrl, qwCityUrl, efefeeeUrlHot, vvhanApiUrl, \
+    movieOnInfoListUrl, duanjuapiSearchPhp, QQyyscUrl, aweatherapiytrsss7, api777camjson, zzxjjvideosUrl, apigirlUrl, \
+    mteladresscommon, dmlisturl, aGasolinePriceQuery, sfzurl, pictureUrl, wordscanUrl
+from tool.vhot import  hotListType
 from tool.getAjax import getHeadersHolidayUrl
 from .model import OtherInput
 from tool.dbLimit import minute110
 from tool.dbThrottling import limiter
+from tool.dbHeaders import outerUserAgentHeadersX64, jsHeaders
+
 outerApp = APIRouter(
     prefix="/h5/outer",
     tags=["其他管理"]
 )
-@outerApp.get("/holiday")
+@outerApp.get("/holiday",description="输入年份获取节假日信息",summary="输入年份获取节假日信息")
 @limiter.limit(minute110)
 async def getHoliday(request: Request,year:int=''):
     """
@@ -25,7 +32,8 @@ async def getHoliday(request: Request,year:int=''):
     """
     return getHeadersHolidayUrl(year=year)
 @outerApp.get("/searchgithub/{query}",description="搜索GitHub仓库名称",summary="搜索GitHub仓库名称")
-async def test(query:Optional[str]='')->dict:
+@limiter.limit(minute110)
+async def test(request: Request,query:Optional[str]='')->dict:
     if not query or len(query)==0:
         return httpStatus(data=query,message="请输入搜索内容")
     qg = """
@@ -39,12 +47,11 @@ async def test(query:Optional[str]='')->dict:
     }
     """
     variables = {"query": query}
-    qurl='https://www.github-zh.com/api/graphql'
     # 发送POST请求到GraphQL API端点
     response = requests.post(
-        url=qurl,
+        url=graphql,
         json={'query': qg, 'variables': variables},
-        headers={'Content-Type': 'application/json'}
+        headers=jsHeaders
     )
 
     # 检查响应
@@ -64,52 +71,243 @@ async def test(query:Optional[str]='')->dict:
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="请求失败")
 
 @outerApp.get("/iplocation",description="获取IP地址信息",summary="获取IP地址信息")
-async def getWeather(ip:str="")->dict:
-   url=f"https://webapi-pc.meitu.com/common/ip_location?ip={ip}"
-   headers={
-       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
-
-   }
-   res=httpx.get(url,headers=headers)
+@limiter.limit(minute110)
+async def getWeather(request: Request,ip:str="")->dict:
+   url=f"{ipLocationUrl}?ip={ip}"
+   res=httpx.get(url,headers=outerUserAgentHeadersX64)
    return httpStatus(data=res.json(),message="获取成功",code=status.HTTP_200_OK)
 @outerApp.get("/weather",description="获取天气信息",summary="获取天气信息")
-async def getWeather(location:str="")->dict:
+@limiter.limit(minute110)
+async def getWeather(request: Request,location:str="")->dict:
     if not location or len(location)==0:
         return httpStatus(data={},message="请输入搜索或者选择城市")
-    url=f"https://api.seniverse.com/v3/weather/now.json?key=e9znqfty5brmjfqj&location={location}&language=zh-Hans&unit=c"
-    headers={
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
-    }
-    res=requests.get(url,headers=headers)
+    url=f"{locationWeatherUrl}&location={location}&language=zh-Hans&unit=c"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
     return httpStatus(data=res.json(),message="获取成功",code=status.HTTP_200_OK)
 @outerApp.get("/city",description="获取城市信息",summary="获取城市信息")
-async def cityJson()->dict:
-    with open("static/files/city_json.json", "r", encoding="utf-8") as f:
-        try:
-            with open("static/files/city_json.json", "r", encoding="utf-8") as f:
-                data = json.load(f)
-            return httpStatus(data=data.get("city"), message="获取成功", code=status.HTTP_200_OK)
-        except json.JSONDecodeError:
-            # JSON格式错误
-            return httpStatus(data={}, message="JSON数据格式错误", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except FileNotFoundError:
-            # 文件不存在
-            return httpStatus(data={}, message="文件未找到", code=status.HTTP_404_NOT_FOUND)
-        except PermissionError:
-            # 文件权限问题
-            return httpStatus(data={}, message="文件读取权限错误", code=status.HTTP_403_FORBIDDEN)
-        except Exception as e:
-            # 其他所有异常
-            return httpStatus(data={}, message=f"未知错误: {str(e)}", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    return httpStatus(data=data.get("city"),message="获取成功",code=status.HTTP_200_OK)
+@limiter.limit(minute110)
+async def cityJson(request: Request,)->dict:
+    city="static/files/city_json.json"
+    try:
+        with open(city, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return httpStatus(data=data.get("city"), message="获取成功", code=status.HTTP_200_OK)
+    except json.JSONDecodeError:
+        # JSON格式错误
+        return httpStatus(data={}, message="JSON数据格式错误", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except FileNotFoundError:
+        # 文件不存在
+        return httpStatus(data={}, message="文件未找到", code=status.HTTP_404_NOT_FOUND)
+    except PermissionError:
+        # 文件权限问题
+        return httpStatus(data={}, message="文件读取权限错误", code=status.HTTP_403_FORBIDDEN)
+    except Exception as e:
+        # 其他所有异常
+        return httpStatus(data={}, message=f"未知错误: {str(e)}", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 @outerApp.get("/hotcity",description="获取热门城市信息",summary="获取热门城市信息")
-async def hotCity(number:int=12)->dict:
-    url=f"https://geoapi.qweather.com/v2/city/top?number={number}&range=cn&key=85e5417c5f5a44b2b02ab27b5ba8be98"
-    headers={
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
-    }
-    res=requests.get(url,headers=headers)
+@limiter.limit(minute110)
+async def hotCity(request: Request,number:int=12)->dict:
+    url=f"{qwCityUrl}?number={number}&range=cn&key={hotCityKey}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
     if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get("/hotblog",description="获取热门博客信息",summary="获取热门博客信息")
+@limiter.limit(minute110)
+async def getVhotList(request: Request,type="")->dict:
+    if not type:
+        type=hotListType[0].get("name")
+    url=f"{efefeeeUrlHot}{type}?cache=true"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/touchTheFish",description="摸鱼",summary="摸鱼")
+@limiter.limit(minute110)
+async def touchTheFish(request: Request,type:str="moyu")->dict:
+    url=f"{vvhanApiUrl}{type}?type=json"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        result= res.json()
+        if result.get("success"):
+            a = {
+                "url": result.get("url")
+            }
+            # wallpaper/views wyMusic/原创榜 moyu text/joke
+            if type=="wyMusic/原创榜":
+                a={
+                    "url":result.get("info").get("url")
+                }
+            if type=="text/joke":
+                a={
+                    "url":result.get("data").get("content")
+                }
+            return httpStatus(data=a, message="获取成功", code=status.HTTP_200_OK)
+        return httpStatus(data={}, message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get("/hotlistall",description="集合列表",summary="集合列表")
+@limiter.limit(minute110)
+async def getHotListAll(request: Request)->dict:
+    url=f"{vvhanApiUrl}hotlist/all"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        result= res.json()
+        return httpStatus(data=result, message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get("/movieOnInfoList",description="正在热门电影",summary="正在热门电影")
+@limiter.limit(minute110)
+async def movieOnInfoList(request: Request)->dict:
+    res=requests.get(movieOnInfoListUrl,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        result= res.json()
+
+        return httpStatus(data=result, message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/duanjuapi",description="短剧搜索",summary="短剧搜索")
+@limiter.limit(minute110)
+async def duanjuapi(request: Request,text:str="")->dict:
+    if not text or len(text)==0:
+        return httpStatus(data={},message="请输入搜索内容")
+    url=f"{duanjuapiSearchPhp}?text={text}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        result= res.json()
+
+        return httpStatus(data=result, message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/qQyysc",description="获取72小时左右的音乐时长",summary="获取72小时左右的音乐时长")
+@limiter.limit(minute110)
+async def qQyysc(request: Request,qq:str="")->dict:
+    if not qq or len(qq)==0:
+        return httpStatus(data={},message="请输入QQ号")
+    url=f"{QQyyscUrl}?text={qq}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data={
+            "qq":f"搜索的QQ号为{qq}",
+            "text":res.text
+        }, message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@outerApp.get("/cityname",description="未来十五日天气",summary="未来十五日天气")
+@limiter.limit(minute110)
+async def cityname(request: Request,cityname:str="")->dict:
+    if not cityname or len(cityname)==0:
+        return httpStatus(data={},message="请输入或者选择城市名")
+    url=f"{aweatherapiytrsss7}?cityname={cityname}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/douyinMM",description="抖音MM",summary="抖音MM")
+@limiter.limit(minute110)
+async def douyinMM(request: Request,)->dict:
+    res=requests.get(api777camjson,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+@outerApp.get("/zzxjj",description="快手MM",summary="快手MM")
+@limiter.limit(minute110)
+async def zzxjj(request: Request,)->dict:
+    res=requests.get(zzxjjvideosUrl,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.url, message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@outerApp.get("/girlMM",description="girlMM",summary="girlMM")
+@limiter.limit(minute110)
+async def girlMM(request: Request,)->dict:
+    res=requests.get(apigirlUrl,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@outerApp.get("/mobile",description="查询手机号归属地",summary="查询手机号归属地")
+@limiter.limit(minute110)
+async def getMobile(request: Request,mobile:str="")->dict:
+    if not mobile or len(mobile)==0:
+        return httpStatus(data={},message="请输入手机号")
+    url=f"{mteladresscommon}?mobile={mobile}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/dmlishi",description="历史上的今天",summary="历史上的今天")
+@limiter.limit(minute110)
+async def getdmLishi(request: Request,dmLishi:str="")->dict:
+    url=f"{dmlisturl}?date={dmLishi}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@outerApp.get("/gasolinePriceQuery",description="全国油价查询",summary="全国油价查询")
+@limiter.limit(minute110)
+async def getdmLishi(request: Request)->dict:
+    res=requests.get(aGasolinePriceQuery,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@outerApp.get("/sfz",description="身份证查询",summary="身份证查询")
+@limiter.limit(minute110)
+async def sfz(request: Request,sfz:str="")->dict:
+    if not sfz or len(sfz)==0:
+        return httpStatus(data={},message="请输入身份证号")
+    url=f"{sfzurl}?sfz={sfz}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/picture",description="图片搜索",summary="图片搜索")
+@limiter.limit(minute110)
+async def getPicture(request: Request,page:int=1)->dict:
+    url=f"{pictureUrl}?page={page}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@outerApp.get("/word",description="文本敏感词检测",summary="文本敏感词检测")
+@limiter.limit(minute110)
+async def getWord(request: Request,word:str="")->dict:
+    if not word or len(word)==0:
+        return httpStatus(data={},message="请输入文本敏感词检测内容")
+    url=f"{wordscanUrl}?word={word}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        if res.json().get("verdict")=='malicious':
+            return httpStatus(data={}, message=f"已存在敏感关键字{word}", code=status.HTTP_200_OK)
         return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
     else:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)

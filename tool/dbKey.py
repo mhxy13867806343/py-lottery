@@ -1,0 +1,2 @@
+hotCityKey="85e5417c5f5a44b2b02ab27b5ba8be98"
+weatherKey="e9znqfty5brmjfqj"
