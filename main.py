@@ -1,6 +1,7 @@
 from fastapi import FastAPI,Request,status,APIRouter
 from extend.db import LOCSESSION,Base,ENGIN # for database
 from tool.appMount import staticMount
+from tool.appRate import appLimitRate
 from tool.appAddMiddleware import appAddMiddleware
 import uvicorn
 from app.users.views import userApp as userRouterApi
@@ -23,7 +24,7 @@ app.include_router(outerAppRouterApi)
 appAddMiddleware(app)
 # 静态文件
 staticMount(app)
-
+appLimitRate(app)
 Base.metadata.create_all(bind=ENGIN)
 
 app.include_router(router)
