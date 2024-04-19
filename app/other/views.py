@@ -371,7 +371,7 @@ async def getBaike(request: Request,msg:str="")->dict:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@outerApp.get("/rubbish",description="百科全书",summary="百科全书")
+@outerApp.get("/rubbish",description="垃圾分类",summary="垃圾分类")
 @limiter.limit(minute110)
 async def getRubbish(request: Request,name:str="")->dict:
     if not name or len(name)==0:
