@@ -8,7 +8,7 @@ from tool.classDb import httpStatus
 from tool.dbKey import hotCityKey
 from tool.dbUrlResult import graphql, ipLocationUrl, locationWeatherUrl, qwCityUrl, efefeeeUrlHot, vvhanApiUrl, \
     movieOnInfoListUrl, duanjuapiSearchPhp, QQyyscUrl, aweatherapiytrsss7, api777camjson, zzxjjvideosUrl, apigirlUrl, \
-    mteladresscommon, dmlisturl, aGasolinePriceQuery, sfzurl, pictureUrl, wordscanUrl, wordcloudUrl, dysearchUrl, \
+    mteladresscommon, dmlisturl, aGasolinePriceQuery, pictureUrl, wordscanUrl, wordcloudUrl, dysearchUrl, \
     kfc4Url, lunarUrl, baikeUrl, rubbishUrl, deliveryUrl
 from tool.vhot import  hotListType
 from tool.getAjax import getHeadersHolidayUrl
@@ -209,6 +209,8 @@ async def cityname(request: Request,cityname:str="")->dict:
     url=f"{aweatherapiytrsss7}?cityname={cityname}"
     res=requests.get(url,headers=outerUserAgentHeadersX64)
     if res.status_code==200:
+        if res.text=="未能解析城市代码！":
+            return httpStatus(data={}, message="未能获取到该城市的天气信息", code=status.HTTP_400_BAD_REQUEST)
         return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
     else:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -277,17 +279,6 @@ async def getdmLishi(request: Request)->dict:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@outerApp.get("/sfz",description="身份证查询",summary="身份证查询")
-@limiter.limit(minute110)
-async def sfz(request: Request,sfz:str="")->dict:
-    if not sfz or len(sfz)==0:
-        return httpStatus(data={},message="请输入身份证号")
-    url=f"{sfzurl}?sfz={sfz}"
-    res=requests.get(url,headers=outerUserAgentHeadersX64)
-    if res.status_code==200:
-        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
-    else:
-        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @outerApp.get("/picture",description="图片搜索",summary="图片搜索")
 @limiter.limit(minute110)
