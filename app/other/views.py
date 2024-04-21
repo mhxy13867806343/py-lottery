@@ -18,7 +18,7 @@ from tool.dbThrottling import limiter
 from tool.dbHeaders import outerUserAgentHeadersX64, jsHeaders
 
 outerApp = APIRouter(
-    prefix="/h5/outer",
+    prefix="/v1/h5/outer",
     tags=["其他管理"]
 )
 @outerApp.get("/holiday",description="输入年份获取节假日信息",summary="输入年份获取节假日信息")
@@ -114,6 +114,10 @@ async def hotCity(request: Request,number:int=12)->dict:
         return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
     else:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get("/hotlist",description="获取分类列表",summary="获取分类列表")
+@limiter.limit(minute110)
+async def getHotList(request: Request)->dict:
+    return httpStatus(data=hotListType, message="获取成功", code=status.HTTP_200_OK)
 @outerApp.get("/hotblog",description="获取热门博客信息",summary="获取热门博客信息")
 @limiter.limit(minute110)
 async def getVhotList(request: Request,type="")->dict:
@@ -126,30 +130,31 @@ async def getVhotList(request: Request,type="")->dict:
     else:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@outerApp.get("/touchTheFish",description="摸鱼",summary="摸鱼")
+@outerApp.get('/touchTheFish' ,description="摸鱼",summary="摸鱼")
 @limiter.limit(minute110)
-async def touchTheFish(request: Request,type:str="moyu")->dict:
-    url=f"{vvhanApiUrl}{type}?type=json"
-    res=requests.get(url,headers=outerUserAgentHeadersX64)
-    if res.status_code==200:
-        result= res.json()
-        if result.get("success"):
-            a = {
-                "url": result.get("url")
-            }
-            # wallpaper/views wyMusic/原创榜 moyu text/joke
-            if type=="wyMusic/原创榜":
-                a={
-                    "url":result.get("info").get("url")
-                }
-            if type=="text/joke":
-                a={
-                    "url":result.get("data").get("content")
-                }
-            return httpStatus(data=a, message="获取成功", code=status.HTTP_200_OK)
-        return httpStatus(data={}, message="获取成功", code=status.HTTP_200_OK)
-    else:
-        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+async def touchTheFish(request: Request, type: str = "moyu") -> dict:
+   try:
+       url = f"{vvhanApiUrl}{type}?type=json"
+       async with httpx.AsyncClient() as client:
+           res = await client.get(url, headers=outerUserAgentHeadersX64)
+       if res.status_code == 200:
+           result = res.json()
+           if result.get("success"):
+               if type == "wyMusic/原创榜":
+                   a = {"url": result.get("info", {}).get("url")}
+               elif type == "text/joke":
+                   a = {"url": result.get("data", {}).get("content")}
+               elif type == "moyu":
+                   a = {"url": result.get("url")}
+               else:
+                   a = {"url": result.get("url")}  # 默认情况下使用通用 URL 结构
+
+               return httpStatus(data=a, message="获取成功", code=status.HTTP_200_OK)
+           return httpStatus(data={}, message="获取失败", code=status.HTTP_400_BAD_REQUEST)
+       else:
+           raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="服务器错误")
+   except httpStatus as e:
+        return httpStatus(data=e.data, message=e.message, code=e.code)
 @outerApp.get("/hotlistall",description="集合列表",summary="集合列表")
 @limiter.limit(minute110)
 async def getHotListAll(request: Request)->dict:
