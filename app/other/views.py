@@ -150,7 +150,7 @@ async def touchTheFish(request: Request, type: str = "moyu") -> dict:
                    a = {"url": result.get("url")}  # 默认情况下使用通用 URL 结构
 
                return httpStatus(data=a, message="获取成功", code=status.HTTP_200_OK)
-           return httpStatus(data={}, message="获取失败", code=status.HTTP_400_BAD_REQUEST)
+           return httpStatus(data={}, message="未获取到数据", code=status.HTTP_400_BAD_REQUEST)
        else:
            raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="服务器错误")
    except httpStatus as e:
