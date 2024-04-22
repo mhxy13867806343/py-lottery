@@ -8,7 +8,7 @@ from tool.classDb import httpStatus
 from tool.dbKey import hotCityKey
 from tool.dbUrlResult import graphql, ipLocationUrl, locationWeatherUrl, qwCityUrl, efefeeeUrlHot, vvhanApiUrl, \
     movieOnInfoListUrl, duanjuapiSearchPhp, QQyyscUrl, aweatherapiytrsss7, api777camjson, zzxjjvideosUrl, apigirlUrl, \
-    mteladresscommon, dmlisturl, aGasolinePriceQuery, pictureUrl, wordscanUrl, wordcloudUrl, dysearchUrl, \
+    mteladresscommon, dmlisturl, pictureUrl, wordscanUrl, wordcloudUrl, dysearchUrl, \
     kfc4Url, lunarUrl, baikeUrl, rubbishUrl, deliveryUrl
 from tool.vhot import  hotListType
 from tool.getAjax import getHeadersHolidayUrl
@@ -274,14 +274,7 @@ async def getdmLishi(request: Request,dmLishi:str="")->dict:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@outerApp.get("/gasolinePriceQuery",description="全国油价查询",summary="全国油价查询")
-@limiter.limit(minute110)
-async def getdmLishi(request: Request)->dict:
-    res=requests.get(aGasolinePriceQuery,headers=outerUserAgentHeadersX64)
-    if res.status_code==200:
-        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
-    else:
-        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
 
