@@ -5,11 +5,11 @@ import requests
 import httpx
 from fastapi import APIRouter,status,Request
 from tool.classDb import httpStatus
-from tool.dbKey import hotCityKey
+from tool.dbKey import hotCityKey, youjiaKey
 from tool.dbUrlResult import graphql, ipLocationUrl, locationWeatherUrl, qwCityUrl, efefeeeUrlHot, vvhanApiUrl, \
     movieOnInfoListUrl, duanjuapiSearchPhp, QQyyscUrl, aweatherapiytrsss7, api777camjson, zzxjjvideosUrl, apigirlUrl, \
     mteladresscommon, dmlisturl, pictureUrl, wordscanUrl, wordcloudUrl, dysearchUrl, \
-    kfc4Url, lunarUrl, baikeUrl, rubbishUrl, deliveryUrl
+    kfc4Url, lunarUrl, baikeUrl, rubbishUrl, deliveryUrl, youjiaUrl
 from tool.vhot import  hotListType
 from tool.getAjax import getHeadersHolidayUrl
 from .model import OtherInput
@@ -70,7 +70,17 @@ async def test(request: Request,query:Optional[str]='')->dict:
     else:
         # 如果GraphQL请求未能成功，则抛出异常
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="请求失败")
-
+@outerApp.post("/youjia",description="今日国内油价查询",summary="今日国内油价查询")
+@limiter.limit(minute110)
+async def getYoujiaUrl(request: Request)->dict:
+    url=f"{youjiaUrl}?key={youjiaKey}"
+    res=httpx.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        if res.json().get("code")==1:
+            return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 @outerApp.get("/iplocation",description="获取IP地址信息",summary="获取IP地址信息")
 @limiter.limit(minute110)
 async def getWeather(request: Request,ip:str="")->dict:

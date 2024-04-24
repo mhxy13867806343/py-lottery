@@ -1,2 +1,3 @@
 hotCityKey="85e5417c5f5a44b2b02ab27b5ba8be98"
 weatherKey="e9znqfty5brmjfqj"
+youjiaKey="09d1e957a738b01dd0606839d149f6ec"
