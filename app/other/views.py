@@ -362,7 +362,7 @@ async def getLunar(request: Request,data:str="")->dict:
 async def getBaike(request: Request,msg:str="")->dict:
     if not msg or len(msg)==0:
         return httpStatus(data={},message="请输入内容")
-    url=f"{baikeUrl}?msg={msg}"
+    url=f"{baikeUrl}?t={msg}"
     res=requests.get(url,headers=outerUserAgentHeadersX64)
     if res.status_code==200:
         return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
