@@ -235,7 +235,13 @@ async def cityname(request: Request,cityname:str="")->dict:
 async def douyinMM(request: Request,)->dict:
     res=requests.get(api777camjson,headers=outerUserAgentHeadersX64)
     if res.status_code==200:
-        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+        nesUrl=res.json().get("data")
+        req=requests.get(nesUrl,headers=outerUserAgentHeadersX64)
+        aurl={
+            **res.json(),
+            "url":req.url
+        }
+        return httpStatus(data=aurl, message="获取成功", code=status.HTTP_200_OK)
     else:
         return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
