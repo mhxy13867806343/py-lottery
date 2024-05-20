@@ -2,7 +2,7 @@ import smtplib
 import email.utils
 from email.mime.text import MIMEText
 isSend=True
-
+sbError=False
 import hashlib
 import random
 import datetime
@@ -30,11 +30,13 @@ def sendEmail(title:str="反馈网站内容", content:str="测试用户数据进
     message['From'] = email.utils.formataddr(('当前用户', from_email))
     message['Subject'] = title
     server = smtplib.SMTP_SSL('smtp.qq.com', 465)
-    server.login(from_email, 'sviyibdxlqqrbaie')
+    server.login(from_email, 'zgxojvlawjohbedh')
     server.set_debuglevel(True)
     try:
         isSend = True
         server.sendmail(from_email, [to_email], msg=message.as_string())
+    except smtplib.SMTPServerDisconnected as e:
+        sbError = True
     finally:
         isSend=False
         server.quit()

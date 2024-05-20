@@ -7,9 +7,6 @@ from tool.appMount import staticMount
 from tool.appRate import appLimitRate
 from tool.appAddMiddleware import appAddMiddleware
 import uvicorn
-from app.users.views import userApp as userRouterApi
-from app.dynamic.views import dyApp as dyRouterApi
-from app.signature.views import signatureApp as signatureRouterApi
 from app.auxiliary.views import emailApp as emailAppRouterApi
 from app.other.views import outerApp as outerAppRouterApi
 router = APIRouter(
@@ -26,9 +23,6 @@ class CustomHeaderMiddleware(BaseHTTPMiddleware):
         return response
 app = FastAPI()
 # 将 router 添加到 app 中
-app.include_router(userRouterApi)
-app.include_router(dyRouterApi)
-app.include_router(signatureRouterApi)
 app.include_router(emailAppRouterApi)
 app.include_router(outerAppRouterApi)
 # CORS
