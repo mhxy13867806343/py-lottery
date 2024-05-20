@@ -11,7 +11,7 @@ from tool.db import getDbSession
 from models.auxiliary.model import Email, CopyEmail
 from tool.classDb import httpStatus, validate_email_str,validate_encrypt_email
 from tool.statusTool import EXPIRE_TIME
-from .tools import sendEmail,isSend,generateEmailId
+from .tools import sendEmail,isSend,generateEmailId,sbError
 from tool.takw import getArgsKwArgsResult
 expires_delta = timedelta(minutes=EXPIRE_TIME)
 emailApp = APIRouter(
@@ -47,6 +47,8 @@ def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession
     if not content:
         return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="内容不能为空",data={})
     try:
+        if sbError:
+            return httpStatus(code=status.HTTP_400_BAD_REQUEST,message="发送失败",data={})
         if isSend:
             rTime = int(time.time())
             emailId = generateEmailId(email_address=email)
@@ -60,6 +62,7 @@ def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession
         else:
             return httpStatus()
     except SQLAlchemyError as e:
+        print(e,5555)
         session.rollback()
         return httpStatus()
 @emailApp.get('/copy/list/{id}',description="克隆邮箱列表",summary="克隆邮箱列表")
