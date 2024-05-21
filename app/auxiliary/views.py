@@ -1,10 +1,16 @@
 from typing import Optional, List
 
-from fastapi import APIRouter, Depends, status, Query
+import requests
+from fastapi import APIRouter, Depends, status, Query,Request
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 import time
 from datetime import datetime, timedelta
+
+from tool.dbKey import suapiKey
+from tool.dbLimit import minute110
+from tool.dbThrottling import limiter
+from tool.dbUrlResult import badwordUrl, ipinfoProUrl
 from .model import AuxiliaryInputFirst, AuxiliaryInputPostNunSize, AuxiliaryCopyInput
 from models.auxiliary.operation import getEmailList,getEmailTotal
 from tool.db import getDbSession
@@ -62,7 +68,6 @@ def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession
         else:
             return httpStatus()
     except SQLAlchemyError as e:
-        print(e,5555)
         session.rollback()
         return httpStatus()
 @emailApp.get('/copy/list/{id}',description="克隆邮箱列表",summary="克隆邮箱列表")
@@ -103,4 +108,21 @@ def postSendEmailCopy(apns:AuxiliaryCopyInput,session:Session = Depends(getDbSes
             return httpStatus()
     except SQLAlchemyError as e:
         session.rollback()
+        return httpStatus()
+
+@emailApp.get('/send/badword',description="敏感词库/违禁词检测接口",summary="敏感词库/违禁词检测接口")
+@limiter.limit(minute110)
+async def ipinfoProUrl1(request: Request,ip:str=""):
+    url=f"{ipinfoProUrl}?key={suapiKey}"
+    respone=requests.post(url,json={"ip":ip})
+    try:
+        if respone.ok:
+            data = respone.json()
+            res = {
+                **data
+            }
+
+            return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=res.get("data"))
+        return httpStatus()
+    except Exception as e:
         return httpStatus()

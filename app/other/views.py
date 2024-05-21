@@ -1,13 +1,15 @@
 
 from typing import Optional
 import requests
+import json
 from fastapi import APIRouter,status,Request
 from tool.classDb import httpStatus
-from tool.dbUrlResult import graphql
+from tool.dbKey import hotCityKey
+from tool.dbUrlResult import graphql, qwCityUrl, locationWeatherUrl, aweatherapiytrsss7
 from tool.getAjax import getHeadersHolidayUrl
 from tool.dbLimit import minute110
 from tool.dbThrottling import limiter
-from tool.dbHeaders import  jsHeaders
+from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 
 outerApp = APIRouter(
     prefix="/v1/h5/outer",
@@ -62,3 +64,53 @@ async def test(request: Request,query:Optional[str]='')->dict:
     else:
         # 如果GraphQL请求未能成功，则抛出异常
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="请求失败")
+@outerApp.get("/weather",description="获取天气信息",summary="获取天气信息")
+@limiter.limit(minute110)
+async def getWeather(request: Request,location:str="")->dict:
+    if not location or len(location)==0:
+        return httpStatus(data={},message="请输入搜索或者选择城市")
+    url=f"{locationWeatherUrl}&location={location}&language=zh-Hans&unit=c"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    return httpStatus(data=res.json(),message="获取成功",code=status.HTTP_200_OK)
+@outerApp.get("/city",description="获取城市信息",summary="获取城市信息")
+@limiter.limit(minute110)
+async def cityJson(request: Request,)->dict:
+    city="static/files/city_json.json"
+    try:
+        with open(city, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return httpStatus(data=data.get("city"), message="获取成功", code=status.HTTP_200_OK)
+    except json.JSONDecodeError:
+        # JSON格式错误
+        return httpStatus(data={}, message="JSON数据格式错误", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except FileNotFoundError:
+        # 文件不存在
+        return httpStatus(data={}, message="文件未找到", code=status.HTTP_404_NOT_FOUND)
+    except PermissionError:
+        # 文件权限问题
+        return httpStatus(data={}, message="文件读取权限错误", code=status.HTTP_403_FORBIDDEN)
+    except Exception as e:
+        # 其他所有异常
+        return httpStatus(data={}, message=f"未知错误: {str(e)}", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get("/hotcity",description="获取热门城市信息",summary="获取热门城市信息")
+@limiter.limit(minute110)
+async def hotCity(request: Request,number:int=12)->dict:
+    url=f"{qwCityUrl}?number={number}&range=cn&key={hotCityKey}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get("/cityname",description="未来十五日天气",summary="未来十五日天气")
+@limiter.limit(minute110)
+async def cityname(request: Request,cityname:str="")->dict:
+    if not cityname or len(cityname)==0:
+        return httpStatus(data={},message="请输入或者选择城市名")
+    url=f"{aweatherapiytrsss7}?cityname={cityname}"
+    res=requests.get(url,headers=outerUserAgentHeadersX64)
+    if res.status_code==200:
+        if res.text=="未能解析城市代码！":
+            return httpStatus(data={}, message="未能获取到该城市的天气信息", code=status.HTTP_400_BAD_REQUEST)
+        return httpStatus(data=res.json(), message="获取成功", code=status.HTTP_200_OK)
+    else:
+        return httpStatus(data={}, message="获取失败", code=status.HTTP_500_INTERNAL_SERVER_ERROR)
