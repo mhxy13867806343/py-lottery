@@ -26,11 +26,17 @@ async def getHoliday(request: Request,year:int=''):
     :return:
     """
     return getHeadersHolidayUrl(year=year)
+@outerApp.get('/search/q')
+async def githubSearch(q:str="",p:int=1,type:str="repositories"):
+    url=f"https://github.com/search?q={q}&type={type}&p={p}"
+    result=requests.get(url,headers=outerUserAgentHeadersX64)
+    js=result.json()
+    if js.get('payload').get("type")=='home':
+        return httpStatus(data=[],message="暂无数据",code=status.HTTP_200_OK)
+    return httpStatus(data=js.get("payload"),message="获取成功",code=status.HTTP_200_OK)
 @outerApp.get("/searchgithub/{query}",description="搜索GitHub仓库名称",summary="搜索GitHub仓库名称")
 @limiter.limit(minute110)
-async def test(request: Request,query:Optional[str]='')->dict:
-    if not query or len(query)==0:
-        return httpStatus(data=query,message="请输入搜索内容")
+async def test(request: Request,query:str="")->dict:
     qg = """
     query SearchInputTipQuery($query: String!) {
       tips: searchTips(query: $query) {
