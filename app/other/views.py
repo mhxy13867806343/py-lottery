@@ -28,12 +28,42 @@ async def getHoliday(request: Request,year:int=''):
     return getHeadersHolidayUrl(year=year)
 @outerApp.get('/search/q')
 async def githubSearch(q:str="",p:int=1,type:str="repositories"):
-    url=f"https://github.com/search?q={q}&type={type}&p={p}"
-    result=requests.get(url,headers=outerUserAgentHeadersX64)
-    js=result.json()
-    if js.get('payload').get("type")=='home':
-        return httpStatus(data=[],message="暂无数据",code=status.HTTP_200_OK)
-    return httpStatus(data=js.get("payload"),message="获取成功",code=status.HTTP_200_OK)
+    try:
+        url = f"https://github.com/search?q={q}&type={type}&p={p}"
+        result = requests.get(url, headers=outerUserAgentHeadersX64)
+        if result.status_code != 200:
+            raise httpStatus(code=result.status_code, message="GitHub请求失败")
+        js = result.json()
+        if js.get('payload').get("type") == 'home':
+            return httpStatus(data=[], message="暂无数据", code=status.HTTP_200_OK)
+        return httpStatus(data=js.get("payload"), message="获取成功", code=status.HTTP_200_OK)
+    except requests.RequestException as e:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="GitHub请求失败")
+    except Exception as e:
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="处理响应时出现错误")
+
+@outerApp.post('/search/github')
+async def github1Search(period:str="day",offset:int=0,lang:str="python",category:str="trending",
+limit:int=50
+                        ):
+    try:
+        data={
+    "category":category,
+    "period":period,
+    "lang": lang,
+    "offset": offset,
+    "limit":limit
+}
+        url = f"https://e.juejin.cn/resources/github"
+        result = requests.post(url,data=data, headers=outerUserAgentHeadersX64)
+        if result.status_code != 200:
+            raise httpStatus(code=result.status_code, message="GitHub请求失败")
+        return httpStatus(data=result.json().get("data"), message="获取成功", code=status.HTTP_200_OK)
+    except requests.RequestException as e:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="GitHub请求失败")
+    except Exception as e:
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="处理响应时出现错误")
+
 @outerApp.get("/searchgithub/{query}",description="搜索GitHub仓库名称",summary="搜索GitHub仓库名称")
 @limiter.limit(minute110)
 async def test(request: Request,query:str="")->dict:

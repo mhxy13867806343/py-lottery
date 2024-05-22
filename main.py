@@ -9,6 +9,7 @@ from tool.appAddMiddleware import appAddMiddleware
 import uvicorn
 from app.auxiliary.views import emailApp as emailAppRouterApi
 from app.other.views import outerApp as outerAppRouterApi
+from app.languages.views import languagesApp as languagesAppRouterApi
 router = APIRouter(
     prefix="/v1",  # 为这个路由器下的所有路由添加路径前缀 /v1
     tags=["v1"],  # 可选，为这组路由添加标签
@@ -25,6 +26,7 @@ app = FastAPI()
 # 将 router 添加到 app 中
 app.include_router(emailAppRouterApi)
 app.include_router(outerAppRouterApi)
+app.include_router(languagesAppRouterApi)
 # CORS
 appAddMiddleware(app)
 
