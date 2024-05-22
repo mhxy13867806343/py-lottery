@@ -42,7 +42,7 @@ async def githubSearch(q:str="",p:int=1,type:str="repositories"):
     except Exception as e:
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="处理响应时出现错误")
 
-@outerApp.post('/search/github')
+@outerApp.get('/search/github')
 async def github1Search(period:str="day",offset:int=0,lang:str="python",category:str="trending",
 limit:int=50
                         ):
@@ -55,13 +55,14 @@ limit:int=50
     "limit":limit
 }
         url = f"https://e.juejin.cn/resources/github"
-        result = requests.post(url,data=data, headers=outerUserAgentHeadersX64)
+        result = requests.post(url,json=data, headers=outerUserAgentHeadersX64)
         if result.status_code != 200:
             raise httpStatus(code=result.status_code, message="GitHub请求失败")
         return httpStatus(data=result.json().get("data"), message="获取成功", code=status.HTTP_200_OK)
     except requests.RequestException as e:
         return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="GitHub请求失败")
     except Exception as e:
+        print(e,555555555)
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="处理响应时出现错误")
 
 @outerApp.get("/searchgithub/{query}",description="搜索GitHub仓库名称",summary="搜索GitHub仓库名称")
