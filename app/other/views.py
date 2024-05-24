@@ -15,6 +15,17 @@ outerApp = APIRouter(
     prefix="/v1/h5/outer",
     tags=["其他管理"]
 )
+@outerApp.get('/ithome',description="获取it之家信息",summary="获取it之家信息")
+async def ithome(limit:int=20,offset:int=0):
+    url = "https://e.juejin.cn/resources/ithome"
+    data={
+        "limit": limit,
+        "offset": offset
+    }
+    result = requests.post(url, headers=outerUserAgentHeadersX64,json=data)
+    if result.status_code != 200:
+        return httpStatus(code=result.status_code, message="vit之家请求失败")
+    return httpStatus(data=result.json().get("data"), message="获取成功", code=status.HTTP_200_OK)
 @outerApp.get('/v2ex',description="获取v2ex信息",summary="获取v2ex信息")
 async def v2ex(limit:int=20,offset:int=0):
     url = "https://e.juejin.cn/resources/v2ex"
