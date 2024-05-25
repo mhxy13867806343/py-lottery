@@ -13,13 +13,24 @@ from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 
 outerApp = APIRouter()
 
+@outerApp.get('/dribbble',description="获取热搜榜信息",summary="获取热搜榜信息")
+async def getDribbble(limit:int=20,offset:int=0):
+    url = f"https://e.juejin.cn/resources/dribbble"
+    data={
+        "limit": limit,
+        "offset": offset
+    }
+    result = requests.post(url, headers=outerUserAgentHeadersX64,json=data)
+    if result.status_code != 200:
+        return httpStatus(code=result.status_code, message="百度热搜榜请求失败")
+    return httpStatus(data=result.json().get("data"), message="获取成功", code=status.HTTP_200_OK)
 @outerApp.get('/hotApi',description="获取热搜榜信息",summary="获取热搜榜信息")
 async def getHot(type:str="baiduhot"):
     url = f"https://tenapi.cn/v2/{type}"
 
     result = requests.post(url, headers=outerUserAgentHeadersX64)
     if result.status_code != 200:
-        return httpStatus(code=result.status_code, message="百度热搜榜请求失败")
+        return httpStatus(code=result.status_code, message="热搜榜请求失败")
     return httpStatus(data=result.json().get("data"), message="获取成功", code=status.HTTP_200_OK)
 
 @outerApp.get('/ithome',description="获取it之家信息",summary="获取it之家信息")
