@@ -126,21 +126,7 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
 
     return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=data_source)
 
-@userApp.get('/testinfo',description="获取用户信息",summary="获取用户信息")
-async def getIndexauthorUser():
-    return {
-        "data":{
-            "message":"欢迎来到德莱联盟",
-            "data":{
-                "version":"1.0.0",
-                "authorName":"hooks",
-                "authorEmail":"869710179@qq.com",
-                "createTime":int(time.time()),
-                "authorWxid":"aigchooks",
-                "authorImg":"static/wx/WechatIMG914.jpg",
-            }
-        }
-    }
+
 @userApp.post('/update',description="更新用户信息",summary="更新用户信息")
 def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
     name = params.name
