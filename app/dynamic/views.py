@@ -11,10 +11,7 @@ from tool.db import getDbSession
 from .operation import getPagenation,getTotal
 from models.user.operation import getDynamicList,getDynamicTotal
 from .model import DynamicUserShare
-dyApp = APIRouter(
-    prefix="/h5/dyanmic",
-    tags=["用户动态管理"]
-)
+dyApp = APIRouter()
 
 @dyApp.get('/home/list', description="获取根据条件分页的用户动态列表", summary="获取根据条件分页的用户动态列表")
 def getHomeDynamicList(
@@ -37,7 +34,7 @@ def getHomeDynamicList(
     return httpStatus(message="获取成功", data=result, code=status.HTTP_200_OK)
 
 
-@dyApp.get('/home/user/{uid}/list', description="获取用户动态详情", summary="获取用户动态详情")
+@dyApp.get('/user/{uid}', description="获取用户动态详情", summary="获取用户动态详情")
 def getUserDynamicList(session: Session = Depends(getDbSession),
                        current_user_id: int=Depends(createToken.getNotCurrentUserId),
                        uid: int = Query(None, description="非登录用户id", alias="uid"),
@@ -94,7 +91,7 @@ def postUserDynamicShare(params: DynamicUserShare, user: AccountInputs = Depends
     except SQLAlchemyError as e:
         session.rollback()
         raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="分享动态失败")
-@dyApp.get('/list', description="获取用户动态列表", summary="获取用户动态列表")
+@dyApp.get('/dynamic/list', description="获取用户动态列表", summary="获取用户动态列表")
 def getUserDynamicList(
         session: Session = Depends(getDbSession),
         title: Optional[str] = Query(None, description="标题,可以输入想要搜索的动态标题", alias="title"),

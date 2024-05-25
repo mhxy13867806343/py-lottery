@@ -20,11 +20,8 @@ from tool.statusTool import EXPIRE_TIME
 from .tools import sendEmail,isSend,generateEmailId,sbError
 from tool.takw import getArgsKwArgsResult
 expires_delta = timedelta(minutes=EXPIRE_TIME)
-emailApp = APIRouter(
-    prefix="/h5/auxiliary",
-    tags=["辅助管理"]
-)
-@emailApp.get('/list/email',description="邮箱列表",summary="邮箱列表")
+emailApp = APIRouter()
+@emailApp.get('/list',description="邮箱列表",summary="邮箱列表")
 async def postEmailList(email:str = Query(''), pageNum: int = 1, pageSize: int =10, session: Session = Depends(getDbSession)):
     if not email:
         return httpStatus(message="邮箱不能为空", data={})
@@ -41,7 +38,7 @@ async def postEmailList(email:str = Query(''), pageNum: int = 1, pageSize: int =
     except SQLAlchemyError as e:
         session.rollback()
         return httpStatus()
-@emailApp.post('/send/email',description="发送邮箱",summary="发送邮箱")
+@emailApp.post('/send',description="发送邮箱",summary="发送邮箱")
 def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession)):
     title:str=aed.title
     email:str=aed.email
@@ -70,7 +67,7 @@ def postSendEmail(aed:AuxiliaryInputFirst,session:Session = Depends(getDbSession
     except SQLAlchemyError as e:
         session.rollback()
         return httpStatus()
-@emailApp.get('/copy/list/{id}',description="克隆邮箱列表",summary="克隆邮箱列表")
+@emailApp.get('/copy/{id}',description="克隆邮箱列表",summary="克隆邮箱列表")
 def getCopyEmailList(id:int,session:Session = Depends(getDbSession)):
     if not id:
         return httpStatus(message="id不能为空", data={})
@@ -81,7 +78,7 @@ def getCopyEmailList(id:int,session:Session = Depends(getDbSession)):
         "total":db_count
     }
     return httpStatus(data=data,code=status.HTTP_200_OK,message="获取成功")
-@emailApp.post('/send/email/copy',description="克隆邮箱",summary="克隆邮箱")
+@emailApp.post('/send/copy',description="克隆邮箱",summary="克隆邮箱")
 def postSendEmailCopy(apns:AuxiliaryCopyInput,session:Session = Depends(getDbSession)):
     title:str=apns.title
     email:str=apns.email
