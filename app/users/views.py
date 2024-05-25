@@ -14,10 +14,7 @@ from tool.statusTool import EXPIRE_TIME
 
 redis_db = RedisDB()
 expires_delta = timedelta(minutes=EXPIRE_TIME)
-userApp = APIRouter(
-    prefix="/h5/user",
-    tags=["用户信息管理"]
-)
+userApp = APIRouter()
 @userApp.post('/registered',description="h5注册",summary="h5注册")
 def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
     account:str=acc.account

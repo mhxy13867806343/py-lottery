@@ -8,14 +8,7 @@ from tool.dbLimit import minute110
 from tool.dbThrottling import limiter
 from pydantic import BaseModel
 
-languagesApp = APIRouter(
-    prefix="/v1/h5/languages",
-    tags=["语言辅助管理"]
-)
-
-
-
-
+languagesApp = APIRouter()
 @languagesApp.get("/search",description="获取语言辅助管理列表",summary="获取语言辅助管理列表")
 def getLanguages(q:str="",db: Session = Depends(getDbSession)):
     # 假设 getListAll 函数接收一个年份参数，返回该年份的节假日信息列表

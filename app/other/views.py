@@ -11,10 +11,7 @@ from tool.dbLimit import minute110
 from tool.dbThrottling import limiter
 from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 
-outerApp = APIRouter(
-    prefix="/v1/h5/outer",
-    tags=["其他管理"]
-)
+outerApp = APIRouter()
 
 @outerApp.get('/hotApi',description="获取热搜榜信息",summary="获取热搜榜信息")
 async def getHot(type:str="baiduhot"):
