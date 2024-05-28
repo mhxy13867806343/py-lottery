@@ -5,6 +5,7 @@ import json
 from fastapi import APIRouter,status,Request
 from tool.classDb import httpStatus
 from tool.dbKey import hotCityKey
+from tool.dbTools import generate_dynamic_cookies
 from tool.dbUrlResult import graphql, qwCityUrl, locationWeatherUrl, aweatherapiytrsss7
 from tool.getAjax import getHeadersHolidayUrl
 from tool.dbLimit import minute110
@@ -13,6 +14,31 @@ from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 
 outerApp = APIRouter()
 
+@outerApp.get("/ai/tool/category",description="ai分类",summary="ai分类")
+async  def toolcategory():
+    file_path="static/json/toolAi.json"
+    try:
+        with open(file_path, "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+        return httpStatus(data=data, code=status.HTTP_200_OK,message="获取成功")
+    except FileNotFoundError:
+        return httpStatus(message='未找到相关资源', status_code=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return httpStatus(message=str(e), status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@outerApp.get('/toolaiAi')
+async def toolaiAi(pageIndex:int=1,pageSize:int=12,key:str="test",
+                   Category:str=""):
+    cookies = generate_dynamic_cookies()
+    if not Category or len(Category)==0:
+        url=f"https://www.toolai.io/api/AI/GetIndexData?PageIndex={pageIndex}&PageSize={pageSize}&Key={key}"
+    else:
+        url=f"https://www.toolai.io/api/AI/GetDataByCategory?PageIndex={pageIndex}&PageSize={pageSize}&Key={key}&Category={Category}&Sort=id desc"
+    outerUserAgentHeadersX64["X-Requested-With"]="XMLHttpRequest"
+
+    result = requests.get(url, headers=outerUserAgentHeadersX64,cookies=cookies)
+    if result.status_code != 200:
+        return httpStatus(code=result.status_code, message="未找到相关资源")
+    return httpStatus(data=result.json(), message="获取成功", code=status.HTTP_200_OK)
 @outerApp.get('/design',description="获取图片信息",summary="获取图片信息")
 async def getDesign(type:str="dribbble",limit:int=20,offset:int=0):
     url = f"https://e.juejin.cn/resources/{type}"
