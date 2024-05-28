@@ -6,6 +6,8 @@ from extend.db import Base, ENGIN # 导入数据库相关模块
 from tool.appMount import staticMount
 from tool.appRate import appLimitRate
 from tool.appAddMiddleware import appAddMiddleware
+from sqlalchemy.exc import SQLAlchemyError
+
 import uvicorn
 from app.auxiliary.views import emailApp as emailAppRouterApi
 from app.other.views import outerApp as outerAppRouterApi
@@ -13,6 +15,7 @@ from app.languages.views import languagesApp as languagesAppRouterApi
 from app.users.views import userApp as userAppRouterApi
 from app.dynamic.views import dyApp as dyAppRouterApi
 from tool.classDb import httpStatus
+from tool.getLogger import globalLogger
 
 # 创建主应用
 app = FastAPI()
@@ -29,6 +32,11 @@ v1_router.include_router(languagesAppRouterApi, prefix="/h5/languages", tags=["�
 
 # 将带有前缀的路由器添加到主应用
 app.include_router(v1_router)
+@app.get('/v1/ai')
+async def test(name:str):
+    import requests
+    resource=requests.get(f"http://localhost:9910/hello/{name}")
+    return httpStatus(data=resource.json(), message="获取成功", code=status.HTTP_200_OK)
 @app.get('/v1/authorinfo',description="获取用户信息",summary="获取用户信息")
 async def getIndexauthorUser():
     aiTool:dict={
@@ -233,11 +241,17 @@ async def getIndexauthorUser():
 # 中间件和其他配置
 class CustomHeaderMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        response: Response = await call_next(request)
-        response.headers['X-Frame-Options'] = 'ALLOW-FROM https://example.com/'
-        response.headers['Content-Security-Policy'] = "frame-ancestors 'self' https://example.com/"
-        return response
-
+        try:
+            response: Response = await call_next(request)
+            response.headers['X-Frame-Options'] = 'ALLOW-FROM https://example.com/'
+            response.headers['Content-Security-Policy'] = "frame-ancestors 'self' https://example.com/"
+            return response
+        except SQLAlchemyError as e:
+            globalLogger.exception("数据库操作出现异常:",e)
+            return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="数据库操作出现异常")
+        except Exception as e:
+            globalLogger.exception("请求处理出现异常:",e)
+            return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="请求处理出现异常")
 # 添加CORS和自定义中间件
 appAddMiddleware(app)
 app.add_middleware(CustomHeaderMiddleware)

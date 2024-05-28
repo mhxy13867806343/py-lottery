@@ -1,0 +1,327 @@
+[
+    {
+        "Category": "copywriting",
+        "href": "/zh/category/copywriting",
+        "text": "文案写作"
+    },
+    {
+        "Category": "email-assistant",
+        "href": "/zh/category/email-assistant",
+        "text": "电子邮件助手"
+    },
+    {
+        "Category": "general-writing",
+        "href": "/zh/category/general-writing",
+        "text": "常规写作"
+    },
+    {
+        "Category": "paraphraser",
+        "href": "/zh/category/paraphraser",
+        "text": "改写工具"
+    },
+    {
+        "Category": "prompts",
+        "href": "/zh/category/prompts",
+        "text": "提示"
+    },
+    {
+        "Category": "seo",
+        "href": "/zh/category/seo",
+        "text": "搜索引擎优化"
+    },
+    {
+        "Category": "social-media-assistant",
+        "href": "/zh/category/social-media-assistant",
+        "text": "社交媒体助理"
+    },
+    {
+        "Category": "story-teller",
+        "href": "/zh/category/story-teller",
+        "text": "讲故事人"
+    },
+    {
+        "Category": "summarizer",
+        "href": "/zh/category/summarizer",
+        "text": "摘要生成器"
+    },
+    {
+        "Category": "ai-chatbots",
+        "href": "/zh/category/ai-chatbots",
+        "text": "人工智能聊天机器人"
+    },
+    {
+        "Category": "translation",
+        "href": "/zh/category/translation",
+        "text": "翻译"
+    },
+    {
+        "Category": "art",
+        "href": "/zh/category/art",
+        "text": "艺术"
+    },
+    {
+        "Category": "avatars",
+        "href": "/zh/category/avatars",
+        "text": "头像"
+    },
+    {
+        "Category": "design-assistant",
+        "href": "/zh/category/design-assistant",
+        "text": "设计助手"
+    },
+    {
+        "Category": "image-editing",
+        "href": "/zh/category/image-editing",
+        "text": "影像编辑"
+    },
+    {
+        "Category": "image-generator",
+        "href": "/zh/category/image-generator",
+        "text": "图像生成器"
+    },
+    {
+        "Category": "logo-generator",
+        "href": "/zh/category/logo-generator",
+        "text": "Logo生成器"
+    },
+    {
+        "Category": "code-assistant",
+        "href": "/zh/category/code-assistant",
+        "text": "代码辅助工具"
+    },
+    {
+        "Category": "developer-tools",
+        "href": "/zh/category/developer-tools",
+        "text": "开发者工具"
+    },
+    {
+        "Category": "low-code-no-code",
+        "href": "/zh/category/low-code-no-code",
+        "text": "低代码/无代码"
+    },
+    {
+        "Category": "spreadsheets",
+        "href": "/zh/category/spreadsheets",
+        "text": "电子表格"
+    },
+    {
+        "Category": "sql",
+        "href": "/zh/category/sql",
+        "text": "结构化查询语言"
+    },
+    {
+        "Category": "audio-editing",
+        "href": "/zh/category/audio-editing",
+        "text": "音频编辑"
+    },
+    {
+        "Category": "music",
+        "href": "/zh/category/music",
+        "text": "音乐"
+    },
+    {
+        "Category": "text-to-speech",
+        "href": "/zh/category/text-to-speech",
+        "text": "文本转语音"
+    },
+    {
+        "Category": "transcriber",
+        "href": "/zh/category/transcriber",
+        "text": "转录员"
+    },
+    {
+        "Category": "speech-to-text",
+        "href": "/zh/category/speech-to-text",
+        "text": "语音转文本"
+    },
+    {
+        "Category": "voice-modulation",
+        "href": "/zh/category/voice-modulation",
+        "text": "语音调制"
+    },
+    {
+        "Category": "personalized-videos",
+        "href": "/zh/category/personalized-videos",
+        "text": "个性化视频"
+    },
+    {
+        "Category": "video-editing",
+        "href": "/zh/category/video-editing",
+        "text": "视频剪辑"
+    },
+    {
+        "Category": "video-generator",
+        "href": "/zh/category/video-generator",
+        "text": "视频生成器"
+    },
+    {
+        "Category": "text-to-video",
+        "href": "/zh/category/text-to-video",
+        "text": "文本转视频"
+    },
+    {
+        "Category": "3d",
+        "href": "/zh/category/3d",
+        "text": "D"
+    },
+    {
+        "Category": "customer-support",
+        "href": "/zh/category/customer-support",
+        "text": "客户支持"
+    },
+    {
+        "Category": "e-commerce",
+        "href": "/zh/category/e-commerce",
+        "text": "电子商务"
+    },
+    {
+        "Category": "education-assistant",
+        "href": "/zh/category/education-assistant",
+        "text": "教育助理"
+    },
+    {
+        "Category": "fashion",
+        "href": "/zh/category/fashion",
+        "text": "时尚"
+    },
+    {
+        "Category": "finance",
+        "href": "/zh/category/finance",
+        "text": "金融"
+    },
+    {
+        "Category": "human-resources",
+        "href": "/zh/category/human-resources",
+        "text": "人力资源"
+    },
+    {
+        "Category": "legal-assistant",
+        "href": "/zh/category/legal-assistant",
+        "text": "法律助理"
+    },
+    {
+        "Category": "presentations",
+        "href": "/zh/category/presentations",
+        "text": "演示文稿"
+    },
+    {
+        "Category": "productivity",
+        "href": "/zh/category/productivity",
+        "text": "生产力"
+    },
+    {
+        "Category": "real-estate",
+        "href": "/zh/category/real-estate",
+        "text": "房地产"
+    },
+    {
+        "Category": "sales",
+        "href": "/zh/category/sales",
+        "text": "销售"
+    },
+    {
+        "Category": "startup-tools",
+        "href": "/zh/category/startup-tools",
+        "text": "初创企业工具"
+    },
+    {
+        "Category": "document-assistant",
+        "href": "/zh/category/document-assistant",
+        "text": "文档助手"
+    },
+    {
+        "Category": "experiments",
+        "href": "/zh/category/experiments",
+        "text": "实验"
+    },
+    {
+        "Category": "fun-tools",
+        "href": "/zh/category/fun-tools",
+        "text": "趣味工具"
+    },
+    {
+        "Category": "gaming",
+        "href": "/zh/category/gaming",
+        "text": "游戏"
+    },
+    {
+        "Category": "gift-ideas",
+        "href": "/zh/category/gift-ideas",
+        "text": "礼品推荐"
+    },
+    {
+        "Category": "healthcare",
+        "href": "/zh/category/healthcare",
+        "text": "医疗保健"
+    },
+    {
+        "Category": "life-assistant",
+        "href": "/zh/category/life-assistant",
+        "text": "生活助手"
+    },
+    {
+        "Category": "memory",
+        "href": "/zh/category/memory",
+        "text": "记忆"
+    },
+    {
+        "Category": "research",
+        "href": "/zh/category/research",
+        "text": "研究"
+    },
+    {
+        "Category": "resources",
+        "href": "/zh/category/resources",
+        "text": "资源"
+    },
+    {
+        "Category": "search-engine",
+        "href": "/zh/category/search-engine",
+        "text": "搜索引擎"
+    },
+    {
+        "Category": "dating",
+        "href": "/zh/category/dating",
+        "text": "约会"
+    },
+    {
+        "Category": "language-learning",
+        "href": "/zh/category/language-learning",
+        "text": "语言学习"
+    },
+    {
+        "Category": "travel",
+        "href": "/zh/category/travel",
+        "text": "旅行"
+    },
+    {
+        "Category": "ai-detector",
+        "href": "/zh/category/ai-detector",
+        "text": "人工智能检测器"
+    },
+    {
+        "Category": "motion-capture",
+        "href": "/zh/category/motion-capture",
+        "text": "动作捕捉"
+    },
+    {
+        "Category": "inspiration",
+        "href": "/zh/category/inspiration",
+        "text": "灵感创意"
+    },
+    {
+        "Category": "podcasting",
+        "href": "/zh/category/podcasting",
+        "text": "播客创作"
+    },
+    {
+        "Category": "self-improvement",
+        "href": "/zh/category/self-improvement",
+        "text": "自我学习"
+    },
+    {
+        "Category": "social-media",
+        "href": "/zh/category/social-media",
+        "text": "社交媒体"
+    }
+]
