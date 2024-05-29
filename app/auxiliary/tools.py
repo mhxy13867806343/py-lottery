@@ -6,7 +6,7 @@ sbError=False
 import hashlib
 import random
 import datetime
-
+from tool.emailTools import emailTools
 
 def generateEmailId(email_address: str) -> str:
     # 获取当前日期，格式为YYYYMMDD
@@ -25,12 +25,12 @@ def generateEmailId(email_address: str) -> str:
 
 def sendEmail(title:str="反馈网站内容", content:str="测试用户数据进行反馈相关内容的测试",from_email:str=None):
     message = MIMEText(content)
-    to_email:str =  '869710179@qq.com'
+    to_email:str = emailTools.get('to_email')
     message['To'] = email.utils.formataddr(('hooks', to_email))
     message['From'] = email.utils.formataddr(('当前用户', from_email))
     message['Subject'] = title
-    server = smtplib.SMTP_SSL('smtp.qq.com', 465)
-    server.login(from_email, 'zgxojvlawjohbedh')
+    server = smtplib.SMTP_SSL(emailTools.get('to_serverHost'), emailTools.get('to_serverPort'))
+    server.login(from_email, emailTools.get('to_main_password'))
     server.set_debuglevel(True)
     try:
         isSend = True

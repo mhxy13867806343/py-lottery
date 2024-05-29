@@ -3,7 +3,11 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 import time
 from datetime import datetime, timedelta
-from .model import AccountInputFirst
+
+from tool.dbConnectionConfig import sendBindEmail, getVerifyEmail
+
+from tool.dbTools import getValidate_email
+from .model import AccountInputFirst, AccountInputEamail
 from tool.db import getDbSession
 from tool import token as createToken
 from models.user.model import AccountInputs
@@ -59,6 +63,7 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
                 user_data['type']=int(user_data['type'])
                 user_data['createTime']=int(user_data['createTime'])
                 user_data['lastTime']=int(user_data['lastTime'])
+                user_data["email"]=user_data.get("email")
                 return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=user_data)
             return httpStatus(message="登录信息已失效，请重新登录", data={})
         except Exception as e:
@@ -79,7 +84,8 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
             "createTime": int(existing_user.create_time),
             "lastTime": int(existing_user.last_time),
             "name": existing_user.name,
-            "status": int(existing_user.status)
+            "status": int(existing_user.status),
+            "email": existing_user.email
         }
         # 将用户信息保存到Redis
         redis_db.set(newAccount, user_data)  # 注意调整为合适的键值和数据
@@ -105,6 +111,7 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
             "lastTime": redis_user_data["lastTime"],
             "id": redis_user_data["sub"],
             "isPermissions": 1,
+            "email": redis_user_data.get("email"),
             "status": redis_user_data["status"]
         }
     else:
@@ -121,7 +128,8 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
             "lastTime": user.last_time,
             "id": user.id,
             "isPermissions": 1,
-            "status": user.status
+            "status": user.status,
+            "email": user.email
         }
 
     return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=data_source)
@@ -156,3 +164,46 @@ def logout(user: AccountInputs = Depends(createToken.pase_token),session: Sessio
         return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
     redis_db.delete(redis_key)
     return httpStatus(code=status.HTTP_200_OK, message="退出成功", data={})
+
+@userApp.post("/bind",description="绑定用户邮箱",summary="绑定用户邮箱")
+def addEmail(params: AccountInputEamail, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    email = params.email
+    if not email:
+        return httpStatus(message="邮箱不能为空,请输入邮箱地址", data={})
+    result:bool=getValidate_email(email)
+    if not result:
+        return httpStatus(message="邮箱格式不正确,请重新输入", data={})
+    resultSql = session.query(AccountInputs).filter(AccountInputs.id == user.id)
+    if not resultSql.first():
+        return httpStatus(message="用户不存在,无法添加邮箱", data={})
+    if resultSql.first().status == 1:
+        return httpStatus(message="当前用户已被禁用,请联系管理员", data={})
+    count=resultSql.count()
+    if count>0:
+        return httpStatus(message="此邮箱已绑定到其他帐户上面了,无法重复绑定，请先将邮箱解除绑定,才能重新绑定", data={})
+    try:
+        sendEmail = sendBindEmail(email)
+        print(sendEmail)
+        print(dir(sendEmail))
+        message = sendEmail.get("message")
+        verification_data = sendEmail.get("verification_data")[email]
+        code = sendEmail.get("code")
+        if message and verification_data and code:
+            resultSql.first().email=email
+            session.commit()
+            return httpStatus(code=status.HTTP_200_OK, message="绑定邮箱成功", data={})
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="绑定邮箱失败,", data={})
+    except SQLAlchemyError as e:
+        session.rollback()
+        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="绑定邮箱失败,", data={})
+
+@userApp.post("/verify",description="验证用户邮箱",summary="验证用户邮箱")
+def verifyEmail(email:str="",code:str="", user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not email:
+        return httpStatus(message="邮箱不能为空,请输入邮箱地址", data={})
+    if not code:
+        return httpStatus(message="验证码不能为空,请输入验证码", data={})
+    result=getVerifyEmail(email, code)
+    if not result:
+        return httpStatus(message="验证码错误,请重新输入", data={})
+    return httpStatus(code=status.HTTP_200_OK, message="验证成功", data={})

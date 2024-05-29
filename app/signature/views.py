@@ -9,8 +9,6 @@ from tool.classDb import httpStatus
 from tool.db import getDbSession
 from .model import SignatureFirst
 signatureApp = APIRouter(
-    prefix="/h5/signature",
-    tags=["用户个性签名管理"]
 )
 @signatureApp.get('/info', description="获取用户个性签名", summary="获取用户个性签名")
 def get_signature_first(db: Session = Depends(getDbSession),
@@ -26,11 +24,13 @@ def get_signature_first(db: Session = Depends(getDbSession),
 
 
 @signatureApp.post('/add', description="用户个性签名添加", summary="用户个性签名添加",)
-def add_signature(signature: SignatureFirst, db: Session = Depends(getDbSession),
+def add_signature(content:str="", db: Session = Depends(getDbSession),
                   user: AccountInputs = Depends(createToken.pase_token)
                   ):
+    if not content:
+        return httpStatus(message="签名不能为空")
     if isLogin(user):
-        signature_db = Signature(user_id=user.id, signature=signature.content)
+        signature_db = Signature(user_id=user.id, signature=content)
         db.add(signature_db)
         try:
             db.commit()
@@ -38,12 +38,20 @@ def add_signature(signature: SignatureFirst, db: Session = Depends(getDbSession)
         except SQLAlchemyError as e:
             db.rollback()
             return httpStatus(message="添加失败")
-@signatureApp.post('/update', description="用户个性签名更新", summary="用户个性签名更新",)
+@signatureApp.put('/update', description="用户个性签名更新", summary="用户个性签名更新",)
 def update_signature(signature: SignatureFirst, db: Session = Depends(getDbSession),
                   user: AccountInputs = Depends(createToken.pase_token)
                   ):
     if isLogin(user):
         signature_db = db.query(Signature).filter(Signature.user_id == user.id).first()
+        if not signature_db:
+            return httpStatus(message="用户签名不存在,无法更新")
+        if not signature_db.id:
+            return httpStatus(message="用户签名不存在,无法更新")
+        if signature_db.id!=signature.id:
+            return httpStatus(message="用户签名数据信息不匹配,无法更新")
+        if signature_db.isDeleted==1:
+            return httpStatus(message="用户签名已删除,无法更新")
         signature_db.signature = signature.content
         try:
             db.commit()
@@ -52,3 +60,27 @@ def update_signature(signature: SignatureFirst, db: Session = Depends(getDbSessi
         except SQLAlchemyError as e:
             db.rollback()
             return httpStatus(message="更新失败")
+@signatureApp.delete('/delete/{id}', description="用户个性签名删除", summary="用户个性签名删除",)
+def delete_signature(id:str="",db: Session = Depends(getDbSession),  user: AccountInputs = Depends(createToken.pase_token)):
+    if not id:
+        return httpStatus(message="id不能为空")
+    if isLogin(user):
+        signature_db = db.query(Signature).filter(Signature.user_id == user.id).first()
+        if not signature_db:
+            return httpStatus(message="用户签名不存在,无法删除")
+        if not signature_db.id:
+            return httpStatus(message="用户签名不存在,无法删除")
+        if signature_db.isDeleted==1:
+            return httpStatus(message="用户签名已删除,无法删除")
+        if signature_db.id!=id:
+            return httpStatus(message="用户签名数据信息不匹配,无法删除")
+        try:
+            signature_db.isDeleted=1
+            db.commit()
+            return httpStatus(message="删除成功", code=status.HTTP_200_OK)
+        except SQLAlchemyError as e:
+            db.rollback()
+            return httpStatus(message="删除失败")
+        except Exception as e:
+            return httpStatus(message="删除失败")
+

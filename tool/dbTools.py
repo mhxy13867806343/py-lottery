@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional, List, Dict, Any, Union, TypeVar, Type, Callable, cast
+import re
+import secrets
 import time
 import random
 from hashlib import md5
@@ -35,3 +37,15 @@ def generate_dynamic_cookies():
         'session_id': session_id
     }
     return cookies
+def getValidate_email(email):
+    """
+    验证电子邮件地址是否合法。
+
+    参数:
+    email (str): 待验证的电子邮件地址。
+
+    返回:
+    bool: 如果电子邮件地址合法，则返回 True；否则返回 False。
+    """
+    pattern = r'^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$'
+    return bool(re.match(pattern, email))
