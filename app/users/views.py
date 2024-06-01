@@ -201,9 +201,13 @@ def addEmail(params: AccountInputEamail, user: AccountInputs = Depends(createTok
 def verifyEmail(email:str="",code:str="", user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
     if not email:
         return httpStatus(message="邮箱不能为空,请输入邮箱地址", data={})
+    if email!=user.email:
+        return httpStatus(message="邮箱与当前用户邮箱不一致,请重新输入", data={})
     if not code:
         return httpStatus(message="验证码不能为空,请输入验证码", data={})
-    result=getVerifyEmail(email, code)
-    if not result:
-        return httpStatus(message="验证码错误,请重新输入", data={})
-    return httpStatus(code=status.HTTP_200_OK, message="验证成功", data={})
+    result:dict=getVerifyEmail(email, code)
+    code=result.get("code")
+    message=result.get("message")
+    if code!=0:
+        return httpStatus(message=message, code=code,data={})
+    return httpStatus(code=status.HTTP_200_OK, message=message, data={})

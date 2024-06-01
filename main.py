@@ -15,6 +15,7 @@ from app.languages.views import languagesApp as languagesAppRouterApi
 from app.users.views import userApp as userAppRouterApi
 from app.dynamic.views import dyApp as dyAppRouterApi
 from app.signature.views import signatureApp as signatureAppRouterApi
+from app.bots.views import botApp as botAppAppRouterApi
 from tool.classDb import httpStatus
 from tool.getLogger import globalLogger
 
@@ -31,6 +32,7 @@ v1_router.include_router(dyAppRouterApi, prefix="/h5/dynamic", tags=["用户动�
 v1_router.include_router(emailAppRouterApi, prefix="/h5/email", tags=["邮件服务"])
 v1_router.include_router(outerAppRouterApi, prefix="/h5/outer", tags=["辅助管理"])
 v1_router.include_router(languagesAppRouterApi, prefix="/h5/languages", tags=["语言管理"])
+v1_router.include_router(botAppAppRouterApi, prefix="/h5/bot", tags=["ai管理"])
 
 # 将带有前缀的路由器添加到主应用
 app.include_router(v1_router)
