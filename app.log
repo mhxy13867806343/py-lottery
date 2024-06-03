@@ -12828,3 +12828,778 @@ TypeError: 'dict' object is not callable
 2024-06-01 12:41:02,000 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.juejin.cn:443
 2024-06-01 12:41:02,179 - urllib3.connectionpool - DEBUG - https://api.juejin.cn:443 "POST /recommend_api/v1/bot/recommend_all_feed?aid=2608&uuid=7352035066346473000&spider=0 HTTP/1.1" 200 118
 2024-06-01 12:45:53,070 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-01 12:45:57,933 - watchfiles.main - DEBUG - 44 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a1/a4151fb635d043d47892616fc71e4aa758c89a'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a1'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/index.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/e8/83c64b8b02bcdc2f6810f612c8762ce2066237'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/00/f3de852a5995888b5797a8fdf0e0cb635837ce'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/00/tmp_obj_SLeliW'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/e8/tmp_obj_Zav6tC'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/04/tmp_obj_SGpSRT'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/04/tmp_obj_SGpSRT'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3d/tmp_obj_yrGhPX'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/e8/tmp_obj_Zav6tC'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3d/tmp_obj_yrGhPX'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3d'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/cd/tmp_obj_UrcN5u'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/e8'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/cd'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f/tmp_obj_tS6OzF'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/7b/tmp_obj_rdoAHE'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/9c/bb1791c6873e54497dafccad61203c32f3dc4a'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3c/tmp_obj_7ohhmY'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/7b'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/cd/e80926d100867f12cc4398afce3f57b2a3da57'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/cd/tmp_obj_UrcN5u'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/7b/ddbaae576ce801d9308b640289ea93a5edcf48'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/9c/tmp_obj_wEXE4u'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/7b/tmp_obj_rdoAHE'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3c/3a428dc9a428a5d391a12bb54143166e3c884a'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/04/b524fbe7c328880bd91d5375e57aceecfdfc82'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/00'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/9c/tmp_obj_wEXE4u'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/index'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/04'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a1/tmp_obj_eNgcAt'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/index.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/9c'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3d/7765ba846749656e4f2542f5a21833f3d12fe3'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/pack/pack-6673ea6e2c7209e83632886f173ec0bb9cd46c27.pack'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f/27ca910c09e75f4c0101cf01c562f371b2b0a4'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3c'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f/tmp_obj_tS6OzF'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a1/tmp_obj_eNgcAt'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/3c/tmp_obj_7ohhmY'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/00/tmp_obj_SLeliW')}
+2024-06-01 12:45:59,970 - watchfiles.main - DEBUG - 53 changes detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/COMMIT_EDITMSG'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/index.lock'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/91/tmp_obj_i6G5eU'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f/tmp_obj_ghM2Zh'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/91/tmp_obj_i6G5eU'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/91'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d4'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/maintenance.lock'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/b3/tmp_obj_exjghc'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a2'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/HEAD.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a3/tmp_obj_TNBQGr'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0d/85a34b2ef3c8d4d9d39eb60cda3a531909701c'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/logs/refs/heads/new-select-main'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/16/775aebf105d6b2586698dd14b57c2b5c151399'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/c2/tmp_obj_q8mULQ'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d3/fcab6d5270cd44e1ed704abecd1e3750ed362e'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d4/bdaa488f3f17f1bf43b89249873f112471af38'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a2/tmp_obj_vJEztX'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0d'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/maintenance.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a3'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/b3/6269950ad5dc7087095e5375db085789d9b8a2'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d3/tmp_obj_cI2Boi'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/16'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/c2/3b1fd03b2fbc937de0867d799c4039eb3f45bb'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/b3/tmp_obj_exjghc'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a3/tmp_obj_TNBQGr'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f/bcbcbdaf0d23b0651e924493380ab2666a7ff6'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/index'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/refs/heads/new-select-main.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a2/tmp_obj_vJEztX'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d4/tmp_obj_pVjLBe'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d4/tmp_obj_pVjLBe'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0d/tmp_obj_XQD4pC'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/logs/HEAD'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0d/tmp_obj_XQD4pC'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/c2/tmp_obj_q8mULQ'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a3/2c227ee1a1670b42841d4b2dea61be7dfa7c46'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f/tmp_obj_ghM2Zh'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/0f'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/index.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d3/tmp_obj_cI2Boi'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/b3'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/a2/f383a82663fff86eec1ea00f00a8835e793075'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/d3'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/91/8140b541cb3a0ada7f90334e96fc0665cd987a'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/c2'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/HEAD.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/16/tmp_obj_1o3a0w'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/objects/16/tmp_obj_1o3a0w'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/refs/heads/new-select-main.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/refs/heads/new-select-main')}
+2024-06-01 12:46:04,335 - watchfiles.main - DEBUG - 4 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/refs/remotes/origin/new-select-main.lock'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/logs/refs/remotes/origin/new-select-main'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/refs/remotes/origin/new-select-main.lock'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.git/refs/remotes/origin/new-select-main')}
+2024-06-01 15:48:42,868 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-01 15:58:30,027 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-01 16:12:01,596 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-01 16:20:38,308 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-01 17:02:32,698 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-01 17:21:21,330 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 13:27:54,815 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 15:33:46,420 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 15:34:24,813 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): e.juejin.cn:443
+2024-06-03 15:34:26,602 - urllib3.connectionpool - DEBUG - https://e.juejin.cn:443 "POST /resources/github HTTP/1.1" 200 None
+2024-06-03 15:34:26,695 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:34:26,701 - sqlalchemy.engine.Engine - INFO - SELECT languages.id AS languages_id, languages.text AS languages_text, languages.href AS languages_href 
+FROM languages
+2024-06-03 15:34:26,702 - sqlalchemy.engine.Engine - INFO - [generated in 0.00064s] {}
+2024-06-03 15:34:26,724 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/uvicorn/protocols/http/httptools_impl.py", line 405, in run_asgi
+    self.scope, self.receive, self.send
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/fastapi/applications.py", line 270, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/starlette/middleware/base.py", line 107, in __call__
+    await response(scope, receive, send)
+TypeError: 'dict' object is not callable
+2024-06-03 15:34:37,673 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): e.juejin.cn:443
+2024-06-03 15:34:39,123 - urllib3.connectionpool - DEBUG - https://e.juejin.cn:443 "POST /resources/github HTTP/1.1" 200 None
+2024-06-03 15:34:39,183 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:34:39,184 - sqlalchemy.engine.Engine - INFO - SELECT languages.id AS languages_id, languages.text AS languages_text, languages.href AS languages_href 
+FROM languages
+2024-06-03 15:34:39,184 - sqlalchemy.engine.Engine - INFO - [cached since 12.48s ago] {}
+2024-06-03 15:34:39,237 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2024-06-03 15:34:54,631 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): e.juejin.cn:443
+2024-06-03 15:34:54,963 - urllib3.connectionpool - DEBUG - https://e.juejin.cn:443 "POST /resources/v2ex HTTP/1.1" 200 None
+2024-06-03 15:34:58,962 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): e.juejin.cn:443
+2024-06-03 15:34:59,236 - urllib3.connectionpool - DEBUG - https://e.juejin.cn:443 "POST /resources/v2ex HTTP/1.1" 200 None
+2024-06-03 15:35:11,575 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): tenapi.cn:443
+2024-06-03 15:35:15,113 - urllib3.connectionpool - DEBUG - https://tenapi.cn:443 "POST /v2/baiduhot HTTP/1.1" 200 None
+2024-06-03 15:35:23,566 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): tenapi.cn:443
+2024-06-03 15:35:25,330 - urllib3.connectionpool - DEBUG - https://tenapi.cn:443 "POST /v2/douyinhot HTTP/1.1" 200 None
+2024-06-03 15:39:21,268 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 15:43:44,342 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~')}
+2024-06-03 15:43:44,346 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 15:43:44,361 - uvicorn.error - INFO - Shutting down
+2024-06-03 15:43:44,466 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 15:43:44,468 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 15:43:44,470 - uvicorn.error - INFO - Finished server process [90081]
+2024-06-03 15:43:44,839 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:43:46,130 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140216071177968'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140216071177968'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 15:43:46,288 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:43:46,288 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,288 - sqlalchemy.engine.Engine - INFO - [cached since 0.2833s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:43:46,290 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,290 - sqlalchemy.engine.Engine - INFO - [cached since 0.2849s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:43:46,290 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,290 - sqlalchemy.engine.Engine - INFO - [cached since 0.2857s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:43:46,291 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,291 - sqlalchemy.engine.Engine - INFO - [cached since 0.2864s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:43:46,292 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,292 - sqlalchemy.engine.Engine - INFO - [cached since 0.2871s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:43:46,293 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,293 - sqlalchemy.engine.Engine - INFO - [cached since 0.2886s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:43:46,295 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,296 - sqlalchemy.engine.Engine - INFO - [cached since 0.2908s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:43:46,297 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,297 - sqlalchemy.engine.Engine - INFO - [cached since 0.2919s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:43:46,297 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:43:46,356 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:43:46,356 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,356 - sqlalchemy.engine.Engine - INFO - [cached since 0.3515s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:43:46,358 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,358 - sqlalchemy.engine.Engine - INFO - [cached since 0.3534s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:43:46,359 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,359 - sqlalchemy.engine.Engine - INFO - [cached since 0.3544s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:43:46,360 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,360 - sqlalchemy.engine.Engine - INFO - [cached since 0.3552s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:43:46,361 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,361 - sqlalchemy.engine.Engine - INFO - [cached since 0.3559s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:43:46,361 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,361 - sqlalchemy.engine.Engine - INFO - [cached since 0.3566s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:43:46,362 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,362 - sqlalchemy.engine.Engine - INFO - [cached since 0.3571s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:43:46,362 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:43:46,362 - sqlalchemy.engine.Engine - INFO - [cached since 0.3577s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:43:46,363 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:43:46,364 - uvicorn.error - INFO - Started server process [9550]
+2024-06-03 15:43:46,365 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 15:43:46,365 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 15:43:46,396 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:45:21,443 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/classDb.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/classDb.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/classDb.py~')}
+2024-06-03 15:45:21,446 - uvicorn.error - WARNING - WatchFiles detected changes in 'tool/classDb.py'. Reloading...
+2024-06-03 15:45:21,473 - uvicorn.error - INFO - Shutting down
+2024-06-03 15:45:21,580 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 15:45:21,582 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 15:45:21,582 - uvicorn.error - INFO - Finished server process [9550]
+2024-06-03 15:45:21,898 - watchfiles.main - DEBUG - 4 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 15:45:22,757 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/classDb.cpython-37.pyc'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/classDb.cpython-37.pyc.140385980674960'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/classDb.cpython-37.pyc.140385980674960')}
+2024-06-03 15:45:22,911 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:45:22,911 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,911 - sqlalchemy.engine.Engine - INFO - [cached since 0.1848s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:45:22,912 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,912 - sqlalchemy.engine.Engine - INFO - [cached since 0.186s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:45:22,916 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,917 - sqlalchemy.engine.Engine - INFO - [cached since 0.1901s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:45:22,917 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,917 - sqlalchemy.engine.Engine - INFO - [cached since 0.1907s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:45:22,918 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,918 - sqlalchemy.engine.Engine - INFO - [cached since 0.1912s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:45:22,918 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,918 - sqlalchemy.engine.Engine - INFO - [cached since 0.1918s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:45:22,919 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,919 - sqlalchemy.engine.Engine - INFO - [cached since 0.1923s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:45:22,919 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,919 - sqlalchemy.engine.Engine - INFO - [cached since 0.1928s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:45:22,920 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:45:22,969 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:45:22,969 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,970 - sqlalchemy.engine.Engine - INFO - [cached since 0.2431s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:45:22,971 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,971 - sqlalchemy.engine.Engine - INFO - [cached since 0.2444s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:45:22,972 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,972 - sqlalchemy.engine.Engine - INFO - [cached since 0.2454s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:45:22,973 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,973 - sqlalchemy.engine.Engine - INFO - [cached since 0.2462s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:45:22,973 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,973 - sqlalchemy.engine.Engine - INFO - [cached since 0.2469s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:45:22,974 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,974 - sqlalchemy.engine.Engine - INFO - [cached since 0.2476s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:45:22,975 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,975 - sqlalchemy.engine.Engine - INFO - [cached since 0.2488s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:45:22,977 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:22,977 - sqlalchemy.engine.Engine - INFO - [cached since 0.2501s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:45:22,977 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:45:22,978 - uvicorn.error - INFO - Started server process [9634]
+2024-06-03 15:45:22,978 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 15:45:22,978 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 15:45:23,026 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:45:51,670 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~')}
+2024-06-03 15:45:51,672 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 15:45:51,758 - uvicorn.error - INFO - Shutting down
+2024-06-03 15:45:51,861 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 15:45:51,862 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 15:45:51,862 - uvicorn.error - INFO - Finished server process [9634]
+2024-06-03 15:45:52,165 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:45:53,021 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140247466985056'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140247466985056'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 15:45:53,131 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:45:53,131 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,131 - sqlalchemy.engine.Engine - INFO - [cached since 0.1874s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:45:53,134 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,134 - sqlalchemy.engine.Engine - INFO - [cached since 0.1905s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:45:53,135 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,135 - sqlalchemy.engine.Engine - INFO - [cached since 0.1911s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:45:53,135 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,135 - sqlalchemy.engine.Engine - INFO - [cached since 0.1916s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:45:53,136 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,136 - sqlalchemy.engine.Engine - INFO - [cached since 0.1924s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:45:53,139 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,139 - sqlalchemy.engine.Engine - INFO - [cached since 0.1958s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:45:53,140 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,140 - sqlalchemy.engine.Engine - INFO - [cached since 0.1964s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:45:53,141 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,141 - sqlalchemy.engine.Engine - INFO - [cached since 0.1969s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:45:53,141 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:45:53,191 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:45:53,192 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,196 - sqlalchemy.engine.Engine - INFO - [cached since 0.2526s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:45:53,204 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,204 - sqlalchemy.engine.Engine - INFO - [cached since 0.2607s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:45:53,205 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,206 - sqlalchemy.engine.Engine - INFO - [cached since 0.2618s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:45:53,206 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,206 - sqlalchemy.engine.Engine - INFO - [cached since 0.2627s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:45:53,207 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,207 - sqlalchemy.engine.Engine - INFO - [cached since 0.2632s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:45:53,207 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,207 - sqlalchemy.engine.Engine - INFO - [cached since 0.2637s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:45:53,208 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,208 - sqlalchemy.engine.Engine - INFO - [cached since 0.2645s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:45:53,209 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:45:53,209 - sqlalchemy.engine.Engine - INFO - [cached since 0.2658s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:45:53,210 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:45:53,211 - uvicorn.error - INFO - Started server process [9671]
+2024-06-03 15:45:53,211 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 15:45:53,211 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 15:45:53,240 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:46:22,251 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~')}
+2024-06-03 15:46:22,253 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 15:46:22,278 - uvicorn.error - INFO - Shutting down
+2024-06-03 15:46:22,380 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 15:46:22,381 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 15:46:22,381 - uvicorn.error - INFO - Finished server process [9671]
+2024-06-03 15:46:22,698 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:46:23,606 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140612270966368'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140612270966368'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 15:46:23,704 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:46:23,704 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,704 - sqlalchemy.engine.Engine - INFO - [cached since 0.1875s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:46:23,705 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,705 - sqlalchemy.engine.Engine - INFO - [cached since 0.1886s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:46:23,706 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,706 - sqlalchemy.engine.Engine - INFO - [cached since 0.1892s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:46:23,706 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,706 - sqlalchemy.engine.Engine - INFO - [cached since 0.1899s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:46:23,707 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,707 - sqlalchemy.engine.Engine - INFO - [cached since 0.1904s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:46:23,708 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,708 - sqlalchemy.engine.Engine - INFO - [cached since 0.1912s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:46:23,708 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,708 - sqlalchemy.engine.Engine - INFO - [cached since 0.1917s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:46:23,709 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,709 - sqlalchemy.engine.Engine - INFO - [cached since 0.1923s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:46:23,709 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:46:23,759 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:46:23,759 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,759 - sqlalchemy.engine.Engine - INFO - [cached since 0.2428s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:46:23,761 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,761 - sqlalchemy.engine.Engine - INFO - [cached since 0.245s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:46:23,763 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,763 - sqlalchemy.engine.Engine - INFO - [cached since 0.2469s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:46:23,765 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,765 - sqlalchemy.engine.Engine - INFO - [cached since 0.2487s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:46:23,766 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,766 - sqlalchemy.engine.Engine - INFO - [cached since 0.2494s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:46:23,767 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,767 - sqlalchemy.engine.Engine - INFO - [cached since 0.2503s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:46:23,767 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,767 - sqlalchemy.engine.Engine - INFO - [cached since 0.2508s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:46:23,768 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:46:23,768 - sqlalchemy.engine.Engine - INFO - [cached since 0.2513s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:46:23,768 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:46:23,769 - uvicorn.error - INFO - Started server process [9693]
+2024-06-03 15:46:23,769 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 15:46:23,769 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 15:46:23,818 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:48:29,414 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 15:48:29,418 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 15:48:29,517 - uvicorn.error - INFO - Shutting down
+2024-06-03 15:48:29,620 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 15:48:29,621 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 15:48:29,621 - uvicorn.error - INFO - Finished server process [9693]
+2024-06-03 15:48:30,047 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 15:48:30,963 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140307062343264'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140307062343264'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 15:48:31,055 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:48:31,056 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,056 - sqlalchemy.engine.Engine - INFO - [cached since 0.1917s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:48:31,058 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,058 - sqlalchemy.engine.Engine - INFO - [cached since 0.1936s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:48:31,058 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,058 - sqlalchemy.engine.Engine - INFO - [cached since 0.1943s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:48:31,059 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,059 - sqlalchemy.engine.Engine - INFO - [cached since 0.1948s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:48:31,059 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,059 - sqlalchemy.engine.Engine - INFO - [cached since 0.1953s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:48:31,060 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,060 - sqlalchemy.engine.Engine - INFO - [cached since 0.1958s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:48:31,060 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,061 - sqlalchemy.engine.Engine - INFO - [cached since 0.1963s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:48:31,061 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,061 - sqlalchemy.engine.Engine - INFO - [cached since 0.1969s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:48:31,062 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:48:31,111 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 15:48:31,112 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,112 - sqlalchemy.engine.Engine - INFO - [cached since 0.2474s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 15:48:31,113 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,113 - sqlalchemy.engine.Engine - INFO - [cached since 0.249s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 15:48:31,120 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,120 - sqlalchemy.engine.Engine - INFO - [cached since 0.2559s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 15:48:31,123 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,123 - sqlalchemy.engine.Engine - INFO - [cached since 0.2588s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 15:48:31,124 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,124 - sqlalchemy.engine.Engine - INFO - [cached since 0.2597s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 15:48:31,125 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,125 - sqlalchemy.engine.Engine - INFO - [cached since 0.2612s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 15:48:31,126 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,126 - sqlalchemy.engine.Engine - INFO - [cached since 0.2621s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 15:48:31,127 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 15:48:31,127 - sqlalchemy.engine.Engine - INFO - [cached since 0.2629s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 15:48:31,128 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 15:48:31,128 - uvicorn.error - INFO - Started server process [9791]
+2024-06-03 15:48:31,129 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 15:48:31,129 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 15:48:31,173 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:04:53,028 - watchfiles.main - DEBUG - 1 change detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py')}
+2024-06-03 17:04:53,030 - uvicorn.error - WARNING - WatchFiles detected changes in 'tool/msg.py'. Reloading...
+2024-06-03 17:04:53,062 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:04:53,165 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:04:53,166 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:04:53,166 - uvicorn.error - INFO - Finished server process [9791]
+2024-06-03 17:04:53,487 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:04:54,543 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:04:54,543 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,543 - sqlalchemy.engine.Engine - INFO - [cached since 0.1919s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:04:54,544 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,544 - sqlalchemy.engine.Engine - INFO - [cached since 0.1932s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:04:54,545 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,545 - sqlalchemy.engine.Engine - INFO - [cached since 0.1938s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:04:54,546 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,546 - sqlalchemy.engine.Engine - INFO - [cached since 0.1946s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:04:54,547 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,547 - sqlalchemy.engine.Engine - INFO - [cached since 0.1955s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:04:54,547 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,548 - sqlalchemy.engine.Engine - INFO - [cached since 0.1963s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:04:54,548 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,548 - sqlalchemy.engine.Engine - INFO - [cached since 0.197s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:04:54,549 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,549 - sqlalchemy.engine.Engine - INFO - [cached since 0.1979s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:04:54,550 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:04:54,597 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:04:54,597 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,597 - sqlalchemy.engine.Engine - INFO - [cached since 0.2459s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:04:54,598 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,598 - sqlalchemy.engine.Engine - INFO - [cached since 0.2472s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:04:54,599 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,599 - sqlalchemy.engine.Engine - INFO - [cached since 0.2478s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:04:54,600 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,600 - sqlalchemy.engine.Engine - INFO - [cached since 0.2483s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:04:54,600 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,600 - sqlalchemy.engine.Engine - INFO - [cached since 0.2489s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:04:54,601 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,601 - sqlalchemy.engine.Engine - INFO - [cached since 0.2494s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:04:54,601 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,601 - sqlalchemy.engine.Engine - INFO - [cached since 0.2499s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:04:54,602 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:04:54,602 - sqlalchemy.engine.Engine - INFO - [cached since 0.2503s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:04:54,602 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:04:54,603 - uvicorn.error - INFO - Started server process [10155]
+2024-06-03 17:04:54,603 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:04:54,603 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:04:54,620 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:12:50,869 - watchfiles.main - DEBUG - 9 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:12:50,872 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py', 'tool/msg.py'. Reloading...
+2024-06-03 17:12:50,931 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:12:51,032 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:12:51,033 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:12:51,034 - uvicorn.error - INFO - Finished server process [10155]
+2024-06-03 17:12:51,424 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:12:52,508 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140540195391072'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140540195391072'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140539947984480'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140539947984480'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc')}
+2024-06-03 17:12:52,549 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:12:52,549 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,549 - sqlalchemy.engine.Engine - INFO - [cached since 0.2042s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:12:52,550 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,550 - sqlalchemy.engine.Engine - INFO - [cached since 0.2054s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:12:52,551 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,551 - sqlalchemy.engine.Engine - INFO - [cached since 0.2059s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:12:52,551 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,551 - sqlalchemy.engine.Engine - INFO - [cached since 0.2064s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:12:52,552 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,552 - sqlalchemy.engine.Engine - INFO - [cached since 0.2068s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:12:52,552 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,552 - sqlalchemy.engine.Engine - INFO - [cached since 0.2074s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:12:52,553 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,553 - sqlalchemy.engine.Engine - INFO - [cached since 0.2079s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:12:52,554 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,554 - sqlalchemy.engine.Engine - INFO - [cached since 0.2085s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:12:52,554 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:12:52,601 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:12:52,601 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,601 - sqlalchemy.engine.Engine - INFO - [cached since 0.256s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:12:52,602 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,603 - sqlalchemy.engine.Engine - INFO - [cached since 0.2574s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:12:52,603 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,603 - sqlalchemy.engine.Engine - INFO - [cached since 0.258s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:12:52,604 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,604 - sqlalchemy.engine.Engine - INFO - [cached since 0.2585s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:12:52,604 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,604 - sqlalchemy.engine.Engine - INFO - [cached since 0.2589s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:12:52,604 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,604 - sqlalchemy.engine.Engine - INFO - [cached since 0.2594s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:12:52,605 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,605 - sqlalchemy.engine.Engine - INFO - [cached since 0.2599s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:12:52,605 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:12:52,606 - sqlalchemy.engine.Engine - INFO - [cached since 0.2604s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:12:52,606 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:12:52,607 - uvicorn.error - INFO - Started server process [10505]
+2024-06-03 17:12:52,607 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:12:52,607 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:12:52,669 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:17:24,238 - watchfiles.main - DEBUG - 9 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:17:24,241 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py', 'tool/msg.py'. Reloading...
+2024-06-03 17:17:24,314 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:17:24,417 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:17:24,418 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:17:24,419 - uvicorn.error - INFO - Finished server process [10505]
+2024-06-03 17:17:24,714 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:17:25,680 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140307073910368'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140306919593568'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140306919593568'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140307073910368'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc')}
+2024-06-03 17:17:25,718 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:17:25,719 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,719 - sqlalchemy.engine.Engine - INFO - [cached since 0.1951s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:17:25,720 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,720 - sqlalchemy.engine.Engine - INFO - [cached since 0.1961s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:17:25,720 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,720 - sqlalchemy.engine.Engine - INFO - [cached since 0.1966s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:17:25,721 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,721 - sqlalchemy.engine.Engine - INFO - [cached since 0.1972s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:17:25,721 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,722 - sqlalchemy.engine.Engine - INFO - [cached since 0.1979s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:17:25,722 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,722 - sqlalchemy.engine.Engine - INFO - [cached since 0.1985s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:17:25,723 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,723 - sqlalchemy.engine.Engine - INFO - [cached since 0.1991s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:17:25,723 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,723 - sqlalchemy.engine.Engine - INFO - [cached since 0.1997s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:17:25,724 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:17:25,771 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:17:25,771 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,771 - sqlalchemy.engine.Engine - INFO - [cached since 0.2474s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:17:25,772 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,772 - sqlalchemy.engine.Engine - INFO - [cached since 0.2486s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:17:25,773 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,773 - sqlalchemy.engine.Engine - INFO - [cached since 0.2494s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:17:25,774 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,774 - sqlalchemy.engine.Engine - INFO - [cached since 0.2501s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:17:25,774 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,774 - sqlalchemy.engine.Engine - INFO - [cached since 0.2507s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:17:25,775 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,775 - sqlalchemy.engine.Engine - INFO - [cached since 0.2513s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:17:25,775 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,775 - sqlalchemy.engine.Engine - INFO - [cached since 0.2517s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:17:25,776 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:17:25,776 - sqlalchemy.engine.Engine - INFO - [cached since 0.2522s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:17:25,776 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:17:25,777 - uvicorn.error - INFO - Started server process [10768]
+2024-06-03 17:17:25,777 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:17:25,777 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:17:25,843 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:17:28,642 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:35:05,882 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:37:12,081 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~')}
+2024-06-03 17:37:12,084 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 17:37:12,128 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:37:12,230 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:37:12,231 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:37:12,231 - uvicorn.error - INFO - Finished server process [10768]
+2024-06-03 17:37:12,529 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:37:13,444 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140350025778784'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140350025778784'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 17:37:13,553 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:37:13,554 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,554 - sqlalchemy.engine.Engine - INFO - [cached since 0.2038s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:37:13,555 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,555 - sqlalchemy.engine.Engine - INFO - [cached since 0.2052s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:37:13,556 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,556 - sqlalchemy.engine.Engine - INFO - [cached since 0.2059s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:37:13,556 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,556 - sqlalchemy.engine.Engine - INFO - [cached since 0.2064s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:37:13,557 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,557 - sqlalchemy.engine.Engine - INFO - [cached since 0.2072s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:37:13,558 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,558 - sqlalchemy.engine.Engine - INFO - [cached since 0.208s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:37:13,558 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,558 - sqlalchemy.engine.Engine - INFO - [cached since 0.2086s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:37:13,559 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,559 - sqlalchemy.engine.Engine - INFO - [cached since 0.2096s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:37:13,560 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:37:13,609 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:37:13,610 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,610 - sqlalchemy.engine.Engine - INFO - [cached since 0.2601s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:37:13,611 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,611 - sqlalchemy.engine.Engine - INFO - [cached since 0.2612s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:37:13,611 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,612 - sqlalchemy.engine.Engine - INFO - [cached since 0.2617s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:37:13,612 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,612 - sqlalchemy.engine.Engine - INFO - [cached since 0.2622s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:37:13,613 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,613 - sqlalchemy.engine.Engine - INFO - [cached since 0.2627s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:37:13,613 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,613 - sqlalchemy.engine.Engine - INFO - [cached since 0.2632s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:37:13,614 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,614 - sqlalchemy.engine.Engine - INFO - [cached since 0.2637s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:37:13,615 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:37:13,615 - sqlalchemy.engine.Engine - INFO - [cached since 0.265s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:37:13,615 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:37:13,616 - uvicorn.error - INFO - Started server process [11336]
+2024-06-03 17:37:13,616 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:37:13,616 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:37:13,660 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:39:30,612 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:39:30,614 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 17:39:30,634 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:39:30,737 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:39:30,739 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:39:30,739 - uvicorn.error - INFO - Finished server process [11336]
+2024-06-03 17:39:31,050 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:39:31,915 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140675504653920'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140675504653920'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 17:39:32,023 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:39:32,023 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,023 - sqlalchemy.engine.Engine - INFO - [cached since 0.1863s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:39:32,024 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,024 - sqlalchemy.engine.Engine - INFO - [cached since 0.1875s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:39:32,025 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,025 - sqlalchemy.engine.Engine - INFO - [cached since 0.1881s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:39:32,025 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,025 - sqlalchemy.engine.Engine - INFO - [cached since 0.1886s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:39:32,026 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,026 - sqlalchemy.engine.Engine - INFO - [cached since 0.1893s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:39:32,027 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,027 - sqlalchemy.engine.Engine - INFO - [cached since 0.1899s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:39:32,027 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,027 - sqlalchemy.engine.Engine - INFO - [cached since 0.1904s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:39:32,028 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,028 - sqlalchemy.engine.Engine - INFO - [cached since 0.191s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:39:32,028 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:39:32,073 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:39:32,073 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,073 - sqlalchemy.engine.Engine - INFO - [cached since 0.2363s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:39:32,074 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,074 - sqlalchemy.engine.Engine - INFO - [cached since 0.2376s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:39:32,075 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,075 - sqlalchemy.engine.Engine - INFO - [cached since 0.2385s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:39:32,076 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,076 - sqlalchemy.engine.Engine - INFO - [cached since 0.2391s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:39:32,077 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,077 - sqlalchemy.engine.Engine - INFO - [cached since 0.2397s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:39:32,077 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,077 - sqlalchemy.engine.Engine - INFO - [cached since 0.2403s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:39:32,078 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,078 - sqlalchemy.engine.Engine - INFO - [cached since 0.241s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:39:32,078 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:39:32,079 - sqlalchemy.engine.Engine - INFO - [cached since 0.2416s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:39:32,079 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:39:32,080 - uvicorn.error - INFO - Started server process [11443]
+2024-06-03 17:39:32,080 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:39:32,080 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:39:32,126 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:43:37,528 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py')}
+2024-06-03 17:43:37,531 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py', 'tool/msg.py'. Reloading...
+2024-06-03 17:43:37,606 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:43:37,708 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:43:37,710 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:43:37,710 - uvicorn.error - INFO - Finished server process [11443]
+2024-06-03 17:43:38,028 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:43:38,985 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140247754557024'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140247754557024'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140247200474720'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140247200474720'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc')}
+2024-06-03 17:43:38,999 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:43:39,000 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,000 - sqlalchemy.engine.Engine - INFO - [cached since 0.1804s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:43:39,002 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,002 - sqlalchemy.engine.Engine - INFO - [cached since 0.1825s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:43:39,003 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,003 - sqlalchemy.engine.Engine - INFO - [cached since 0.1835s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:43:39,003 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,003 - sqlalchemy.engine.Engine - INFO - [cached since 0.1842s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:43:39,004 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,004 - sqlalchemy.engine.Engine - INFO - [cached since 0.185s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:43:39,005 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,005 - sqlalchemy.engine.Engine - INFO - [cached since 0.1857s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:43:39,006 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,006 - sqlalchemy.engine.Engine - INFO - [cached since 0.1868s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:43:39,007 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,007 - sqlalchemy.engine.Engine - INFO - [cached since 0.1874s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:43:39,007 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:43:39,056 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:43:39,056 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,056 - sqlalchemy.engine.Engine - INFO - [cached since 0.2372s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:43:39,058 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,058 - sqlalchemy.engine.Engine - INFO - [cached since 0.2385s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:43:39,058 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,058 - sqlalchemy.engine.Engine - INFO - [cached since 0.2392s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:43:39,059 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,059 - sqlalchemy.engine.Engine - INFO - [cached since 0.2397s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:43:39,059 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,059 - sqlalchemy.engine.Engine - INFO - [cached since 0.2402s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:43:39,060 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,060 - sqlalchemy.engine.Engine - INFO - [cached since 0.2407s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:43:39,060 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,060 - sqlalchemy.engine.Engine - INFO - [cached since 0.2411s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:43:39,061 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:43:39,061 - sqlalchemy.engine.Engine - INFO - [cached since 0.2416s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:43:39,061 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:43:39,062 - uvicorn.error - INFO - Started server process [11617]
+2024-06-03 17:43:39,062 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:43:39,062 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:43:39,094 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:45:19,408 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:48:35,067 - watchfiles.main - DEBUG - 9 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 17:48:35,071 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py', 'tool/msg.py'. Reloading...
+2024-06-03 17:48:35,094 - uvicorn.error - INFO - Shutting down
+2024-06-03 17:48:35,196 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 17:48:35,198 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 17:48:35,198 - uvicorn.error - INFO - Finished server process [11617]
+2024-06-03 17:48:35,492 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:48:36,336 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140161182778976'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140161182778976'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 17:48:36,446 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140161185191520'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140161185191520')}
+2024-06-03 17:48:36,453 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:48:36,453 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,453 - sqlalchemy.engine.Engine - INFO - [cached since 0.19s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:48:36,454 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,454 - sqlalchemy.engine.Engine - INFO - [cached since 0.1911s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:48:36,455 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,455 - sqlalchemy.engine.Engine - INFO - [cached since 0.1916s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:48:36,455 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,455 - sqlalchemy.engine.Engine - INFO - [cached since 0.1922s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:48:36,456 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,456 - sqlalchemy.engine.Engine - INFO - [cached since 0.1927s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:48:36,456 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,456 - sqlalchemy.engine.Engine - INFO - [cached since 0.1933s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:48:36,457 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,457 - sqlalchemy.engine.Engine - INFO - [cached since 0.1938s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:48:36,457 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,457 - sqlalchemy.engine.Engine - INFO - [cached since 0.1942s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:48:36,458 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:48:36,508 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 17:48:36,508 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,508 - sqlalchemy.engine.Engine - INFO - [cached since 0.2453s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 17:48:36,509 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,510 - sqlalchemy.engine.Engine - INFO - [cached since 0.2464s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 17:48:36,510 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,510 - sqlalchemy.engine.Engine - INFO - [cached since 0.2471s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 17:48:36,511 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,511 - sqlalchemy.engine.Engine - INFO - [cached since 0.2477s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 17:48:36,511 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,511 - sqlalchemy.engine.Engine - INFO - [cached since 0.2482s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 17:48:36,512 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,512 - sqlalchemy.engine.Engine - INFO - [cached since 0.2487s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 17:48:36,512 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,512 - sqlalchemy.engine.Engine - INFO - [cached since 0.2492s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 17:48:36,513 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 17:48:36,513 - sqlalchemy.engine.Engine - INFO - [cached since 0.2498s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 17:48:36,513 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 17:48:36,514 - uvicorn.error - INFO - Started server process [11857]
+2024-06-03 17:48:36,514 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 17:48:36,514 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 17:48:36,555 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 17:58:40,849 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 18:06:12,813 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 18:06:12,815 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 18:06:12,889 - uvicorn.error - INFO - Shutting down
+2024-06-03 18:06:12,991 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 18:06:12,992 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 18:06:12,992 - uvicorn.error - INFO - Finished server process [11857]
+2024-06-03 18:06:13,281 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 18:06:14,190 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140441958631008'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140441958631008'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 18:06:14,283 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 18:06:14,284 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,284 - sqlalchemy.engine.Engine - INFO - [cached since 0.2027s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 18:06:14,285 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,285 - sqlalchemy.engine.Engine - INFO - [cached since 0.2037s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 18:06:14,285 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,286 - sqlalchemy.engine.Engine - INFO - [cached since 0.2043s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 18:06:14,286 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,286 - sqlalchemy.engine.Engine - INFO - [cached since 0.2049s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 18:06:14,287 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,287 - sqlalchemy.engine.Engine - INFO - [cached since 0.2057s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 18:06:14,288 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,288 - sqlalchemy.engine.Engine - INFO - [cached since 0.2066s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 18:06:14,292 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,293 - sqlalchemy.engine.Engine - INFO - [cached since 0.2112s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 18:06:14,293 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,293 - sqlalchemy.engine.Engine - INFO - [cached since 0.2119s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 18:06:14,294 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 18:06:14,344 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 18:06:14,344 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,344 - sqlalchemy.engine.Engine - INFO - [cached since 0.2627s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 18:06:14,345 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,345 - sqlalchemy.engine.Engine - INFO - [cached since 0.264s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 18:06:14,346 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,346 - sqlalchemy.engine.Engine - INFO - [cached since 0.2648s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 18:06:14,347 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,347 - sqlalchemy.engine.Engine - INFO - [cached since 0.2654s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 18:06:14,347 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,347 - sqlalchemy.engine.Engine - INFO - [cached since 0.2662s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 18:06:14,348 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,348 - sqlalchemy.engine.Engine - INFO - [cached since 0.2668s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 18:06:14,348 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,349 - sqlalchemy.engine.Engine - INFO - [cached since 0.2672s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 18:06:14,349 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:06:14,349 - sqlalchemy.engine.Engine - INFO - [cached since 0.2678s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 18:06:14,349 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 18:06:14,350 - uvicorn.error - INFO - Started server process [12353]
+2024-06-03 18:06:14,350 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 18:06:14,350 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 18:06:14,406 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 18:07:37,404 - watchfiles.main - DEBUG - 9 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/msg.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 18:07:37,406 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py', 'tool/msg.py'. Reloading...
+2024-06-03 18:07:37,461 - uvicorn.error - INFO - Shutting down
+2024-06-03 18:07:37,563 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 18:07:37,564 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 18:07:37,564 - uvicorn.error - INFO - Finished server process [12353]
+2024-06-03 18:07:37,878 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 18:07:38,793 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140663671932512'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140663671932512'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 18:07:38,899 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140663430092384'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/tool/__pycache__/msg.cpython-37.pyc.140663430092384')}
+2024-06-03 18:07:38,906 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 18:07:38,906 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,906 - sqlalchemy.engine.Engine - INFO - [cached since 0.1946s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 18:07:38,907 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,907 - sqlalchemy.engine.Engine - INFO - [cached since 0.1956s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 18:07:38,908 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,908 - sqlalchemy.engine.Engine - INFO - [cached since 0.1962s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 18:07:38,908 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,908 - sqlalchemy.engine.Engine - INFO - [cached since 0.1967s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 18:07:38,909 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,909 - sqlalchemy.engine.Engine - INFO - [cached since 0.1971s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 18:07:38,909 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,909 - sqlalchemy.engine.Engine - INFO - [cached since 0.1976s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 18:07:38,910 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,910 - sqlalchemy.engine.Engine - INFO - [cached since 0.198s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 18:07:38,910 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,910 - sqlalchemy.engine.Engine - INFO - [cached since 0.1984s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 18:07:38,911 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 18:07:38,956 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 18:07:38,957 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,957 - sqlalchemy.engine.Engine - INFO - [cached since 0.2452s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 18:07:38,958 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,958 - sqlalchemy.engine.Engine - INFO - [cached since 0.2464s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 18:07:38,959 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,959 - sqlalchemy.engine.Engine - INFO - [cached since 0.247s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 18:07:38,959 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,959 - sqlalchemy.engine.Engine - INFO - [cached since 0.2476s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 18:07:38,960 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,960 - sqlalchemy.engine.Engine - INFO - [cached since 0.2481s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 18:07:38,960 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,960 - sqlalchemy.engine.Engine - INFO - [cached since 0.2486s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 18:07:38,961 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,961 - sqlalchemy.engine.Engine - INFO - [cached since 0.2491s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 18:07:38,961 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:38,961 - sqlalchemy.engine.Engine - INFO - [cached since 0.2496s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 18:07:38,962 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 18:07:38,962 - uvicorn.error - INFO - Started server process [12438]
+2024-06-03 18:07:38,962 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 18:07:38,963 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 18:07:39,007 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 18:07:51,743 - watchfiles.main - DEBUG - 6 changes detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~'), (<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/views.py~'), (<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/.idea/workspace.xml~')}
+2024-06-03 18:07:51,744 - uvicorn.error - WARNING - WatchFiles detected changes in 'app/users/views.py'. Reloading...
+2024-06-03 18:07:51,837 - uvicorn.error - INFO - Shutting down
+2024-06-03 18:07:51,938 - uvicorn.error - INFO - Waiting for application shutdown.
+2024-06-03 18:07:51,939 - uvicorn.error - INFO - Application shutdown complete.
+2024-06-03 18:07:51,939 - uvicorn.error - INFO - Finished server process [12438]
+2024-06-03 18:07:52,194 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
+2024-06-03 18:07:52,995 - watchfiles.main - DEBUG - 3 changes detected: {(<Change.deleted: 3>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140434435229280'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc.140434435229280'), (<Change.added: 1>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app/users/__pycache__/views.cpython-37.pyc')}
+2024-06-03 18:07:53,083 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 18:07:53,084 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,084 - sqlalchemy.engine.Engine - INFO - [cached since 0.1716s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 18:07:53,085 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,085 - sqlalchemy.engine.Engine - INFO - [cached since 0.1728s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 18:07:53,086 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,086 - sqlalchemy.engine.Engine - INFO - [cached since 0.1736s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 18:07:53,086 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,087 - sqlalchemy.engine.Engine - INFO - [cached since 0.1742s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 18:07:53,087 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,087 - sqlalchemy.engine.Engine - INFO - [cached since 0.1748s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 18:07:53,088 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,088 - sqlalchemy.engine.Engine - INFO - [cached since 0.1754s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 18:07:53,088 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,088 - sqlalchemy.engine.Engine - INFO - [cached since 0.1759s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 18:07:53,089 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,089 - sqlalchemy.engine.Engine - INFO - [cached since 0.1763s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 18:07:53,089 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 18:07:53,131 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2024-06-03 18:07:53,132 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,132 - sqlalchemy.engine.Engine - INFO - [cached since 0.2194s ago] {'table_schema': 'lottery', 'table_name': 'email'}
+2024-06-03 18:07:53,133 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,133 - sqlalchemy.engine.Engine - INFO - [cached since 0.2203s ago] {'table_schema': 'lottery', 'table_name': 'copy_email'}
+2024-06-03 18:07:53,133 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,133 - sqlalchemy.engine.Engine - INFO - [cached since 0.2208s ago] {'table_schema': 'lottery', 'table_name': 'languages'}
+2024-06-03 18:07:53,134 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,134 - sqlalchemy.engine.Engine - INFO - [cached since 0.2213s ago] {'table_schema': 'lottery', 'table_name': 'account'}
+2024-06-03 18:07:53,134 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,134 - sqlalchemy.engine.Engine - INFO - [cached since 0.222s ago] {'table_schema': 'lottery', 'table_name': 'user_posts'}
+2024-06-03 18:07:53,135 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,135 - sqlalchemy.engine.Engine - INFO - [cached since 0.2226s ago] {'table_schema': 'lottery', 'table_name': 'user_history'}
+2024-06-03 18:07:53,135 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,136 - sqlalchemy.engine.Engine - INFO - [cached since 0.2232s ago] {'table_schema': 'lottery', 'table_name': 'signature'}
+2024-06-03 18:07:53,136 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2024-06-03 18:07:53,136 - sqlalchemy.engine.Engine - INFO - [cached since 0.2238s ago] {'table_schema': 'lottery', 'table_name': 'share_signature'}
+2024-06-03 18:07:53,137 - sqlalchemy.engine.Engine - INFO - COMMIT
+2024-06-03 18:07:53,137 - uvicorn.error - INFO - Started server process [12463]
+2024-06-03 18:07:53,137 - uvicorn.error - INFO - Waiting for application startup.
+2024-06-03 18:07:53,137 - uvicorn.error - INFO - Application startup complete.
+2024-06-03 18:07:53,160 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, '/Users/hooksvue/Desktop/python3.7demo/py-lottery/app.log')}
