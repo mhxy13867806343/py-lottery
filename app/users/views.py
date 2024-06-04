@@ -4,11 +4,11 @@ from sqlalchemy.orm import Session
 import time
 from datetime import datetime, timedelta
 
-from tool.dbConnectionConfig import sendBindEmail, getVerifyEmail
+from tool.dbConnectionConfig import sendBindEmail, getVerifyEmail, verification_data
 
 from tool.dbTools import getValidate_email
 from tool.msg import msg
-from .model import AccountInputFirst, AccountInputEamail
+from .model import AccountInputFirst, AccountInputEamail, AccountInputEamail1
 from tool.db import getDbSession
 from tool import token as createToken
 from models.user.model import AccountInputs
@@ -26,8 +26,6 @@ def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
     password:str=acc.password
     if not account or not password:
         return httpStatus(message=msg.get('error2'), data={})
-    if not validate_pwd(password):
-        return httpStatus(message=msg.get("pwdstatus"), data={})
     existing_account = db.query(AccountInputs).filter(AccountInputs.account == account).first()
     if existing_account is None:
         rTime = int(time.time())
@@ -95,52 +93,57 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("login1"), data={})
 @userApp.post('/info',description="获取用户信息",summary="获取用户信息")
 def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-    redis_key = f"user-{user.account}"  # 构造一个基于用户ID的Redis键
 
-    # 尝试从Redis获取用户信息
-    redis_user_data = redis_db.get(redis_key)
-    if redis_user_data:
-        if redis_user_data.get('status')==1:
-            return httpStatus(message=msg.get('accountstatus'), data={})
-        # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
-        data_source = {
-            "account": redis_user_data["account"],
-            "name": redis_user_data["name"],
-            "type": redis_user_data["type"],
-            "createTime": redis_user_data["createTime"],
-            "lastTime": redis_user_data["lastTime"],
-            "id": redis_user_data["sub"],
-            "isPermissions": 1,
-            "email": redis_user_data.get("email"),
-            "status": redis_user_data["status"]
-        }
-    else:
-        user = session.query(AccountInputs).filter(AccountInputs.id == user.id).first()
-        if user is None:
-            return httpStatus(message=msg.get("error3"), data={})
-        if user.status==1:
-            return httpStatus(message=msg.get('accountstatus'), data={})
-        data_source = {
-            "account": user.account,
-            "name": user.name,
-            "type": user.type,
-            "createTime": user.create_time,
-            "lastTime": user.last_time,
-            "id": user.id,
-            "isPermissions": 1,
-            "status": user.status,
-            "email": user.email
-        }
 
+    if user:
+        datas=session.query(AccountInputs).filter(AccountInputs.id == user).first()
+        redis_key = f"user-{datas.account}"  # 构造一个基于用户ID的Redis键
+        # 尝试从Redis获取用户信息
+        redis_user_data = redis_db.get(redis_key)
+
+        if redis_user_data:
+
+            if redis_user_data.get('status') == 1:
+                return httpStatus(message=msg.get('accountstatus'), data={})
+            # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
+            data_source = {
+                "account": redis_user_data["account"],
+                "name": redis_user_data["name"],
+                "type": redis_user_data["type"],
+                "createTime": redis_user_data["createTime"],
+                "lastTime": redis_user_data["lastTime"],
+                "id": user,
+                "isPermissions": 1,
+                "email": redis_user_data["email"],
+                "status": redis_user_data["status"]
+            }
+            return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
+    user = session.query(AccountInputs).filter(AccountInputs.id == user).first()
+    if user is None:
+        return httpStatus(message=msg.get("error3"), data={})
+    if user.status == 1:
+        return httpStatus(message=msg.get('accountstatus'), data={})
+    data_source = {
+        "account": user.account,
+        "name": user.name,
+        "type": user.type,
+        "createTime": user.create_time,
+        "lastTime": user.last_time,
+        "id": user.id,
+        "isPermissions": 1,
+        "status": user.status,
+        "email": user.email
+    }
     return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
 
 
 @userApp.post('/update',description="更新用户信息",summary="更新用户信息")
 def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+
     name = params.name
     if not name:
         return httpStatus(message=msg.get("error4"), data={})
-    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
+    db=session.query(AccountInputs).filter(AccountInputs.id==user).first()
     if db is None:
         return httpStatus(message=msg.get("error5"), data={})
     if db.status == 1:
@@ -148,7 +151,7 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
     if db.name==name:
         return httpStatus(message=msg.get("error51"), data={})
     try:
-        user.name = name
+        db.name=name
         session.commit()
         return httpStatus(code=status.HTTP_200_OK, message=msg.get("update0"), data={})
     except SQLAlchemyError as e:
@@ -156,8 +159,10 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("update1"), data={})
 @userApp.post('/logout',description="用户退出",summary="用户退出")
 def logout(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-    redis_key = f"user-{user.account}"
-    db=session.query(AccountInputs).filter(AccountInputs.id==user.id).first()
+    db = session.query(AccountInputs).filter(AccountInputs.id == user).first()
+    redis_key = f"user-{db.account}"
+    if not redis_key:
+        return httpStatus(message=msg.get("loguto0"), data={})
     if db is None:
         return httpStatus(message=msg.get("loguto0"), data={})
     if db.status == 1:
@@ -166,31 +171,39 @@ def logout(user: AccountInputs = Depends(createToken.pase_token),session: Sessio
     return httpStatus(code=status.HTTP_200_OK, message=msg.get("login01"), data={})
 
 @userApp.post("/bind",description="绑定用户邮箱",summary="绑定用户邮箱")
-def addEmail(params: AccountInputEamail, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-    email = params.email
+async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    email=params.email
+    code=params.code
     if not email:
         return httpStatus(message=msg.get("email00"), data={})
-    result:bool=getValidate_email(email)
+    result:bool=getValidate_email(email) #验证邮箱格式
     if not result:
         return httpStatus(message=msg.get("email01"), data={})
-    resultSql = session.query(AccountInputs).filter(AccountInputs.id == user.id)
+    if not code:
+        return httpStatus(message=msg.get("email023"), data={})
+    result: dict = await getVerifyEmail(email, code)
+    if not result:
+        return httpStatus(message=msg.get("email024"), data={})
+    if result.get('code')==-800 or result.get('code')==-801 or  result.get('code')==-802:
+        return httpStatus(message=result.get("message"), data={})
+    resultSql = session.query(AccountInputs).filter(AccountInputs.id == user)
     if not resultSql.first():
         return httpStatus(message=msg.get("email02"), data={})
     if resultSql.first().status == 1:
         return httpStatus(message=msg.get("accountstatus"), data={})
-    count=resultSql.count()
-    if count>0:
+    count=resultSql.first().email
+    if len(count)>0:
         return httpStatus(message=msg.get("email021"), data={})
     try:
-        sendEmail = sendBindEmail(email)
-        print(sendEmail)
-        print(dir(sendEmail))
-        message = sendEmail.get("message")
-        verification_data = sendEmail.get("verification_data")[email]
-        code = sendEmail.get("code")
-        if message and verification_data and code:
+        if result.get("code")==200:
             resultSql.first().email=email
             session.commit()
+            redis_key = f"user-{resultSql.first().account}"  # 构造一个基于用户ID的Redis键
+            user_data = redis_db.get(redis_key)
+            print(user_data,66666666)
+            if user_data:
+                user_data["email"]=email
+                redis_db.set(redis_key, user_data)
             return httpStatus(code=status.HTTP_200_OK, message=msg.get("email09901"), data={})
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("email09902"), data={})
     except SQLAlchemyError as e:
@@ -198,26 +211,25 @@ def addEmail(params: AccountInputEamail, user: AccountInputs = Depends(createTok
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("email09902"), data={})
 
 @userApp.post("/verify",description="验证用户邮箱",summary="验证用户邮箱")
-def verifyEmail(email:str="",code:str="", user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-    if not email:
+async def verifyEmail(params:AccountInputEamail, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not params.email:
         return httpStatus(message=msg.get("email00"), data={})
-    if email!=user.email:
-        return httpStatus(message=msg.get("email022"), data={})
+    sendEmail =  sendBindEmail(params.email)
+    message = sendEmail.get("message")
+    code = sendEmail.get("code")
     if not code:
         return httpStatus(message=msg.get("email023"), data={})
-    result:dict=getVerifyEmail(email, code)
-    code=result.get("code")
-    message=result.get("message")
-    if code!=0:
-        return httpStatus(message=message, code=code,data={})
-    return httpStatus(code=status.HTTP_200_OK, message=message, data={})
+    if code!=200:
+        return httpStatus(message=message, data={})
+    return httpStatus(code=status.HTTP_200_OK, message="发送成功", data={})
 
 
 @userApp.post("/resetpwd",description="重置密码",summary="重置密码")
 def resetPwd(email:str="",code:str="",password:str="", user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
     if not email:
         return httpStatus(message=msg.get("email00"), data={})
-    if email!=user.email:
+    db=session.query(AccountInputs).filter(AccountInputs.id==user).first()
+    if email!=db.email:
         return httpStatus(message=msg.get("email022"), data={})
     if not password:
         return httpStatus(message=msg.get("email09903"), data={})
@@ -230,10 +242,10 @@ def resetPwd(email:str="",code:str="",password:str="", user: AccountInputs = Dep
     message = result.get("message")
     if code != 0:
         return httpStatus(message=message, code=code, data={})
-    if user.status==1:
+    if db.status==1:
         return httpStatus(message=msg.get("accountstatus"), data={})
     try:
-        resultSql = session.query(AccountInputs).filter(AccountInputs.id == user.id)
+        resultSql = session.query(AccountInputs).filter(AccountInputs.id == db.id)
         if not resultSql.first(): #找不到用户
             return httpStatus(message=msg.get("error3"), data={})
         if resultSql.first().status == 1:
