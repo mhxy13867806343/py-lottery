@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 import time
 from datetime import datetime, timedelta
 
-from tool.dbConnectionConfig import sendBindEmail, getVerifyEmail, verification_data
+from tool.dbConnectionConfig import sendBindEmail, getVerifyEmail
 
 from tool.dbTools import getValidate_email
 from tool.msg import msg
@@ -40,6 +40,21 @@ def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
     return httpStatus(message=msg.get("error1"), data={})
 
 
+#获取用户信息
+def getUserInfoLogin(redis_user_data,id):
+    data = {
+        "account": redis_user_data["account"],
+        "name": redis_user_data["name"],
+        "type": int(redis_user_data["type"]),
+        "createTime":int( redis_user_data["createTime"]),
+        "lastTime": int(redis_user_data["lastTime"]),
+        "id": id,
+        "isPermissions": 1,
+        "email": redis_user_data["email"],
+        "status": redis_user_data["status"],
+        "emailStatus": int(redis_user_data["emailStatus"])
+    }
+    return data
 @userApp.post('/login', description="登录用户信息", summary="登录用户信息")
 def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
     account = user_input.account
@@ -62,6 +77,7 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
                 user_data['createTime']=int(user_data['createTime'])
                 user_data['lastTime']=int(user_data['lastTime'])
                 user_data["email"]=user_data.get("email")
+                user_data["emailStatus"]=int(user_data.get("emailStatus"))
                 return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=user_data)
             return httpStatus(message=msg.get("tokenstatus"), data={})
         except Exception as e:
@@ -83,7 +99,8 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
             "lastTime": int(existing_user.last_time),
             "name": existing_user.name,
             "status": int(existing_user.status),
-            "email": existing_user.email
+            "email": existing_user.email,
+            "emailStatus": int(existing_user.emailStatus)
         }
         # 将用户信息保存到Redis
         redis_db.set(newAccount, user_data)  # 注意调整为合适的键值和数据
@@ -91,6 +108,9 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
     except Exception as e:
         session.rollback()
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("login1"), data={})
+
+
+
 @userApp.post('/info',description="获取用户信息",summary="获取用户信息")
 def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
 
@@ -106,34 +126,14 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
             if redis_user_data.get('status') == 1:
                 return httpStatus(message=msg.get('accountstatus'), data={})
             # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
-            data_source = {
-                "account": redis_user_data["account"],
-                "name": redis_user_data["name"],
-                "type": redis_user_data["type"],
-                "createTime": redis_user_data["createTime"],
-                "lastTime": redis_user_data["lastTime"],
-                "id": user,
-                "isPermissions": 1,
-                "email": redis_user_data["email"],
-                "status": redis_user_data["status"]
-            }
+            data_source = getUserInfoLogin(redis_user_data,user)
             return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
     user = session.query(AccountInputs).filter(AccountInputs.id == user).first()
     if user is None:
         return httpStatus(message=msg.get("error3"), data={})
     if user.status == 1:
         return httpStatus(message=msg.get('accountstatus'), data={})
-    data_source = {
-        "account": user.account,
-        "name": user.name,
-        "type": user.type,
-        "createTime": user.create_time,
-        "lastTime": user.last_time,
-        "id": user.id,
-        "isPermissions": 1,
-        "status": user.status,
-        "email": user.email
-    }
+    data_source = getUserInfoLogin(user, user.id)
     return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
 
 
@@ -153,6 +153,10 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
     try:
         db.name=name
         session.commit()
+        newAccount = f"user-{db.account}"  # redis key
+        redis_db.set(newAccount,{
+            "name":name,
+        })
         return httpStatus(code=status.HTTP_200_OK, message=msg.get("update0"), data={})
     except SQLAlchemyError as e:
         session.rollback()
@@ -181,7 +185,7 @@ async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(cre
         return httpStatus(message=msg.get("email01"), data={})
     if not code:
         return httpStatus(message=msg.get("email023"), data={})
-    result: dict = await getVerifyEmail(email, code)
+    result: dict = await getVerifyEmail(email,code, user)
     if not result:
         return httpStatus(message=msg.get("email024"), data={})
     if result.get('code')==-800 or result.get('code')==-801 or  result.get('code')==-802:
@@ -197,12 +201,13 @@ async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(cre
     try:
         if result.get("code")==200:
             resultSql.first().email=email
+            resultSql.first().emailStatus=1
             session.commit()
             redis_key = f"user-{resultSql.first().account}"  # 构造一个基于用户ID的Redis键
             user_data = redis_db.get(redis_key)
-            print(user_data,66666666)
             if user_data:
                 user_data["email"]=email
+                user_data["emailStatus"]=1
                 redis_db.set(redis_key, user_data)
             return httpStatus(code=status.HTTP_200_OK, message=msg.get("email09901"), data={})
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("email09902"), data={})
@@ -214,7 +219,7 @@ async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(cre
 async def verifyEmail(params:AccountInputEamail, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
     if not params.email:
         return httpStatus(message=msg.get("email00"), data={})
-    sendEmail =  sendBindEmail(params.email)
+    sendEmail =  sendBindEmail(params.email,user)
     message = sendEmail.get("message")
     code = sendEmail.get("code")
     if not code:
@@ -237,7 +242,7 @@ def resetPwd(email:str="",code:str="",password:str="", user: AccountInputs = Dep
         return httpStatus(message=msg.get("pwdstatus"), data={})
     if not code:
         return httpStatus(message=msg.get("email09904"), data={})
-    result: dict = getVerifyEmail(email, code)
+    result: dict = getVerifyEmail(email, code,db.id)
     code = result.get("code")
     message = result.get("message")
     if code != 0:
