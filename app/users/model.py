@@ -5,3 +5,6 @@ class AccountInputFirst(BaseModel):
     name: Optional[str] = None
 class AccountInputEamail(BaseModel):
     email: Optional[str] = None
+
+class AccountInputEamail1(AccountInputEamail):
+    code: Optional[str] = None

@@ -1,44 +1,76 @@
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+
 from fastapi import status
-from tool.emailTools import emailTools
-import secrets
 from datetime import datetime, timedelta
+import secrets
 
-conf = ConnectionConfig(
-    MAIL_USERNAME = emailTools.get("to_email"),
-    MAIL_PASSWORD = emailTools.get("to_main_password"),
-    MAIL_FROM = emailTools.get("to_email"),
-    MAIL_PORT = emailTools.get("to_serverPort"),
-    MAIL_SERVER =emailTools.get("to_serverHost"),
-    MAIL_FROM_NAME="Desired Name",
-    MAIL_STARTTLS = True,
-    MAIL_SSL_TLS = False,
-    USE_CREDENTIALS = True,
-    VALIDATE_CERTS = True
-)
-
+import smtplib
+from email.mime.text import MIMEText
+from email.utils import formataddr
+from tool.emailTools import emailTools
 verification_data = {}
-async def sendBindEmail(email:str=""):
+import random
+import string
+
+def generate_random_code():
+    all_chars = string.ascii_letters + string.digits  # 包含所有字母和数字
+    code = ''.join(random.choice(all_chars) for _ in range(6))
+    return code
+def sendBindEmail(from_email: str = ""):
+    now = datetime.now()
+
+    # 检查是否已经发送过验证码，并且在5分钟内
+    if from_email in verification_data:
+        last_sent = verification_data[from_email]['timestamp']
+        if (now - last_sent) < timedelta(minutes=5):
+            return {
+                "code": -80008,
+                "result": {},
+                "message": "验证码已发送到您的邮箱中去了，请5分钟后再试"
+            }
+
+
     # 生成一个随机验证码
-    code = secrets.token_urlsafe(8)
-    # 存储验证码和邮箱
-    verification_data[email] = code
+    code = generate_random_code()
 
-    message = MessageSchema(
-        subject="验证您的邮箱地址",
-        recipients=[email],
-        body=f"请查询您的邮箱中的验证码: {code}，有效期为5分钟，请尽快验证。",
-        subtype="html"
-    )
-
-    fm = FastMail(conf)
-    await fm.send_message(message)
-
-    return {
-        "message":message,
-        "verification_data":verification_data,
-        "code":code
+    # 更新存储验证码和时间戳
+    verification_data[from_email] = {
+        "code": code,
+        "timestamp": now
     }
+
+    # 创建邮件内容
+    message = MIMEText(f"\n您的验证码是: {code}", 'plain', 'utf-8')
+    to_email = emailTools.get('to_email')
+    server_host = emailTools.get('to_serverHost')
+    server_port = emailTools.get('to_serverPort')
+    main_password = emailTools.get('to_main_password')
+
+    # 设置邮件头部信息
+    message['To'] = formataddr(('Recipient Name', to_email))
+    message['From'] = formataddr(('Current User', from_email))
+    message['Subject'] = "发送您的验证码"
+
+    # 连接SMTP服务器并发送邮件
+    try:
+        server = smtplib.SMTP_SSL(server_host, server_port)
+        server.login(from_email, main_password)
+        server.set_debuglevel(1)  # 启用调试输出
+        server.sendmail(from_email, [to_email], message.as_string())
+        response = {
+            "code": status.HTTP_200_OK,
+            "result": {},
+            "message": "发送成功"
+        }
+    except smtplib.SMTPException as e:
+        print("邮件发送失败:", e)
+        response = {
+            "code": -800,
+            "result": {},
+            "message": "发送失败"
+        }
+    finally:
+        server.quit()
+        return response
 
 async def getVerifyEmail(email:str="", code: str = ""):
     if email not in verification_data:
