@@ -13,7 +13,7 @@ class AccountInputs(Base): # 用户信息
     last_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     email = Column(String(100), nullable=False, default='')
     name=Column(String(30),nullable=False,default='管理员')
-
+    emailStatus = Column(Integer, nullable=False, default=0) #0未绑定 1已绑定
     status = Column(Integer, nullable=False, default=0) # 0:正常 1:禁用
     def __repr__(self):
         return f'<AccountInputs {self.account}>'
