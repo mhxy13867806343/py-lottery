@@ -3,7 +3,7 @@ from .model import Email
 
 def getEmailList(email:str,session:Session,pageNum:int=1,pageSize:int=20)->list:
     resultSum = (pageNum - 1) * pageSize
-    result = session.query(Email).filter(Email.email==email).offset(resultSum).limit(pageSize).all()
+    result = session.query(Email).filter(Email.email==email).order_by(Email.create_time.desc()).offset(resultSum).limit(pageSize).all()
     return result
 
 #获取总条数
