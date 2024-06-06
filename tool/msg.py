@@ -31,5 +31,9 @@ msg:dict={
     "email09903":"密码不能为空,请输入密码",
     "email09904":"验证码不能为空,请输入验证码",
     "updatdpwd":"更新成功",
+    "updatdpwd1":"更新失败",
     "updatdpwd001":"密码修改失败",
+    "changeVerifyCode":"验证成功",
+    "changeVerifyCode1":"验证失败",
+    "verify0":"未进行验证,请先验证",
 }

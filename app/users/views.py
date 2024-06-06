@@ -8,7 +8,7 @@ from tool.dbConnectionConfig import sendBindEmail, getVerifyEmail
 
 from tool.dbTools import getValidate_email
 from tool.msg import msg
-from .model import AccountInputFirst, AccountInputEamail, AccountInputEamail1
+from .model import AccountInputFirst, AccountInputEamail, AccountInputEamail1, AccountInputEamail2
 from tool.db import getDbSession
 from tool import token as createToken
 from models.user.model import AccountInputs
@@ -215,7 +215,9 @@ async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(cre
         session.rollback()
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("email09902"), data={})
 
-@userApp.post("/verify",description="验证用户邮箱",summary="验证用户邮箱")
+
+
+@userApp.post("/verify",description="发送用户邮箱验证码",summary="发送用户邮箱验证码")
 async def verifyEmail(params:AccountInputEamail, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
     if not params.email:
         return httpStatus(message=msg.get("email00"), data={})
@@ -228,9 +230,35 @@ async def verifyEmail(params:AccountInputEamail, user: AccountInputs = Depends(c
         return httpStatus(message=message, data={})
     return httpStatus(code=status.HTTP_200_OK, message="发送成功", data={})
 
+@userApp.post("/verifyCode",description="验证用户邮箱验证码",summary="验证用户邮箱验证码")
+async def verifyCode(params:AccountInputEamail1, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    email=params.email
+    code=params.code
+    if not email:
+        return httpStatus(message=msg.get("email00"), data={})
+    if not code:
+        return httpStatus(message=msg.get("email023"), data={})
+
+    db = session.query(AccountInputs).filter(AccountInputs.id == user).first()
+
+    if email!=db.email:
+        return httpStatus(message=msg.get("email022"), data={})
+
+    result: dict = await getVerifyEmail(email, code, db.id)
+    message = result.get("message")
+    if db.status==1:
+        return httpStatus(message=msg.get("accountstatus"), data={})
+    if db.emailStatus==0:
+        return httpStatus(message=msg.get("email001"), data={})
+    if code != 0:
+        return httpStatus(message=message, code=code, data={})
+    return httpStatus(message=msg.get("changeVerifyCode1"), data={})
 
 @userApp.post("/resetpwd",description="重置密码",summary="重置密码")
-def resetPwd(email:str="",code:str="",password:str="", user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+async def resetPwd(params:AccountInputEamail2, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    email=params.email
+    code=params.code
+    password=params.password
     if not email:
         return httpStatus(message=msg.get("email00"), data={})
     db=session.query(AccountInputs).filter(AccountInputs.id==user).first()
@@ -238,28 +266,22 @@ def resetPwd(email:str="",code:str="",password:str="", user: AccountInputs = Dep
         return httpStatus(message=msg.get("email022"), data={})
     if not password:
         return httpStatus(message=msg.get("email09903"), data={})
-    if not validate_pwd(password):
-        return httpStatus(message=msg.get("pwdstatus"), data={})
     if not code:
         return httpStatus(message=msg.get("email09904"), data={})
-    result: dict = getVerifyEmail(email, code,db.id)
+    result: dict =await getVerifyEmail(email, code,db.id)
     code = result.get("code")
     message = result.get("message")
-    if code != 0:
-        return httpStatus(message=message, code=code, data={})
     if db.status==1:
         return httpStatus(message=msg.get("accountstatus"), data={})
-    try:
-        resultSql = session.query(AccountInputs).filter(AccountInputs.id == db.id)
-        if not resultSql.first(): #找不到用户
-            return httpStatus(message=msg.get("error3"), data={})
-        if resultSql.first().status == 1:
-            return httpStatus(message=msg.get("accountstatus"), data={})
-        if not resultSql.first().email  or len(resultSql.first().email)==0:
-            return httpStatus(message=msg.get("email001"), data={})
-        user.password = createToken.getHashPwd(password)
-        session.commit()
-        return httpStatus(code=status.HTTP_200_OK, message=msg.get("updatdpwd"), data={})
-    except SQLAlchemyError as e:
-        session.rollback()
-        return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("updatdpwd001"), data={})
+    if db.emailStatus==0:
+        return httpStatus(message=msg.get("email001"), data={})
+    if code==200:
+        try:
+            db.password = createToken.getHashPwd(password)
+            session.commit()
+            return httpStatus(code=status.HTTP_200_OK, message=msg.get("updatdpwd"), data={})
+        except SQLAlchemyError as e:
+            session.rollback()
+            return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("updatdpwd001"), data={})
+    else:
+        return httpStatus(message=message, code=code, data={})
