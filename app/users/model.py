@@ -8,3 +8,7 @@ class AccountInputEamail(BaseModel):
 
 class AccountInputEamail1(AccountInputEamail):
     code: Optional[str] = None
+class AccountInputEamail2(BaseModel):
+    password: Optional[str] = None
+    email: Optional[str] = None
+    code: Optional[str] = None
