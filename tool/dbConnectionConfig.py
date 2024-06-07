@@ -44,7 +44,7 @@ def sendBindEmail(from_email: str = "", uid: int = 0):
     redis_db.set_with_expiry(tempkey, {"code": code, "timestamp": now.timestamp()},
                              expire_time=5, time_unit="minutes")
 
-    message = MIMEText(f"\n您的验证码是: {code}", 'plain', 'utf-8')
+    message = MIMEText(f"\n您的验证码是:<a href='#' style='color:red'> {code}</a>,如果过期或者使用成功后，将不能再使用了哦!", 'html', 'utf-8')
     to_email = emailTools.get('to_email')
     server_host = emailTools.get('to_serverHost')
     server_port = emailTools.get('to_serverPort')

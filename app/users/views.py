@@ -285,3 +285,47 @@ async def resetPwd(params:AccountInputEamail2, user: AccountInputs = Depends(cre
             return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("updatdpwd001"), data={})
     else:
         return httpStatus(message=message, code=code, data={})
+
+#没有用户信息的
+@userApp.get("/recoverEmail",description="通过验证码找回密码",summary="通过验证码找回密码")
+async def getRecoverPwd(email, session: Session = Depends(getDbSession)):
+    if not email:
+        return httpStatus(message=msg.get("email00"), data={})
+    db = session.query(AccountInputs).filter(AccountInputs.email == email).first()
+    if not db or db.status==1 or db.emailStatus==0:
+        return httpStatus(message=msg.get("verify99"), data={})
+    sendEmail = sendBindEmail(email, f"recover{db.id}")
+    message = sendEmail.get("message")
+    code = sendEmail.get("code")
+    if not code:
+        return httpStatus(message=msg.get("email023"), data={})
+    if code != 200:
+        return httpStatus(message=message, data={})
+    return httpStatus(code=status.HTTP_200_OK, message=msg.get('changeVerifyCode2'), data={})
+@userApp.post("/recPassVerify",description="找回密码",summary="找回密码")
+async def postRecoVerify(p:AccountInputEamail2, session: Session = Depends(getDbSession)):
+    email=p.email
+    code=p.code
+    password=p.password
+    if not email:
+        return httpStatus(message=msg.get("email00"), data={})
+    if not code:
+        return httpStatus(message=msg.get("email023"), data={})
+    if not password:
+        return httpStatus(message=msg.get("email09903"), data={})
+    db=session.query(AccountInputs).filter(AccountInputs.email == email).first()
+    if not db or db.status==1 or db.emailStatus==0:
+        return httpStatus(message=msg.get("verify99"), data={})
+    result=await getVerifyEmail(email, code, f"recover{db.id}")
+    code = result.get("code")
+    message = result.get("message")
+    if code==200:
+        try:
+            db.password = createToken.getHashPwd(password)
+            session.commit()
+            return httpStatus(code=status.HTTP_200_OK, message=msg.get("updatdpwd"), data={})
+        except SQLAlchemyError as e:
+            session.rollback()
+            return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("updatdpwd001"), data={})
+    else:
+        return httpStatus(message=message, code=code, data={})
