@@ -114,9 +114,9 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
 @userApp.post('/info',description="获取用户信息",summary="获取用户信息")
 def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
 
-
     if user:
         datas=session.query(AccountInputs).filter(AccountInputs.id == user).first()
+
         redis_key = f"user-{datas.account}"  # 构造一个基于用户ID的Redis键
         # 尝试从Redis获取用户信息
         redis_user_data = redis_db.get(redis_key)
