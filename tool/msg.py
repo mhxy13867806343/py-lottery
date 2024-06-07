@@ -35,5 +35,7 @@ msg:dict={
     "updatdpwd001":"密码修改失败",
     "changeVerifyCode":"验证成功",
     "changeVerifyCode1":"验证失败",
+    "changeVerifyCode2":"发送成功",
     "verify0":"未进行验证,请先验证",
+    "verify99":"用户信息不存在或当前用户已被禁用或用户邮箱未绑定",
 }
