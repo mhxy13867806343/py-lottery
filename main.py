@@ -1,4 +1,7 @@
 import time
+from datetime import datetime
+
+import pytz
 from fastapi import FastAPI, APIRouter,Request,status
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
@@ -92,6 +95,12 @@ async def getIndexauthorUser():
                         "type": "免费或者收费",
                         "language": "中文",
                         "id": "baidu"
+                    },
+                    {
+                        "url": "https://cloud.tencent.com/product/acc",
+                        "type": "免费或者收费",
+                        "language": "中文",
+                        "id": "tencent"
                     }
                 ]
             },
@@ -191,6 +200,7 @@ async def getIndexauthorUser():
         "createTime": int(time.time()),
         "authorWxid": "aigchooks",
         "authorImg": "static/wx/WechatIMG914.jpg",
+        "qqAuthorImg": "static/qq/temp_qrcode_share.png",
         "githubHome": "https://github.com/mhxy13867806343?tab=repositories",
         "juejinHome": "https://juejin.cn/user/1310273588955581",
         "saying": "零的起点，从这里开始",
@@ -199,7 +209,6 @@ async def getIndexauthorUser():
             {
                 "url": "https://www.python.org/",
                 "name": "Python",
-
             },
             {
                 "url": "https://www.rust-lang.org/",
@@ -239,6 +248,13 @@ async def getIndexauthorUser():
         ]
     }
     return httpStatus(data=data, message="获取成功", code=status.HTTP_200_OK)
+
+@app.get("/v1/get-time",description="获取服务端时间",summary="获取服务端时间")
+def get_server_time():
+    # 获取当前的UTC时间，并转换为特定时区时间，例如美国东部时间
+    timezone = pytz.timezone("America/New_York")
+    server_time = datetime.now(tz=timezone)
+    return {"server_time": server_time.strftime("%Y-%m-%d %H:%M:%S %Z")}
 # 中间件和其他配置
 class CustomHeaderMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
