@@ -26,7 +26,7 @@ class Signature(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('account.id'), nullable=False)
-    content = Column(String(25), nullable=False)
+    content = Column(String(64), nullable=False)
     created_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     last_time = Column(Integer, nullable=False, default=lambda: int(time.time()))
     user = relationship("AccountInputs", back_populates="signatures")
