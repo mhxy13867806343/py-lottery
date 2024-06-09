@@ -13,6 +13,7 @@ from app.auxiliary.views import emailApp as emailAppRouterApi
 from app.other.views import outerApp as outerAppRouterApi
 from app.languages.views import languagesApp as languagesAppRouterApi
 from app.users.views import userApp as userAppRouterApi
+from app.signature.views import signatureApp as signatureAppRouterApi
 from tool.classDb import httpStatus
 from tool.getLogger import globalLogger
 
@@ -24,6 +25,7 @@ v1_router = APIRouter(prefix="/v1")
 
 # 将各个模块的路由添加到带前缀的路由器
 v1_router.include_router(userAppRouterApi, prefix="/h5/user", tags=["用户管理"])
+v1_router.include_router(signatureAppRouterApi, prefix="/h5/signature", tags=["用户签名管理"])
 v1_router.include_router(emailAppRouterApi, prefix="/h5/email", tags=["邮件服务"])
 v1_router.include_router(outerAppRouterApi, prefix="/h5/outer", tags=["辅助管理"])
 v1_router.include_router(languagesAppRouterApi, prefix="/h5/languages", tags=["语言管理"])

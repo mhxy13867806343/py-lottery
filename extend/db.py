@@ -10,7 +10,7 @@ host="localhost" # 数据库地址
 port=3306 # 数据库端口
 db_name="lottery" # 数据库名
 
-url=f"mysql+pymysql://{username}:{password}@{host}:{port}/{db_name}?charset=utf8"
+url=f"mysql+pymysql://{username}:{password}@{host}:{port}/{db_name}?charset=utf8mb4"
 
 ENGIN=create_engine(url,echo=True)
 
