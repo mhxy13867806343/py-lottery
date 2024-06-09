@@ -278,6 +278,7 @@ async def resetPwd(params:AccountInputEamail2, user: AccountInputs = Depends(cre
     if code==200:
         try:
             db.password = createToken.getHashPwd(password)
+            db.last_time=int(time.time())
             session.commit()
             return httpStatus(code=status.HTTP_200_OK, message=msg.get("updatdpwd"), data={})
         except SQLAlchemyError as e:
@@ -322,6 +323,7 @@ async def postRecoVerify(p:AccountInputEamail2, session: Session = Depends(getDb
     if code==200:
         try:
             db.password = createToken.getHashPwd(password)
+            db.last_time=int(time.time())
             session.commit()
             return httpStatus(code=status.HTTP_200_OK, message=msg.get("updatdpwd"), data={})
         except SQLAlchemyError as e:
