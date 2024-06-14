@@ -96,7 +96,7 @@ def check_redis():
     redis_db = RedisDB()
     if not redis_db.is_running():
         return httpStatus(message="redis未运行,请运行", data={}, code=statusTool.statusCode[60000])
-check_redis()
+
 #
 # schedule.every(600).seconds.do(check_redis) # 每隔600秒检查一次 Redis 是否运行
 #
