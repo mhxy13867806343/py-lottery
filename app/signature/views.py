@@ -12,6 +12,8 @@ signatureApp = APIRouter()
 
 @signatureApp.post('/add', description="添加签名内容", summary="添加签名内容")
 def addSignature(ub: SignatureInput,uid: AccountInputs = Depends(createToken.pase_token), session: Session = Depends(getDbSession)):
+    if not uid:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     content=ub.content
     maxlenth:int=64
     if not uid:
@@ -51,7 +53,7 @@ def addSignature(ub: SignatureInput,uid: AccountInputs = Depends(createToken.pas
 @signatureApp.get('/connentId', description="获取签名内容", summary="获取签名内容")
 def getSignature(user: AccountInputs = Depends(createToken.pase_token), session: Session = Depends(getDbSession)):
     if not user:
-        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="用户未找到")
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     db=session.query(AccountInputs).filter(AccountInputs.id==user).first()
     if db.status == 1:
         return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="用户被禁用")

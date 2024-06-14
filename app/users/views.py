@@ -148,7 +148,8 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
 
 @userApp.post('/update',description="更新用户信息",summary="更新用户信息")
 def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
-
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     name = params.name
     if not name:
         return httpStatus(message=msg.get("error4"), data={})
@@ -172,6 +173,8 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=msg.get("update1"), data={})
 @userApp.post('/logout',description="用户退出",summary="用户退出")
 def logout(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     db = session.query(AccountInputs).filter(AccountInputs.id == user).first()
     redis_key = f"user-{db.account}"
     if not redis_key:
@@ -185,6 +188,8 @@ def logout(user: AccountInputs = Depends(createToken.pase_token),session: Sessio
 
 @userApp.post("/bind",description="绑定用户邮箱",summary="绑定用户邮箱")
 async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     email=params.email
     code=params.code
     if not email:
@@ -228,6 +233,8 @@ async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(cre
 
 @userApp.post("/verify",description="发送用户邮箱验证码",summary="发送用户邮箱验证码")
 async def verifyEmail(params:AccountInputEamail, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     if not params.email:
         return httpStatus(message=msg.get("email00"), data={})
     sendEmail =  sendBindEmail(params.email,user)
@@ -241,6 +248,8 @@ async def verifyEmail(params:AccountInputEamail, user: AccountInputs = Depends(c
 
 @userApp.post("/verifyCode",description="验证用户邮箱验证码",summary="验证用户邮箱验证码")
 async def verifyCode(params:AccountInputEamail1, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     email=params.email
     code=params.code
     if not email:
@@ -265,6 +274,8 @@ async def verifyCode(params:AccountInputEamail1, user: AccountInputs = Depends(c
 
 @userApp.post("/resetpwd",description="重置密码",summary="重置密码")
 async def resetPwd(params:AccountInputEamail2, user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     email=params.email
     code=params.code
     password=params.password
