@@ -40,21 +40,7 @@ def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
     return httpStatus(message=msg.get("error1"), data={})
 
 
-#获取用户信息
-def getUserInfoLogin(redis_user_data,id):
-    data = {
-        "account": redis_user_data["account"],
-        "name": redis_user_data["name"],
-        "type": int(redis_user_data["type"]),
-        "createTime":int( redis_user_data["createTime"]),
-        "lastTime": int(redis_user_data["lastTime"]),
-        "id": id,
-        "isPermissions": 1,
-        "email": redis_user_data["email"],
-        "status": redis_user_data["status"],
-        "emailStatus": int(redis_user_data["emailStatus"])
-    }
-    return data
+
 @userApp.post('/login', description="登录用户信息", summary="登录用户信息")
 def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
     account = user_input.account
@@ -113,28 +99,51 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
 
 @userApp.post('/info',description="获取用户信息",summary="获取用户信息")
 def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: Session = Depends(getDbSession)):
+    if not user:
+        return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
+    datas = session.query(AccountInputs).filter(AccountInputs.id == user).first()
 
-    if user:
-        datas=session.query(AccountInputs).filter(AccountInputs.id == user).first()
+    redis_key = f"user-{datas.account}"  # 构造一个基于用户ID的Redis键
+    # 尝试从Redis获取用户信息
+    redis_user_data = redis_db.get(redis_key)
 
-        redis_key = f"user-{datas.account}"  # 构造一个基于用户ID的Redis键
-        # 尝试从Redis获取用户信息
-        redis_user_data = redis_db.get(redis_key)
+    if redis_user_data:
+        if redis_user_data.get('status') == 1:
+            return httpStatus(message=msg.get('accountstatus'), data={})
+        # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
+        data_source = {
+            "account": redis_user_data.get('account'),
+            "name": redis_user_data.get("name"),
+            "type": int(redis_user_data.get('type')),
+            "createTime": int(redis_user_data.get("createTime")),
+            "lastTime": int(redis_user_data.get("lastTime")),
+            "id": user,
+            "isPermissions": 1,
+            "email": redis_user_data.get("email"),
+            "status": redis_user_data.get("status"),
+            "emailStatus": int(redis_user_data.get("emailStatus"))
+        }
+        return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
+    else:
+        user = session.query(AccountInputs).filter(AccountInputs.id == user).first()
+        if user is None:
+            return httpStatus(message=msg.get("error3"), data={})
+        if user.status == 1:
+            return httpStatus(message=msg.get('accountstatus'), data={})
+        data_source = {
+            "account": user.account,
+            "name": user.name,
+            "type": int(user.type),
+            "createTime": int(user.create_time),
+            "lastTime": int(user.last_time),
+            "id": user,
+            "isPermissions": 1,
+            "email": user.email,
+            "status": user.status,
+            "emailStatus": int(user.emailStatus)
+        }
+        return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
 
-        if redis_user_data:
-
-            if redis_user_data.get('status') == 1:
-                return httpStatus(message=msg.get('accountstatus'), data={})
-            # 如果在Redis中找到了用户信息，直接使用这些信息构建响应
-            data_source = getUserInfoLogin(redis_user_data,user)
-            return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
-    user = session.query(AccountInputs).filter(AccountInputs.id == user).first()
-    if user is None:
-        return httpStatus(message=msg.get("error3"), data={})
-    if user.status == 1:
-        return httpStatus(message=msg.get('accountstatus'), data={})
-    data_source = getUserInfoLogin(user, user.id)
-    return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
 
 
 @userApp.post('/update',description="更新用户信息",summary="更新用户信息")
@@ -195,8 +204,8 @@ async def addEmail(params:AccountInputEamail1, user: AccountInputs = Depends(cre
         return httpStatus(message=msg.get("email02"), data={})
     if resultSql.first().status == 1:
         return httpStatus(message=msg.get("accountstatus"), data={})
-    count=resultSql.first().email
-    if len(count)>0:
+    existing_email_user = session.query(AccountInputs).filter(AccountInputs.email == email).first()
+    if existing_email_user:
         return httpStatus(message=msg.get("email021"), data={})
     try:
         if result.get("code")==200:
