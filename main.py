@@ -260,8 +260,8 @@ class CustomHeaderMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         try:
             response: Response = await call_next(request)
-            response.headers['X-Frame-Options'] = 'ALLOW-FROM https://example.com/'
-            response.headers['Content-Security-Policy'] = "frame-ancestors 'self' https://example.com/"
+            response.headers['X-Frame-Options'] = 'ALLOW-FROM https://lcs200.icu/#/'
+            response.headers['Content-Security-Policy'] = "frame-ancestors 'self' https://lcs200.icu/#/"
             return response
         except SQLAlchemyError as e:
             globalLogger.exception("数据库操作出现异常:",e)
