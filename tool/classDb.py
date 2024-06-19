@@ -1,6 +1,6 @@
 from typing import Tuple, List
 from sqlalchemy import or_
-
+import requests
 from sqlalchemy.types import TypeDecorator, CHAR
 from fastapi import  status
 import uuid
@@ -8,7 +8,7 @@ import re
 import time
 import hashlib
 from datetime import datetime, timedelta
-
+from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 # 通用工具类 正则表达式
 toolReg={
     "email_regex":r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
@@ -16,6 +16,27 @@ toolReg={
     "pwd_regex": r"/^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/"
 }
 
+
+def performGetRequest(url:str=None, method='get', data=None, json=None):
+    if not url:
+        return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="请求地址不能为空", data={})
+    try:
+        if method == 'post':
+            response = requests.post(url, headers=outerUserAgentHeadersX64, data=data, json=json)
+        elif method == 'get':
+            response = requests.get(url, headers=outerUserAgentHeadersX64, json=json,data=None)
+        if response.status_code != 200:
+            return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"获取数据失败: {response.status_code}", data={})
+        return httpStatus(code=status.HTTP_200_OK, message="获取成功", data=response.json())
+    except requests.ConnectionError:
+        # 处理连接错误
+        raise httpStatus(code=status.HTTP_503_SERVICE_UNAVAILABLE, message="服务不可达")
+    except requests.Timeout:
+        # 处理超时错误
+        raise httpStatus(code=status.HTTP_408_REQUEST_TIMEOUT, message="请求超时")
+    except requests.RequestException as e:
+        # 对于其他请求相关的异常
+        raise httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=str(e))
 def get_next_year_timestamp():
     current_time = datetime.now()
     next_year_date = current_time.replace(year=current_time.year + 1)

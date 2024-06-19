@@ -3,7 +3,7 @@ from typing import Optional
 import requests
 import json
 from fastapi import APIRouter,status,Request
-from tool.classDb import httpStatus
+from tool.classDb import httpStatus, performGetRequest
 from tool.dbKey import hotCityKey
 from tool.dbTools import generate_dynamic_cookies
 from tool.dbUrlResult import graphql, qwCityUrl, locationWeatherUrl, aweatherapiytrsss7
@@ -13,6 +13,29 @@ from tool.dbThrottling import limiter
 from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 
 outerApp = APIRouter()
+
+@outerApp.get('/user_list', description="某个沸点的用户列表", summary="某个沸点的用户列表")
+async def getuserList(cursor: str = "", limit: int = 30,  id_type: int = 4
+                  ,item_id:str=""
+                  ,spider:int=0, aid: str = "6587", uuid: str = "7376801797577950746"):
+    url = f"https://api.juejin.cn/interact_api/v1/digg/user_list?aid={aid}&uuid={uuid}&spider={spider}"
+    tdata = {
+        "cursor": cursor,
+        "id_type": id_type,
+        "limit": limit,
+        "item_id":item_id
+    }
+    return performGetRequest(url, method='post', json=tdata)
+@outerApp.get('/pins', description="沸点", summary="沸点")
+async def getPins(cursor: str = "", limit: int = 30, sort_type: int = 200, id_type: int = 4, aid: str = "6587", uuid: str = "7376801797577950746"):
+    url = f"https://api.juejin.cn/recommend_api/v1/short_msg/recommend?aid={aid}&uuid={uuid}"
+    tdata = {
+        "cursor": cursor,
+        "id_type": id_type,
+        "limit": limit,
+        "sort_type": sort_type
+    }
+    return performGetRequest(url, method='post', json=tdata)
 
 @outerApp.get("/ai/tool/category",description="ai分类",summary="ai分类")
 async  def toolcategory():
