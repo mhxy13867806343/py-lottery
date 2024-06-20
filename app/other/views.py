@@ -15,7 +15,7 @@ from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 outerApp = APIRouter()
 
 @outerApp.get('/user_list', description="某个沸点的用户列表", summary="某个沸点的用户列表")
-async def getuserList(cursor: str = "", limit: int = 30,  id_type: int = 4
+async def getuserList(cursor: str = "", limit: int = 20,  id_type: int = 4
                   ,item_id:str=""
                   ,spider:int=0, aid: str = "6587", uuid: str = "7376801797577950746"):
     url = f"https://api.juejin.cn/interact_api/v1/digg/user_list?aid={aid}&uuid={uuid}&spider={spider}"
@@ -151,7 +151,6 @@ limit:int=50
     except requests.RequestException as e:
         return httpStatus(code=status.HTTP_400_BAD_REQUEST, message="GitHub请求失败")
     except Exception as e:
-        print(e,555555555)
         return httpStatus(code=status.HTTP_500_INTERNAL_SERVER_ERROR, message="处理响应时出现错误")
 
 @outerApp.get("/searchgithub/{query}",description="搜索GitHub仓库名称",summary="搜索GitHub仓库名称")
