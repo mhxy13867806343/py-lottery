@@ -1,3 +1,4 @@
+import json
 from typing import Tuple, List
 from sqlalchemy import or_
 import requests
@@ -147,3 +148,12 @@ def getListAllTotal(db=None, cls=None, name: str = '', status: int = 0) -> int:
         count = db.query(cls).filter(cls.status == status).count()
 
     return count
+def getJsonStatic(static:str=""):
+    try:
+        with open(static, "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+        return httpStatus(data=data, code=status.HTTP_200_OK, message="获取成功")
+    except FileNotFoundError:
+        return httpStatus(message='未找到相关资源', code=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return httpStatus(message=str(e), code=status.HTTP_500_INTERNAL_SERVER_ERROR)

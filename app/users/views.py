@@ -32,7 +32,7 @@ def registered(acc:AccountInput,db:Session = Depends(getDbSession)):
         name=str('--')+str(rTime)+str(account)+str('--')
         password = createToken.getHashPwd(password)
         resultSql = AccountInputs(account=account, password=password, create_time=rTime,
-                                    last_time=rTime,name=name,type=1,status=0)
+                                    last_time=rTime,name=name,type=1,status=0,sex=0)
         db.add(resultSql)
         db.commit()
         db.flush()
@@ -64,6 +64,7 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
                 user_data['lastTime']=int(user_data['lastTime'])
                 user_data["email"]=user_data.get("email")
                 user_data["emailStatus"]=int(user_data.get("emailStatus"))
+                user_data['sex']=int(user_data.get("sex"))
                 return httpStatus(code=status.HTTP_200_OK, message="登录成功", data=user_data)
             return httpStatus(message=msg.get("tokenstatus"), data={})
         except Exception as e:
@@ -86,7 +87,8 @@ def login(user_input: AccountInput, session: Session = Depends(getDbSession)):
             "name": existing_user.name,
             "status": int(existing_user.status),
             "email": existing_user.email,
-            "emailStatus": int(existing_user.emailStatus)
+            "emailStatus": int(existing_user.emailStatus),
+            "sex":int(existing_user.sex)
         }
         # 将用户信息保存到Redis
         redis_db.set(newAccount, user_data)  # 注意调整为合适的键值和数据
@@ -121,7 +123,8 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
             "isPermissions": 1,
             "email": redis_user_data.get("email"),
             "status": redis_user_data.get("status"),
-            "emailStatus": int(redis_user_data.get("emailStatus"))
+            "emailStatus": int(redis_user_data.get("emailStatus")),
+            "sex": int(redis_user_data.get("sex"))
         }
         return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
     else:
@@ -140,7 +143,8 @@ def getUserInfo(user: AccountInputs = Depends(createToken.pase_token),session: S
             "isPermissions": 1,
             "email": user.email,
             "status": user.status,
-            "emailStatus": int(user.emailStatus)
+            "emailStatus": int(user.emailStatus),
+            "sex": int(user.sex)
         }
         return httpStatus(code=status.HTTP_200_OK, message=msg.get("ok99"), data=data_source)
 
@@ -151,6 +155,7 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
     if not user:
         return httpStatus(message=msg.get('error31'), data={},code=status.HTTP_401_UNAUTHORIZED)
     name = params.name
+    sex=params.sex
     if not name:
         return httpStatus(message=msg.get("error4"), data={})
     db=session.query(AccountInputs).filter(AccountInputs.id==user).first()
@@ -158,14 +163,14 @@ def updateUserInfo(params: AccountInputFirst, user: AccountInputs = Depends(crea
         return httpStatus(message=msg.get("error5"), data={})
     if db.status == 1:
         return httpStatus(message=msg.get('accountstatus'), data={})
-    if db.name==name:
-        return httpStatus(message=msg.get("error51"), data={})
     try:
         db.name=name
+        db.sex=sex
         session.commit()
         newAccount = f"user-{db.account}"  # redis key
         redis_db.set(newAccount,{
             "name":name,
+            "sex":sex  or 0
         })
         return httpStatus(code=status.HTTP_200_OK, message=msg.get("update0"), data={})
     except SQLAlchemyError as e:

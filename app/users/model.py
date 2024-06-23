@@ -3,6 +3,7 @@ from typing import Optional, List, Dict, Any, Union, TypeVar, Type, Callable, ca
 
 class AccountInputFirst(BaseModel):
     name: Optional[str] = None
+    sex: Optional[str] = None
 class AccountInputEamail(BaseModel):
     email: Optional[str] = None
 
