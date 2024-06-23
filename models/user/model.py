@@ -15,7 +15,7 @@ class AccountInputs(Base): # 用户信息
     name=Column(String(30),nullable=False,default='管理员')
     emailStatus = Column(Integer, nullable=False, default=0) #0未绑定 1已绑定
     status = Column(Integer, nullable=False, default=0) # 0:正常 1:禁用
-
+    sex = Column(Integer, nullable=False, default=0) #11:男 12:女 0:未知
     signatures = relationship("Signature", back_populates="user", order_by="Signature.created_time")
     def __repr__(self):
         return f'<AccountInputs {self.account}>'

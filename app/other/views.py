@@ -3,7 +3,7 @@ from typing import Optional
 import requests
 import json
 from fastapi import APIRouter,status,Request
-from tool.classDb import httpStatus, performGetRequest
+from tool.classDb import httpStatus, performGetRequest,getJsonStatic
 from tool.dbKey import hotCityKey
 from tool.dbTools import generate_dynamic_cookies
 from tool.dbUrlResult import graphql, qwCityUrl, locationWeatherUrl, aweatherapiytrsss7
@@ -14,6 +14,25 @@ from tool.dbHeaders import jsHeaders, outerUserAgentHeadersX64
 
 outerApp = APIRouter()
 
+
+@outerApp.get("/capital",description="获取下一级列表",summary="获取下一级列表")
+async def getprovincialCapital(prove:str="浙江省"):
+    url=f"https://657258535.github.io/China-Area-Region-Administrative-Divisions/China/{prove}.json"
+    resource=requests.get(url,headers=outerUserAgentHeadersX64)
+    return {
+        "code": 200,
+        "message": "获取成功",
+        "data": resource.json()
+    }
+
+@outerApp.get("/sar",description="获取特别行政区列表",summary="获取特别行政区列表")
+async def getsar():
+    sar = "static/area/sar.json"
+    return getJsonStatic(sar)
+@outerApp.get("/province",description="获取省列表",summary="获取省列表")
+async def getprovince():
+    province = "static/area/province.json"
+    return getJsonStatic(province)
 @outerApp.get('/user_list', description="某个沸点的用户列表", summary="某个沸点的用户列表")
 async def getuserList(cursor: str = "", limit: int = 20,  id_type: int = 4
                   ,item_id:str=""
@@ -40,14 +59,7 @@ async def getPins(cursor: str = "", limit: int = 30, sort_type: int = 200, id_ty
 @outerApp.get("/ai/tool/category",description="ai分类",summary="ai分类")
 async  def toolcategory():
     file_path="static/json/toolAi.json"
-    try:
-        with open(file_path, "r", encoding="utf-8") as json_file:
-            data = json.load(json_file)
-        return httpStatus(data=data, code=status.HTTP_200_OK,message="获取成功")
-    except FileNotFoundError:
-        return httpStatus(message='未找到相关资源', status_code=status.HTTP_400_BAD_REQUEST)
-    except Exception as e:
-        return httpStatus(message=str(e), status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return getJsonStatic(file_path)
 @outerApp.get('/toolaiAi')
 async def toolaiAi(pageIndex:int=1,pageSize:int=12,key:str="test",
                    Category:str=""):
