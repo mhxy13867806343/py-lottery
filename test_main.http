@@ -1,11 +1,11 @@
 # Test your FastAPI endpoints
 
-GET http://127.0.0.1:8000/
+GET https://www.lcs200.icu/
 Accept: application/json
 
 ###
 
-GET http://127.0.0.1:8000/hello/User
+GET https://www.lcs200.icu/hello/User
 Accept: application/json
 
 ###
